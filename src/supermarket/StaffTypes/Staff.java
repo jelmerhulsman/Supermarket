@@ -1,4 +1,4 @@
-package StaffTypes;
+package supermarket.StaffTypes;
 
 public class Staff {
 
