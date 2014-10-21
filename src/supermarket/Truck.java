@@ -51,6 +51,7 @@ public class Truck {
      * @param items 
      */
     public void order(List<Item> items) {
-        this.items.add(items);
+     for(Item i : items)
+        this.items.add(i);
     }
 }
