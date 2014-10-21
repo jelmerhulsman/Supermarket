@@ -6,6 +6,7 @@
 ### NetBeans ###
 nbproject/private/
 build/
+nbproject/
 nbbuild/
 dist/
 nbdist/
