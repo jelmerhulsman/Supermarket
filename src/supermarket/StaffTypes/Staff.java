@@ -2,9 +2,9 @@ package supermarket.StaffTypes;
 
 public class Staff {
 
-    private String name;
+    protected String name;
 
-    private Staff(String name) {
+    public Staff(String name) {
         this.name = name;
     }
 

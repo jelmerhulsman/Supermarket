@@ -2,13 +2,13 @@ package supermarket;
 
 import java.util.ArrayList;
 import supermarket.Item.Category;
-import supermarket.StaffTypes.AisleLoader;
+import supermarket.StaffTypes.Stocker;
 
 public class Aisle {
 
     private String name;
     private ArrayList<Item> items = new ArrayList();
-    private AisleLoader currentLoader;
+    private Stocker currentLoader;
 
     public enum Status {
 
@@ -38,7 +38,7 @@ public class Aisle {
      *
      * @param currentLoader The loader that you are willing to assign
      */
-    public void setCurrentLoader(AisleLoader currentLoader) {
+    public void setCurrentLoader(Stocker currentLoader) {
         this.currentLoader = currentLoader;
     }
 
@@ -47,7 +47,7 @@ public class Aisle {
      *
      * @return the current loader
      */
-    public AisleLoader getCurrentLoader() {
+    public Stocker getCurrentLoader() {
         return currentLoader;
     }
 
