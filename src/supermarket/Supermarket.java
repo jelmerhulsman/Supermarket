@@ -1,6 +1,12 @@
 package supermarket;
 
 import java.util.List;
+import supermarket.Aisle;
+import supermarket.Checkout;
+import supermarket.Department;
+import supermarket.Item;
+import supermarket.Storage;
+import supermarket.Truck;
 
 /**
  *
@@ -17,11 +23,12 @@ public class Supermarket {
 
     public Supermarket() {
         final int MAX_AISLES = 4;
+        final int MAX_ITEMS_PER_AISLE = 2;
         final int MAX_CHECKOUTS = 4;
         final int MAX_DEPARTMENTS = 2;
+        final int MAX_ITEMS_PER_DEPARTMENT = 1;
         final int MAX_STAFF_MEMBERS = 6;
-        final int MAX_UNIQUE_ITEMS = (MAX_AISLES * 2) + (MAX_DEPARTMENTS * 1);
-        final float PROFIT_PER_ITEM = 1.5f;
+        final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
         
         for (int i = 0; i < MAX_AISLES; i++) {
             aisles.add(new Aisle());

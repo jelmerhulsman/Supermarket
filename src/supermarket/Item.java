@@ -5,14 +5,12 @@ public class Item {
     public enum Category  { WINE, SNACK, SODA, BEER, LIQUOR, DIARY, SPICYFOOD, NONSPICYFOOD, FROZENFOOD, CANNEDFOOD }
     public enum Status { LOADED, INSTORAGE, ATCUSTOMER, ATSTAFF, INTRUCK  } 
     private float price;
-    private float purchasePrice;
     private Status status;
     private Category category;
     
-    public Item(String name, Category category, float price, float purchasePrice){
+    public Item(String name, Category category, float price){
         this.name = name;
         this.price = price;
-        this.purchasePrice = purchasePrice;
         this.category = category;
         this.status = Status.INTRUCK;
     }
@@ -39,14 +37,6 @@ public class Item {
      */
     public float getPrice() {
         return price;
-    }
-
-    /**
-     * Gets the current purchasing price for the supermarket
-     * @return The price for the supermarket
-     */
-    public float getPurchasePrice() {
-        return purchasePrice;
     }
 
     /**

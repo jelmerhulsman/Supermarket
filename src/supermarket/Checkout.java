@@ -1,6 +1,5 @@
 package supermarket;
 
-import CustomerTypes.*;
 import StaffTypes.Cashier;
 import java.util.List;
 
