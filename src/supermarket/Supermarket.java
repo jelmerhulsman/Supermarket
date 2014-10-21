@@ -33,7 +33,7 @@ public class Supermarket {
         }
 
         for (int i = 0; i < MAX_DEPARTMENTS; i++) {
-            departments.add(new Department());
+            departments.add(new Department("Drinks Department"));
         }
 
         storage = new Storage();
