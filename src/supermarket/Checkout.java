@@ -1,7 +1,7 @@
 package supermarket;
 
-import StaffTypes.Cashier;
 import java.util.List;
+import supermarket.StaffTypes.Cashier;
 
 public class Checkout {
 
