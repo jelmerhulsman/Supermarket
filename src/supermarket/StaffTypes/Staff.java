@@ -5,11 +5,10 @@ import java.util.List;
 public class Staff {
     private String name;
     private List<Staff> functions;
-    private Staff curFunctions;
+    private Staff curFunction;
     
-    public Staff(String name, List<Staff> functions){
+    public Staff(String name){
         this.name = name;
-        this.functions = functions;
     }
 
     /**
@@ -19,5 +18,40 @@ public class Staff {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Assign functions for this staff member
+     * 
+     * @param functions 
+     */
+    public void setFunctions(List<Staff> functions) {
+        this.functions = functions;
+    }  
+
+    /**
+     * Return the assigned functions of this staff member
+     * 
+     * @return functions
+     */
+    public List<Staff> getFunctions() {
+        return functions;
+    }
+    
+    /**
+     * Sets the current function for this staff member
+     * 
+     * @param curFunction 
+     */
+    public void setCurFunction(Staff curFunction) {
+        this.curFunction = curFunction;
+    }
+
+    /**
+     * Gets the current function of this staff member
+     * @return curFunction
+     */
+    public Staff getCurFunction() {
+        return curFunction;
     }
 }
