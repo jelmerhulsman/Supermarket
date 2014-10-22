@@ -1,5 +1,6 @@
 package supermarket;
 
+import com.jme3.math.Vector2f;
 import java.util.List;
 
 public class Truck extends Object{
@@ -16,8 +17,8 @@ public class Truck extends Object{
      *
      * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
-    public Truck(String name) {
-        super(name);
+    public Truck(String name, Vector2f location) {
+        super(name,location);
         items = null;
         status = Status.AWAY;
     }

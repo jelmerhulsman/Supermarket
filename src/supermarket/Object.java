@@ -1,22 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package supermarket;
+
+import com.jme3.math.Vector2f;
 
 /**
  *
  * @author Moreno
  */
 public class Object {
-    protected String location;
+    protected String locationName;
+    protected Vector2f location;
     
-    public Object(String location)
+    public Object(String locationName, Vector2f location)
     {
+        this.locationName = locationName;
         this.location = location;
     }
 
-    public String getLocation() {
+    /**
+     * Gets the name of the current location
+     * @return the NAME current location. For example: "The wine Aisle" or "The dairy aisle"
+     */
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public Vector2f getLocation() {
         return location;
     }
     

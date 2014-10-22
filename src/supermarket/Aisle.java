@@ -18,8 +18,8 @@ public class Aisle extends Object {
     private final int ITEMLIMIT = 50;
     private ArrayList<Category> categories = new ArrayList();
 
-    public Aisle(String name, Category category1, Category category2) {
-        super(name);
+    public Aisle(String name,int locationX, int locationY, Category category1, Category category2) {
+        super(name,locationX,locationY);
         this.name = name;
         categories.add(category1);
         categories.add(category2);

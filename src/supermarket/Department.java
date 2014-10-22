@@ -1,5 +1,6 @@
 package supermarket;
 
+import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 
 public class Department extends Object {
@@ -7,8 +8,8 @@ public class Department extends Object {
     private String name;
     private ArrayList<Aisle> aisles;
 
-    public Department(String name) {
-        super(name);
+    public Department(String name, Vector2f location) {
+        super(name,location);
         this.name = name;
     }
 /**
