@@ -28,8 +28,6 @@ public class Item {
     public Item() {
         
     }
-    
-    public Item(String name, Category category, float price){
 
     public Item(String name, Category category, float price, boolean primary) {
         this.name = name;
