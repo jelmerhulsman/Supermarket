@@ -2,12 +2,13 @@ package supermarket;
 
 import java.util.ArrayList;
 
-public class Department {
+public class Department extends Object {
 
     private String name;
     private ArrayList<Aisle> aisles;
 
     public Department(String name) {
+        super(name);
         this.name = name;
     }
 /**

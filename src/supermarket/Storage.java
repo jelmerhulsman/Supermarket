@@ -3,15 +3,15 @@ package supermarket;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Unloader;
 
-public class Storage {
+public class Storage extends Object {
     private ArrayList<Item> items = null;
     private Unloader currentUnloader;
     
     /**
      * creates the storage
      */
-    public Storage() {
-        
+    public Storage(String name) {
+        super(name);
     }
     
     /**

@@ -2,7 +2,7 @@ package supermarket;
 
 import java.util.List;
 
-public class Truck {
+public class Truck extends Object{
 
     public enum Status {
 
@@ -16,7 +16,8 @@ public class Truck {
      *
      * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
-    public Truck() {
+    public Truck(String name) {
+        super(name);
         items = null;
         status = Status.AWAY;
     }
