@@ -7,8 +7,6 @@ public class Staff {
     protected float speed;
     protected Object objectType;
 
-    
-    
     public Staff(String name){
         this.name = name;
         this.speed = 1.0f;

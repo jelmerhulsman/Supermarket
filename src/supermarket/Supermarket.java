@@ -26,7 +26,7 @@ public class Supermarket {
         final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
 
         for (int i = 0; i < MAX_AISLES; i++) {
-            aisles.add(new Aisle("Liquor",40,40, Item.Category.BEER, Item.Category.LIQUOR));
+            aisles.add(new Aisle("Liquor",new Vector2f(40,40), Item.Category.BEER, Item.Category.LIQUOR));
         }
 
         for (int i = 0; i < MAX_CHECKOUTS; i++) {
