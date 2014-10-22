@@ -4,14 +4,15 @@
 *.class
 
 ### NetBeans ###
-nbproject/private/**/*
-build/**/*
-nbproject/**/*
-nbbuild/**/*
-dist/**/*
-nbdist/**/*
+nbproject/private/**
+build/**
+nbproject/**
+nbbuild/**
+dist/**
+nbdist/**
 nbactions.xml
 nb-configuration.xml
+build.xml
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
