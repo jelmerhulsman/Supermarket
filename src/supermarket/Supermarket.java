@@ -1,5 +1,6 @@
 package supermarket;
 
+import com.jme3.math.Vector2f;
 import java.util.List;
 
 /**
@@ -25,19 +26,19 @@ public class Supermarket {
         final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
 
         for (int i = 0; i < MAX_AISLES; i++) {
-            aisles.add(new Aisle("Liquor", Item.Category.BEER, Item.Category.LIQUOR));
+            aisles.add(new Aisle("Liquor",new Vector2f(40,40), Item.Category.BEER, Item.Category.LIQUOR));
         }
 
         for (int i = 0; i < MAX_CHECKOUTS; i++) {
-            checkouts.add(new Checkout(i + 1));
+            checkouts.add(new Checkout(i + 1, new Vector2f(90 - 10 * i, 80)));
         }
 
         for (int i = 0; i < MAX_DEPARTMENTS; i++) {
-            departments.add(new Department("Drinks Department"));
+            departments.add(new Department("Drinks Department",new Vector2f(50,50)));
         }
 
-        storage = new Storage("Storage");
-        truck = new Truck("Truck");
+        storage = new Storage("Storage",new Vector2f(0,50));
+        truck = new Truck("Truck",new Vector2f(0,0));
 
         //Add staff members
         //

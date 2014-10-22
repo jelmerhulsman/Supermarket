@@ -1,26 +1,35 @@
 package supermarket;
 
-import java.util.ArrayList;
+import com.jme3.math.Vector2f;
+import java.util.List;
 import supermarket.Item.Category;
 import supermarket.StaffTypes.Stocker;
 
 public class Aisle extends Object {
-
-    private String name;
-    private ArrayList<Item> items = new ArrayList();
-    private Stocker currentLoader;
-
+    
+    private final int ITEM_LIMIT_AISLE = 50;
+    
     public enum Status {
 
-        FULL, EMPTY, NORMAL
+        EMPTY, STOCKED, FULL
     }
+    
+    private String name;
     private Status status;
-    private final int ITEMLIMIT = 50;
-    private ArrayList<Category> categories = new ArrayList();
+    private Stocker stocker;
+    private List<Category> categories;
+    private List<Item> items;
+    private List<Customer> customers;
 
-    public Aisle(String name, Category category1, Category category2) {
-        super(name);
+    public Aisle(String name,Vector2f location, Category category1, Category category2) {
+        super(name,location);
         this.name = name;
+        status = Status.EMPTY;
+        stocker = null;
+        categories = null;
+        items = null;
+        customers = null;
+        
         categories.add(category1);
         categories.add(category2);
     }
@@ -39,8 +48,8 @@ public class Aisle extends Object {
      *
      * @param currentLoader The loader that you are willing to assign
      */
-    public void setCurrentLoader(Stocker currentLoader) {
-        this.currentLoader = currentLoader;
+    public void setCurrentLoader(Stocker stocker) {
+        this.stocker = stocker;
     }
 
     /**
@@ -49,7 +58,7 @@ public class Aisle extends Object {
      * @return the current loader
      */
     public Stocker getCurrentLoader() {
-        return currentLoader;
+        return stocker;
     }
 
     /**
@@ -57,7 +66,7 @@ public class Aisle extends Object {
      *
      * @return a list of all the items
      */
-    public ArrayList<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
@@ -66,7 +75,7 @@ public class Aisle extends Object {
      *
      * @return two categories that are assigned to this Aisle in a list
      */
-    public ArrayList<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
@@ -96,12 +105,12 @@ public class Aisle extends Object {
      * being empty and sets the Status accordingly.
      */
     public void checkAisle() {
-        if (items.size() == ITEMLIMIT) {
+        if (items.size() == ITEM_LIMIT_AISLE) {
             status = Status.FULL;
         } else if (items.isEmpty()) {
             status = Status.EMPTY;
         } else {
-            status = Status.NORMAL;
+            status = Status.STOCKED;
         }
     }
 }

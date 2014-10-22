@@ -1,13 +1,12 @@
 package supermarket.StaffTypes;
+import com.jme3.math.Vector2f;
 import supermarket.Object;
 public class Staff {
 
     protected String name;
     protected float speed;
-    protected Object location;
+    protected Object objectType;
 
-    
-    
     public Staff(String name){
         this.name = name;
         this.speed = 1.0f;
@@ -22,8 +21,27 @@ public class Staff {
         return name;
     }
     
-    public String getLocation()
+    /**
+     * Gets the CLASS of the current location. For example "Aisle" or "Storage"
+     * @return the class of the current location
+     */
+    public Object getObjectType()
     {
-        return location.getLocation();
+        return objectType;
+    }
+    
+    /**
+     * Moves this staff member to the specified location name
+     * @param target For example: "The liquor Aisle"
+     */
+    public void gotoLocation(String target)
+    {
+        
+    }
+    
+    public void calcDistanceToTarget(String target)
+    {
+        
+        Vector2f curLoc = objectType.getLocation();
     }
 }

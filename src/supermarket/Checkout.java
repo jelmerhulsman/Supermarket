@@ -1,9 +1,10 @@
 package supermarket;
 
+import com.jme3.math.Vector2f;
 import java.util.List;
 import supermarket.StaffTypes.Cashier;
 
-public class Checkout {
+public class Checkout extends Object{
 
     public enum Status {
 
@@ -14,7 +15,8 @@ public class Checkout {
     private Cashier cashier;
     private List<Customer> customers;
 
-    public Checkout(int number) {
+    public Checkout(int number,Vector2f location) {
+        super("Checkout " + number, location);
         this.number = number;
         status = Status.CLOSED;
         cashier = null;

@@ -1,5 +1,6 @@
 package supermarket;
 
+import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Unloader;
 
@@ -10,8 +11,8 @@ public class Storage extends Object {
     /**
      * creates the storage
      */
-    public Storage(String name) {
-        super(name);
+    public Storage(String name, Vector2f location) {
+        super(name,location);
     }
     
     /**
