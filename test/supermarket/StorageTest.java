@@ -42,29 +42,29 @@ public class StorageTest {
     /**
      * Test of getCurrentUnloader method, of class Storage.
      */
-//    @Test
-//    public void testGetCurrentUnloader() {
-//        System.out.println("getCurrentUnloader");
-//        Storage instance = null;
-//        Unloader expResult = null;
-//        Unloader result = instance.getCurrentUnloader();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testGetCurrentUnloader() {
+        System.out.println("getCurrentUnloader");
+        Storage instance = null;
+        Unloader expResult = null;
+        Unloader result = instance.getCurrentUnloader();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
     /**
      * Test of setCurrentUnloader method, of class Storage.
      */
-//    @Test
-//    public void testSetCurrentUnloader() {
-//        System.out.println("setCurrentUnloader");
-//        Unloader currentUnloader = null;
-//        Storage instance = null;
-//        instance.setCurrentUnloader(currentUnloader);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testSetCurrentUnloader() {
+        System.out.println("setCurrentUnloader");
+        Unloader currentUnloader = null;
+        Storage instance = null;
+        instance.setCurrentUnloader(currentUnloader);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
     /**
      * Test of getItems method, of class Storage.
@@ -72,7 +72,7 @@ public class StorageTest {
     @Test
     public void testGetItems() {
         System.out.println("getItems");
-        Storage instance = new Storage("storage", Vector2f.ZERO);;
+        Storage instance = new Storage("storage", Vector2f.ZERO);
         ArrayList expResult = new ArrayList<Item>() ;
         expResult.add(new Item("budweisser", Item.Category.BEER, 3, true));
         ArrayList result = instance.getItems();
@@ -103,16 +103,16 @@ public class StorageTest {
     /**
      * Test of moveItem method, of class Storage.
      */
-//    @Test
-//    public void testMoveItem() {
-//        System.out.println("moveItem");
-//        Item.Category cat = null;
-//        int amount = 0;
-//        Storage instance = null;
-//        ArrayList expResult = null;
-//        ArrayList result = instance.moveItem(cat, amount);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testMoveItem() {
+        System.out.println("moveItem");
+        Item.Category cat = null;
+        int amount = 0;
+        Storage instance = null;
+        ArrayList expResult = null;
+        ArrayList result = instance.moveItem(cat, amount);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }
