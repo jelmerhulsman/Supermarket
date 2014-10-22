@@ -1,5 +1,19 @@
 # Created by https://www.gitignore.io
 
+#java specific
+*.class
+
+### NetBeans ###
+nbproject/private/**
+build/**
+nbproject/**
+nbbuild/**
+dist/**
+nbdist/**
+nbactions.xml
+nb-configuration.xml
+build.xml
+
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
@@ -46,3 +60,4 @@ atlassian-ide-plugin.xml
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 
+/dist/

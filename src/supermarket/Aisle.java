@@ -2,9 +2,9 @@ package supermarket;
 
 import java.util.List;
 import supermarket.Item.Category;
-import supermarket.StaffTypes.AisleLoader;
+import supermarket.StaffTypes.Stocker;
 
-public class Aisle {
+public class Aisle extends Object {
     
     private final int ITEM_LIMIT_AISLE = 50;
     
@@ -15,12 +15,13 @@ public class Aisle {
     
     private String name;
     private Status status;
-    private AisleLoader stocker;
+    private Stocker stocker;
     private List<Category> categories;
     private List<Item> items;
     private List<Customer> customers;
 
     public Aisle(String name, Category category1, Category category2) {
+        super(name);
         this.name = name;
         status = Status.EMPTY;
         stocker = null;
@@ -46,8 +47,8 @@ public class Aisle {
      *
      * @param currentLoader The loader that you are willing to assign
      */
-    public void setCurrentLoader(AisleLoader currentLoader) {
-        this.stocker = currentLoader;
+    public void setCurrentLoader(Stocker stocker) {
+        this.stocker = stocker;
     }
 
     /**
@@ -55,7 +56,7 @@ public class Aisle {
      *
      * @return the current loader
      */
-    public AisleLoader getCurrentLoader() {
+    public Stocker getCurrentLoader() {
         return stocker;
     }
 
