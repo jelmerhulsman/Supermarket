@@ -12,12 +12,12 @@ public class Item {
 
     public enum Category {
 
-        WINE, SNACK, SODA, BEER, LIQUOR, DAIRY, SPICYFOOD, NONSPICYFOOD, FROZENFOOD, CANNEDFOOD, FRESH, VEGTABLES
+        BEER, LIQUOR, WINE, SNACK, SODA, DAIRY, SPICY, NONFOOD, FROZEN, PRESERVATION, BREAD, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN
     }
 
     public enum Status {
 
-        LOADED, INSTORAGE, ONCUSTOMER, ONSTAFF, INTRUCK
+        LOADED, IN_STORAGE, ON_CUSTOMER, ON_STAFF, IN_TRUCK
     }
     private String name;
     private float price;
@@ -34,7 +34,7 @@ public class Item {
         this.price = price;
         this.primary = primary;
         this.category = category;
-        this.status = Status.INTRUCK;
+        this.status = Status.IN_TRUCK;
     }
 
     /**
