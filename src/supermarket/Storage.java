@@ -4,7 +4,7 @@ import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Unloader;
 
-public class Storage extends Object {
+public class Storage extends PartOfShop {
     private ArrayList<Item> items = null;
     private Unloader currentUnloader;
     

@@ -17,6 +17,7 @@ public class Supermarket {
     private ArrayList<Checkout> checkouts = new ArrayList<>();
     private ArrayList<Department> departments = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<PartOfShop> allLocations = new ArrayList<>();
     private Storage storage;
     private Truck truck;
     private Staff unloader;
@@ -40,14 +41,21 @@ public class Supermarket {
 
         for (int i = 0; i < MAX_DEPARTMENTS; i++) {
             departments.add(new Department("Drinks Department",new Vector2f(50,50)));
+            
         }
-
+        allLocations.addAll(departments);
+        allLocations.addAll(aisles);
+        allLocations.addAll(checkouts);
+        
         storage = new Storage("Storage",new Vector2f(0,50));
         truck = new Truck("Truck",new Vector2f(0,0));
+        
+        allLocations.add(storage);
+        allLocations.add(truck);
 
         //Add staff members
         unloader = new Unloader("Jannes");
-        unloader.calcDistanceToTarget("Storage");
+        unloader.calcDistanceToTarget("Storage", allLocations);
         //
 
         // Add items

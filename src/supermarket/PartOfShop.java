@@ -6,12 +6,12 @@ import com.jme3.math.Vector2f;
  *
  * @author Moreno
  */
-public class Object {
+public class PartOfShop {
     protected String locationName;
     protected Vector2f location;
-    protected Object object;
+    protected PartOfShop object;
     
-    public Object(String locationName, Vector2f location)
+    public PartOfShop(String locationName, Vector2f location)
     {
         this.locationName = locationName;
         this.location = location;
@@ -29,12 +29,12 @@ public class Object {
         return location;
     }
     
-    public Object seekByName(String name)
+    public boolean seekByName(String name)
     {
         if(this.getLocationName() == name)
-        return this;
+        return true;
         else
-          return this;
+          return false;
     }
     
     

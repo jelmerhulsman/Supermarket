@@ -1,11 +1,12 @@
 package supermarket.StaffTypes;
 import com.jme3.math.Vector2f;
-import supermarket.Object;
+import java.util.ArrayList;
+import supermarket.PartOfShop;
 public class Staff {
 
     protected String name;
     protected float speed;
-    protected Object objectType;
+    protected PartOfShop objectType;
 
     public Staff(String name){
         this.name = name;
@@ -25,7 +26,7 @@ public class Staff {
      * Gets the CLASS of the current location. For example "Aisle" or "Storage"
      * @return the class of the current location
      */
-    public Object getObjectType()
+    public PartOfShop getObjectType()
     {
         return objectType;
     }
@@ -39,10 +40,17 @@ public class Staff {
         
     }
     
-    public void calcDistanceToTarget(String target)
+    public void calcDistanceToTarget(String target, ArrayList<PartOfShop> objects)
     {
-        Object targetObject = new Object("SEEKOBJECT",new Vector2f(0,0));
-        targetObject = targetObject.seekByName(target);
-        Vector2f curLoc = this.getObjectType().getLocation();
+        Vector2f tarLoc,curLoc;
+        PartOfShop targetObject = null;
+        for(PartOfShop o : objects)
+        {
+            if(o.seekByName(target))
+                targetObject = o;
+                
+        }
+        curLoc = this.getObjectType().getLocation();
+        tarLoc = targetObject.getLocation();
     }
 }
