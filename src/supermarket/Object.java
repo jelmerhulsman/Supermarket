@@ -9,6 +9,7 @@ import com.jme3.math.Vector2f;
 public class Object {
     protected String locationName;
     protected Vector2f location;
+    protected Object object;
     
     public Object(String locationName, Vector2f location)
     {
@@ -26,6 +27,14 @@ public class Object {
 
     public Vector2f getLocation() {
         return location;
+    }
+    
+    public Object seekByName(String name)
+    {
+        if(this.getLocationName() == name)
+        return this;
+        else
+          return this;
     }
     
     

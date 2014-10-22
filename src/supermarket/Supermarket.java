@@ -1,7 +1,11 @@
 package supermarket;
 
 import com.jme3.math.Vector2f;
-import java.util.List;
+import java.util.ArrayList;
+import supermarket.StaffTypes.Staff;
+import supermarket.StaffTypes.Supervisor;
+import supermarket.StaffTypes.Unloader;
+
 
 /**
  *
@@ -9,12 +13,13 @@ import java.util.List;
  */
 public class Supermarket {
 
-    private List<Aisle> aisles;
-    private List<Checkout> checkouts;
-    private List<Department> departments;
-    private List<Item> items;
+    private ArrayList<Aisle> aisles = new ArrayList<>();
+    private ArrayList<Checkout> checkouts = new ArrayList<>();
+    private ArrayList<Department> departments = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
     private Storage storage;
     private Truck truck;
+    private Staff unloader;
 
     public Supermarket() {
         final int MAX_AISLES = 4;
@@ -41,16 +46,19 @@ public class Supermarket {
         truck = new Truck("Truck",new Vector2f(0,0));
 
         //Add staff members
-        //
+        unloader = new Unloader("Jannes");
+        unloader.calcDistanceToTarget("Storage");
         //
 
         // Add items
         //
         //
+        
     }
 
     public static void main(String[] args) {
-        // TODO code application logic here
+        Supermarket simulation = new Supermarket();
+        System.out.println("test");
     }
     
     private boolean chanceOf(int percent) {

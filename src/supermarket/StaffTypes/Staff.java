@@ -41,7 +41,8 @@ public class Staff {
     
     public void calcDistanceToTarget(String target)
     {
-        
-        Vector2f curLoc = objectType.getLocation();
+        Object targetObject = new Object("SEEKOBJECT",new Vector2f(0,0));
+        targetObject = targetObject.seekByName(target);
+        Vector2f curLoc = this.getObjectType().getLocation();
     }
 }

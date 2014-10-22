@@ -1,35 +1,34 @@
 package supermarket;
 
 import com.jme3.math.Vector2f;
-import java.util.List;
+import java.util.ArrayList;
 import supermarket.Item.Category;
 import supermarket.StaffTypes.Stocker;
 
 public class Aisle extends Object {
-    
+
     private final int ITEM_LIMIT_AISLE = 50;
-    
+
     public enum Status {
 
         EMPTY, STOCKED, FULL
     }
-    
     private String name;
     private Status status;
     private Stocker stocker;
-    private List<Category> categories;
-    private List<Item> items;
-    private List<Customer> customers;
+    private ArrayList<Category> categories;
+    private ArrayList<Item> items;
+    private ArrayList<Customer> customers;
 
-    public Aisle(String name,Vector2f location, Category category1, Category category2) {
-        super(name,location);
+    public Aisle(String name, Vector2f location, Category category1, Category category2) {
+        super(name, location);
         this.name = name;
         status = Status.EMPTY;
         stocker = null;
-        categories = null;
-        items = null;
-        customers = null;
-        
+        categories = new ArrayList<Category>();
+        items = new ArrayList<Item>();
+        customers = new ArrayList<Customer>();
+
         categories.add(category1);
         categories.add(category2);
     }
@@ -66,7 +65,7 @@ public class Aisle extends Object {
      *
      * @return a list of all the items
      */
-    public List<Item> getItems() {
+    public ArrayList<Item> getItems() {
         return items;
     }
 
@@ -75,7 +74,7 @@ public class Aisle extends Object {
      *
      * @return two categories that are assigned to this Aisle in a list
      */
-    public List<Category> getCategories() {
+    public ArrayList<Category> getCategories() {
         return categories;
     }
 

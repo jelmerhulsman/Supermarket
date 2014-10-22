@@ -1,10 +1,10 @@
 package supermarket;
 
 import com.jme3.math.Vector2f;
-import java.util.List;
+import java.util.ArrayList;
 import supermarket.StaffTypes.Cashier;
 
-public class Checkout extends Object{
+public class Checkout extends Object {
 
     public enum Status {
 
@@ -13,9 +13,9 @@ public class Checkout extends Object{
     private int number;
     private Status status;
     private Cashier cashier;
-    private List<Customer> customers;
+    private ArrayList<Customer> customers;
 
-    public Checkout(int number,Vector2f location) {
+    public Checkout(int number, Vector2f location) {
         super("Checkout " + number, location);
         this.number = number;
         status = Status.CLOSED;
@@ -107,28 +107,30 @@ public class Checkout extends Object{
             status = Status.OPEN;
         }
     }
-    
+
     /**
      * Returns checkout status
+     *
      * @return status
      */
     public Status getStatus() {
         return status;
     }
-    
+
     /**
      * Sets checkout status closing
      */
     public void closing() {
         this.status = Status.CLOSING;
     }
-    
+
     /**
-     * Returns price of all the customer's items 
+     * Returns price of all the customer's items
+     *
      * @param items
      * @return price
      */
-    public float printReceipt(List<Item> items) {
+    public float printReceipt(ArrayList<Item> items) {
         float price = 0;
 
         for (Item i : items) {
