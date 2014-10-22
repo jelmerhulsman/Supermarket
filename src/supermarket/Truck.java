@@ -1,26 +1,29 @@
 package supermarket;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Truck {
 
     public enum Status {
-        WAITING, UNLOADING, AWAY, EMPTY
+
+        AWAY, WAITING, UNLOADING, EMPTY
     };
-    private List<Item> items = new ArrayList<Item>();
+    private List<Item> items;
     private Status status;
 
     /**
      * creates a truck
+     *
      * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
-    public Truck(Status status) {
-        this.status = status;
+    public Truck() {
+        items = null;
+        status = Status.AWAY;
     }
 
     /**
      * returns the status of the truck
+     *
      * @return WAITING, UNLOADING, AWAY, EMPTY
      */
     public Status getStatus() {
@@ -29,6 +32,7 @@ public class Truck {
 
     /**
      * sets the status of the truck
+     *
      * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
     public void setStatus(Status status) {
@@ -36,19 +40,21 @@ public class Truck {
     }
 
     /**
-     * unloads the truck (returns all the items in the truck in an array
-     *                    and removes them from the truck)
+     * unloads the truck (returns all the items in the truck in an array and
+     * removes them from the truck)
+     *
      * @return items
      */
     public List<Item> unload() {
-        List<Item> bufferItems = items;
+        List<Item> i = items;
         items.clear();
-        return bufferItems;
+        return i;
     }
 
     /**
      * orders items (add's items to the truck)
-     * @param items 
+     *
+     * @param items
      */
     public void order(List<Item> items) {
      for(Item i : items)

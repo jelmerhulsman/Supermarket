@@ -1,10 +1,10 @@
 package supermarket;
 
-import StaffTypes.Unloader;
 import java.util.ArrayList;
+import supermarket.StaffTypes.Unloader;
 
 public class Storage {
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<Item> items = null;
     private Unloader currentUnloader;
     
     /**

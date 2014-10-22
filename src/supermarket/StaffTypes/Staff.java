@@ -11,4 +11,13 @@ public class Staff {
         this.name = name;
         this.functions = functions;
     }
+
+    /**
+     * Gets the name of this Staff member
+     *
+     * @return the name of this staff member
+     */
+    public String getName() {
+        return name;
+    }
 }
