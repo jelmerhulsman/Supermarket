@@ -12,7 +12,7 @@ public class Item {
 
     public enum Category {
 
-        BEER, LIQUOR, WINE, SNACK, SODA, DAIRY, SPICY, NONFOOD, FROZEN, PRESERVATION, BREAD, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN
+        BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICY, NONFOOD, FROZEN, PRESERVATION, BREAD, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT
     }
 
     public enum Status {
@@ -24,10 +24,6 @@ public class Item {
     private boolean primary;
     private Status status;
     private Category category;
-    
-    public Item() {
-        
-    }
 
     public Item(String name, Category category, float price, boolean primary) {
         this.name = name;

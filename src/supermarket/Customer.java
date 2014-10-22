@@ -1,6 +1,6 @@
 package supermarket;
 
-import java.util.List;
+import java.util.ArrayList;
 import supermarket.Item.Category;
 
 public class Customer {
@@ -13,9 +13,9 @@ public class Customer {
     private Stereotype stereotype;
     private float saldo;
     private float speed;
-    private List<Item> shoppingList, shoppingCart;
+    private ArrayList<Item> shoppingList, shoppingCart;
 
-    public Customer(String name, Stereotype stereotype, List<Item> uniqueItems) {
+    public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
         this.name = name;
         this.stereotype = stereotype;
 
@@ -64,39 +64,52 @@ public class Customer {
         return (int) (Math.random() * 101) <= percent;
     }
 
-    private List<Item> getShoppingList(Stereotype stereotype, List<Item> uniqueItems) {
-        List<Category> blackList = null;
-        List<Category> likingList = null;
+    private ArrayList<Item> getShoppingList(Stereotype stereotype, ArrayList<Item> uniqueItems) {
+        ArrayList<Category> blackList = new ArrayList<>();
+        ArrayList<Category> likingList = new ArrayList<>();
 
         switch (stereotype) {
             case ELDER:
-                blackList.add(Category.SPICYFOOD);
+                blackList.add(Category.SPICY);
+                blackList.add(Category.FOREIGN);
+                blackList.add(Category.CAFFEINE);
                 likingList.add(Category.VEGTABLES);
+                likingList.add(Category.DAIRY);
                 break;
             case MOTHER:
-                blackList.add(Category.SPICYFOOD);
-                likingList.add(Category.VEGTABLES);
+                blackList.add(Category.READY_TO_EAT);
                 break;
             case STUDENT:
-                blackList.add(Category.SPICYFOOD);
-                likingList.add(Category.VEGTABLES);
+                blackList.add(Category.NONFOOD);
+                blackList.add(Category.WINE);
+                blackList.add(Category.VEGTABLES);
+                blackList.add(Category.FRUIT);
+                likingList.add(Category.BEER);
+                likingList.add(Category.LIQUOR);
+                likingList.add(Category.CAFFEINE);
+                likingList.add(Category.FROZEN);
+                likingList.add(Category.READY_TO_EAT);
                 break;
             case WORKER:
-                blackList.add(Category.SPICYFOOD);
-                likingList.add(Category.VEGTABLES);
+                blackList.add(Category.NONFOOD);
+                likingList.add(Category.BEER);
+                likingList.add(Category.LIQUOR);
+                likingList.add(Category.FROZEN);
+                likingList.add(Category.CAFFEINE);
+                likingList.add(Category.SNACK);
+                likingList.add(Category.READY_TO_EAT);
                 break;
         }
 
-        List<Item> items = null;
+        ArrayList<Item> items = new ArrayList<>();
         float costs = 0;
-
         do {
             for (Item item : uniqueItems) {
                 boolean addToList = false;
-                if (blackList == null || !blackList.contains(item.getCategory())) {
+                if (blackList.isEmpty() || !blackList.contains(item.getCategory())) {
                     if (item.isPrimary()) {
                         addToList = chanceOf(90);
-                    } else if (likingList == null) {
+                    } else if (likingList.isEmpty()) {
                         addToList = chanceOf(60);
                     } else if (likingList.contains(item.getCategory())) {
                         addToList = chanceOf(80);
@@ -112,8 +125,8 @@ public class Customer {
                     }
                 }
             }
-        } while (items == null);
-
+        } while (items.isEmpty());
+        
         return items;
     }
 }
