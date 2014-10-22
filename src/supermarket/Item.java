@@ -56,12 +56,21 @@ public class Item {
     public Category getCategory() {
         return category;
     }
+
+    /**
+     * sets the primary thingy
+     * @param primary 
+     */
+    public void setPrimary(boolean primary) {
+        this.primary = primary;
+    }
     
     /**
      * Returns the primary status of this item
      *
      * @return The primary status of this item
      */
+    @Column(name = "primary")
     public boolean isPrimary() {
         return primary;
     }
