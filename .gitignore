@@ -4,12 +4,12 @@
 *.class
 
 ### NetBeans ###
-nbproject/private/**
-build/**
-nbproject/**
-nbbuild/**
-dist/**
-nbdist/**
+nbproject/private/**/*
+build/**/*
+nbproject/**/*
+nbbuild/**/*
+dist/**/*
+nbdist/**/*
 nbactions.xml
 nb-configuration.xml
 
