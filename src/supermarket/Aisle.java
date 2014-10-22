@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import supermarket.Item.Category;
 import supermarket.StaffTypes.Stocker;
 
-public class Aisle {
+public class Aisle extends Object {
 
     private String name;
     private ArrayList<Item> items = new ArrayList();
@@ -19,6 +19,7 @@ public class Aisle {
     private ArrayList<Category> categories = new ArrayList();
 
     public Aisle(String name, Category category1, Category category2) {
+        super(name);
         this.name = name;
         categories.add(category1);
         categories.add(category2);

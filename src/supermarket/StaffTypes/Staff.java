@@ -1,14 +1,15 @@
 package supermarket.StaffTypes;
-
-import java.util.List;
+import supermarket.Object;
 
 public class Staff {
-    private String name;
-    private List<Staff> functions;
-    private Staff curFunction;
-    
+
+    protected String name;
+    protected float speed;
+    protected Object location;
+
     public Staff(String name){
         this.name = name;
+        this.speed = 1.0f;
     }
 
     /**
@@ -21,37 +22,12 @@ public class Staff {
     }
 
     /**
-     * Assign functions for this staff member
+     * Get current location of staff member
      * 
-     * @param functions 
+     * @return location
      */
-    public void setFunctions(List<Staff> functions) {
-        this.functions = functions;
-    }  
-
-    /**
-     * Return the assigned functions of this staff member
-     * 
-     * @return functions
-     */
-    public List<Staff> getFunctions() {
-        return functions;
-    }
-    
-    /**
-     * Sets the current function for this staff member
-     * 
-     * @param curFunction 
-     */
-    public void setCurFunction(Staff curFunction) {
-        this.curFunction = curFunction;
-    }
-
-    /**
-     * Gets the current function of this staff member
-     * @return curFunction
-     */
-    public Staff getCurFunction() {
-        return curFunction;
+    public String getLocation()
+    {
+        return location.getLocation();
     }
 }
