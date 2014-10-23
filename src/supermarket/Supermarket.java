@@ -3,7 +3,6 @@ package supermarket;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Staff;
-import supermarket.StaffTypes.Supervisor;
 import supermarket.StaffTypes.Unloader;
 
 
@@ -54,10 +53,17 @@ public class Supermarket {
         allLocations.add(truck);
 
         //Add staff members
-        unloader = new Unloader("Jannes");
-        unloader.calcDistanceToTarget("Storage", allLocations);
+        
+        unloader = new Unloader("Jannes",storage);
+        System.out.println(unloader.getName() + " : "  + unloader.getLocation());
+        System.out.println("Now going to the truck...");
+        unloader.gotoLocation("Truck",allLocations);
+        System.out.println(unloader.getName() + " : "  + unloader.getLocation());
+        System.out.println("Now going to the storage...");
+        unloader.gotoLocation("Storage", allLocations);
+        System.out.println(unloader.getName() + " : "  + unloader.getLocation());
         //
-
+        
         // Add items
         //
         //

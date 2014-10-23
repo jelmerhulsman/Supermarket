@@ -9,7 +9,6 @@ import com.jme3.math.Vector2f;
 public class PartOfShop {
     protected String locationName;
     protected Vector2f location;
-    protected PartOfShop object;
     
     public PartOfShop(String locationName, Vector2f location)
     {
