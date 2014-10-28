@@ -42,7 +42,7 @@ public class StorageTest {
     /**
      * Test of getCurrentUnloader method, of class Storage.
      */
-    @Test
+    /*@Test
     public void testGetCurrentUnloader() {
         System.out.println("getCurrentUnloader");
         Storage instance = null;
@@ -51,12 +51,12 @@ public class StorageTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of setCurrentUnloader method, of class Storage.
      */
-    @Test
+    /*@Test
     public void testSetCurrentUnloader() {
         System.out.println("setCurrentUnloader");
         Unloader currentUnloader = null;
@@ -64,12 +64,12 @@ public class StorageTest {
         instance.setCurrentUnloader(currentUnloader);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of getItems method, of class Storage.
      */
-    /*@Test
+    @Test
     public void testGetItems() {
         System.out.println("getItems");
         Storage instance = new Storage("storage", Vector2f.ZERO);
@@ -84,7 +84,7 @@ public class StorageTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
-    }*/
+    }
 
     /**
      * Test of addItem method, of class Storage.
@@ -112,7 +112,7 @@ public class StorageTest {
     /**
      * Test of moveItem method, of class Storage.
      */
-    @Test
+    /*@Test
     public void testMoveItem() {
         System.out.println("moveItem");
         Item.Category cat = null;
@@ -123,5 +123,5 @@ public class StorageTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 }

@@ -2,7 +2,6 @@ package supermarket;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 @Entity
 @Table(name="items")
 public class Item{
