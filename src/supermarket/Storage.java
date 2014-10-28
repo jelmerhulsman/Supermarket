@@ -56,7 +56,7 @@ public class Storage extends PartOfShop {
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            List itemslist = session.createQuery("FROM items").list();
+            List itemslist = session.createQuery("FROM Items").list();
             for (Iterator iterator = itemslist.iterator(); iterator.hasNext();){
                 items.add((Item) iterator.next());
             }

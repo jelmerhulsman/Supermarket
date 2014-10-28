@@ -5,11 +5,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="items")
-public class Item {
+public class Item{
     
+    @Id @GeneratedValue
+    @Column(name = "id")
     private int id;
-    
 
+    
     public enum Category {
 
         BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICY, NONFOOD, FROZEN, PRESERVATION, BREAD, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT
@@ -19,16 +21,27 @@ public class Item {
 
         LOADED, IN_STORAGE, ON_CUSTOMER, ON_STAFF, IN_TRUCK
     }
+    @Column(name = "name")
     private String name;
+    @Column(name = "price")
     private float price;
-    private boolean primary;
+    @Transient
+    private boolean isPrimary;
+    @Column(name="status")
+    @Enumerated(EnumType.STRING)
     private Status status;
+    @Column(name="category")
+    @Enumerated(EnumType.STRING)
     private Category category;
+
+    public Item() {
+        this.status = Status.IN_STORAGE;
+    }
 
     public Item(String name, Category category, float price, boolean primary) {
         this.name = name;
         this.price = price;
-        this.primary = primary;
+        this.isPrimary = primary;
         this.category = category;
         this.status = Status.IN_TRUCK;
     }
@@ -38,7 +51,7 @@ public class Item {
      *
      * @return wether the item is loaded, at a customer, purchased and whatever
      */
-    @Enumerated(EnumType.ORDINAL)
+    
     public Status getStatus() {
         return status;
     }
@@ -48,8 +61,7 @@ public class Item {
      *
      * @return The current category
      */
-    @Enumerated(EnumType.ORDINAL)
-    public Category getCategory() {
+        public Category getCategory() {
         return category;
     }
 
@@ -58,7 +70,7 @@ public class Item {
      * @param primary 
      */
     public void setPrimary(boolean primary) {
-        this.primary = primary;
+        this.isPrimary = primary;
     }
     
     /**
@@ -66,17 +78,16 @@ public class Item {
      *
      * @return The primary status of this item
      */
-    @Column(name = "primary")
+    
     public boolean isPrimary() {
-        return primary;
+        return isPrimary;
     }
 
     /**
      * gets the ID of the item
      * @return 
      */
-    @Id @GeneratedValue
-    @Column(name = "id")
+    
     public int getId() {
         return id;
     }
@@ -94,7 +105,7 @@ public class Item {
      *
      * @return The current price for the customer
      */
-    @Column(name="price")
+    
     public float getPrice() {
         return price;
     }
@@ -112,7 +123,7 @@ public class Item {
      *
      * @return The name of this item
      */
-    @Column(name="name")
+    
     public String getName() {
         return name;
     }
