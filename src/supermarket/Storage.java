@@ -8,7 +8,7 @@ import org.hibernate.*;
 import org.hibernate.cfg.*;
 import supermarket.StaffTypes.Unloader;
 
-public class Storage extends PartOfShop {
+public class Storage extends ObjectInShop {
     private ArrayList<Item> items = null;
     private Unloader currentUnloader;
     private static SessionFactory factory; 

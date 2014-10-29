@@ -3,7 +3,7 @@ package supermarket;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 
-public class Department extends PartOfShop {
+public class Department extends ObjectInShop {
 
     private String name;
     private ArrayList<Aisle> aisles;

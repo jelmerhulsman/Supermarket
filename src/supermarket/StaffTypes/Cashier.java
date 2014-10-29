@@ -4,18 +4,17 @@ import supermarket.Checkout;
 import supermarket.Customer;
 
 public class Cashier extends Staff {
-    private Checkout checkout;
+     Checkout workplace;
     
      /**
-     * Constructor for the Unloader staff member
+     * Constructor for the Cashier staff member
      * @param name Specify the name of this person
-     * @param checkout Specify the workspace of this person
+     * @param workplace Specify the workspace of this person
      */
     public Cashier(String name, Checkout checkout)
     {
         super(name);
-        this.objectType = checkout;
-        this.checkout = checkout;
+        workplace = checkout;
     }
     
     /**
@@ -23,8 +22,8 @@ public class Cashier extends Staff {
      * open the checkout.
      */
     public void goToCheckout(){
-        if(this.location == this.objectType.getLocation()){
-            this.checkout.open(this);
+        if(this.location == this.workplace.getLocation()){
+            this.workplace.open(this);
         }
     }
     
@@ -32,15 +31,24 @@ public class Cashier extends Staff {
      * Help the customer.
      */
     public void processCustsomer(){
-        Customer c = this.checkout.getFirstCustomer();
+        Customer c = this.workplace.getFirstCustomer();
         if(c != null){
-            float toPay = this.checkout.printReceipt(c.getShoppingCart());
+            float toPay = this.workplace.printReceipt(c.getShoppingCart());
             c.setSaldo(c.getSaldo() - toPay);
-            this.checkout.removeFirstCustomer();
+            this.workplace.removeFirstCustomer();
         } else {
-            if(this.checkout.getStatus() == Checkout.Status.CLOSING){
-                this.checkout.close();
+            if(this.workplace.getStatus() == Checkout.Status.CLOSING){
+                this.workplace.close();
             }
         }
+    }
+    
+     /**
+     * Gets the CLASS of the current location. For example "Aisle" or "Storage"
+     * @return the class of the current location
+     */
+    public Checkout getWorkPlace()
+    {
+        return workplace;
     }
 }

@@ -1,22 +1,22 @@
 package supermarket;
 
+import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item.Category;
 
-public class Customer {
+public class Customer extends ObjectInShop{
 
     public enum Stereotype {
 
         ELDER, MOTHER, STUDENT, WORKER
     };
-    private String name;
+    
     private Stereotype stereotype;
     private float saldo;
-    private float speed;
     private ArrayList<Item> shoppingList, shoppingCart;
 
     public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
-        this.name = name;
+        super(name, new Vector2f(100, 100));
         this.stereotype = stereotype;
 
         switch (stereotype) {
@@ -37,7 +37,7 @@ public class Customer {
                 speed = giveSpeed(chanceOf(20));
                 break;
         }
-
+        
         shoppingList = generateShoppingList(stereotype, uniqueItems);
         shoppingCart = new ArrayList<>();
     }

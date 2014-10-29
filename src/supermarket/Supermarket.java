@@ -22,7 +22,7 @@ public class Supermarket {
     private Storage storage;
     private Truck truck;
     private Staff unloader;
-    private ArrayList<PartOfShop> allLocations;
+    private ArrayList<ObjectInShop> allLocations;
     private ArrayList<Customer> customers;
 
     public Supermarket() {
@@ -75,7 +75,7 @@ public class Supermarket {
         unloader.gotoLocation("Storage", allLocations);
         System.out.println(unloader.getName() + " : " + unloader.getLocation());
 
-        //Add items
+        //Add all unique items to a list
         availableItems = new ArrayList<>();
         for (int i = 0; i < MAX_UNIQUE_ITEMS; i++) {
             availableItems.add(new Item());
@@ -131,7 +131,7 @@ public class Supermarket {
     private void sleep(int milliseconds) {
         try {
             Thread.sleep(milliseconds); //1000 milliseconds is one second.
-        } catch (InterruptedException ex) {
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
