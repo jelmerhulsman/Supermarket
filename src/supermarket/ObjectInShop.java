@@ -74,7 +74,7 @@ public class ObjectInShop {
         if (targetObject == null) {
             System.out.println("ERROR: TARGET '" + target + "' AT STAFF MEMBER '" + this.name + "' NOT FOUND! CHECK YOUR CODE!");
         }
-        curLoc = this.getLocation();
+        curLoc = getLocation();
         tarLoc = targetObject.getLocation();
         distance = curLoc.distance(tarLoc);
 

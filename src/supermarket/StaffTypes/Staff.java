@@ -1,6 +1,5 @@
 package supermarket.StaffTypes;
 
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item;
@@ -10,12 +9,9 @@ public class Staff extends ObjectInShop {
 
     public Staff(String name) {
         super(name, new Vector2f(0, 50), 2f);
+        items = new ArrayList<>();
     }
-    protected String name;
-    protected float speed;
     protected ObjectInShop workplace;
-    protected ObjectInShop curLocObject;
-    protected Vector2f location;
     protected final int maxItems = 10;
     protected ArrayList<Item> items;
 
@@ -24,23 +20,12 @@ public class Staff extends ObjectInShop {
      *
      * @return the name of this staff member
      */
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public Vector2f getLocation() {
-        return location;
-    }
 
     /**
      * Gets the CLASS of the current location. For example "Aisle" or "Storage"
      *
      * @return the class of the current location
      */
-    public ObjectInShop getCurLocObject() {
-        return curLocObject;
-    }
 
     /**
      * gets the workplace object of this staff member
