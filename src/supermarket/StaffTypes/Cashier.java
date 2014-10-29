@@ -4,8 +4,8 @@ import supermarket.Checkout;
 import supermarket.Customer;
 
 public class Cashier extends Staff {
-
-    Checkout workplace;
+    
+    private Checkout checkout;
 
     /**
      * Constructor for the Cashier staff member
@@ -16,6 +16,7 @@ public class Cashier extends Staff {
     public Cashier(String name, Checkout checkout) {
         super(name);
         workplace = checkout;
+        this.checkout = checkout;
     }
 
     /**
@@ -24,7 +25,7 @@ public class Cashier extends Staff {
      */
     public void goToCheckout() {
         if (this.location == this.workplace.getLocation()) {
-            this.workplace.open(this);
+            this.checkout.open(this);
         }
     }
 
@@ -32,14 +33,14 @@ public class Cashier extends Staff {
      * Help the customer.
      */
     public void processCustsomer() {
-        Customer c = this.workplace.getFirstCustomer();
+        Customer c = this.checkout.getFirstCustomer();
         if (c != null) {
-            float toPay = this.workplace.printReceipt(c.getShoppingCart());
+            float toPay = this.checkout.printReceipt(c.getShoppingCart());
             c.setSaldo(c.getSaldo() - toPay);
-            this.workplace.removeFirstCustomer();
+            this.checkout.removeFirstCustomer();
         } else {
-            if (this.workplace.getStatus() == Checkout.Status.CLOSING) {
-                this.workplace.close();
+            if (this.checkout.getStatus() == Checkout.Status.CLOSING) {
+                this.checkout.close();
             }
         }
     }
@@ -49,7 +50,7 @@ public class Cashier extends Staff {
      *
      * @return the class of the current location
      */
-    public Checkout getWorkplace() {
-        return workplace;
+    public Checkout getCheckOut() {
+        return checkout;
     }
 }

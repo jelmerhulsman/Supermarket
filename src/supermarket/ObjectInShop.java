@@ -31,14 +31,7 @@ public class ObjectInShop {
         return curLocObject;
     }
 
-    
-    /**
-     * Gets the name of the current location
-     *
-     * @return the NAME current location. For example: "The wine Aisle" or "The
-     * dairy aisle"
-     */
-    public String getLocationName() {
+    public String getName() {
         return name;
     }
 
@@ -47,7 +40,7 @@ public class ObjectInShop {
     }
 
     public boolean seekByName(String name) {
-        if (this.getLocationName() == name) {
+        if (this.getName() == name) {
             return true;
         } else {
             return false;
@@ -94,4 +87,4 @@ public class ObjectInShop {
         System.out.println("STAFF MEMBER " + this.name + " has reached " + target);
         curLocObject = targetObject;
     }
-    }
+}
