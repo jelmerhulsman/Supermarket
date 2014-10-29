@@ -144,4 +144,17 @@ public class Customer {
 
         return shoppingList;
     }
+
+    public ArrayList<Item> getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+    
+    public float getSaldo() {
+        return saldo;
+    }
+       
 }

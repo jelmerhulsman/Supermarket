@@ -2,6 +2,7 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
+import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Unloader;
 
@@ -56,8 +57,7 @@ public class Supermarket {
         allLocations.add(storage);
         allLocations.add(truck);
 
-        //Add staff members
-        
+        //Add staff members        
         unloader = new Unloader("Jannes",storage);
         System.out.println(unloader.getName() + " : "  + unloader.getLocation());
         System.out.println("Now going to the truck...");
