@@ -3,7 +3,7 @@ package supermarket;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 
-public class Truck extends Object{
+public class Truck extends PartOfShop{
 
     public enum Status {
 

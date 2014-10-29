@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import supermarket.Item.Category;
 import supermarket.StaffTypes.Stocker;
 
-public class Aisle extends Object {
+public class Aisle extends PartOfShop {
 
     private final int ITEM_LIMIT_AISLE = 50;
 

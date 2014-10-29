@@ -4,8 +4,12 @@ import supermarket.Storage;
 
 public class Unloader extends Staff {
 
-     private Storage storage;
-    public Unloader(String name)
+    /**
+     * Constructor for the Unloader staff member
+     * @param name Specify the name of this person
+     * @param storage Specify the workspace of this person
+     */
+    public Unloader(String name, Storage storage)
     {
        
         super(name);

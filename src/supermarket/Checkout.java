@@ -4,7 +4,7 @@ import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Cashier;
 
-public class Checkout extends Object {
+public class Checkout extends PartOfShop {
 
     public enum Status {
 

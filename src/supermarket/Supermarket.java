@@ -16,6 +16,8 @@ public class Supermarket {
     private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;
     private ArrayList<Item> items;
+    private ArrayList<PartOfShop> allLocations;
+    
     private Storage storage;
     private Truck truck;
     private Staff unloader;
@@ -42,20 +44,36 @@ public class Supermarket {
         departments = new ArrayList<>();
         for (int i = 0; i < MAX_DEPARTMENTS; i++) {
             departments.add(new Department("Drinks Department",new Vector2f(50,50)));
+            
         }
-
+        allLocations.addAll(departments);
+        allLocations.addAll(aisles);
+        allLocations.addAll(checkouts);
+        
         storage = new Storage("Storage",new Vector2f(0,50));
         truck = new Truck("Truck",new Vector2f(0,0));
+        
+        allLocations.add(storage);
+        allLocations.add(truck);
 
         //Add staff members
-        unloader = new Unloader("Jannes");
-        unloader.calcDistanceToTarget("Storage");
+        
+        unloader = new Unloader("Jannes",storage);
+        System.out.println(unloader.getName() + " : "  + unloader.getLocation());
+        System.out.println("Now going to the truck...");
+        unloader.gotoLocation("Truck",allLocations);
+        System.out.println(unloader.getName() + " : "  + unloader.getLocation());
+        System.out.println("Now going to the storage...");
+        unloader.gotoLocation("Storage", allLocations);
+        System.out.println(unloader.getName() + " : "  + unloader.getLocation());
         //
-
+        
+        items = new ArrayList<>();
         // Add items
         //
         //
         
+        allLocations = new ArrayList<>();
     }
 
     public static void main(String[] args) {
