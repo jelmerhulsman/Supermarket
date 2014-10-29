@@ -148,7 +148,7 @@ public class Customer {
             shoppingList.remove(item);
         }
 
-        return shoppingList;
+        return shoppingCart;
     }
 
     public ArrayList<Item> getShoppingCart() {
