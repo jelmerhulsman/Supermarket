@@ -3,7 +3,6 @@ package supermarket;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Staff;
-import supermarket.StaffTypes.Supervisor;
 import supermarket.StaffTypes.Unloader;
 
 
@@ -13,10 +12,10 @@ import supermarket.StaffTypes.Unloader;
  */
 public class Supermarket {
 
-    private ArrayList<Aisle> aisles = new ArrayList<>();
-    private ArrayList<Checkout> checkouts = new ArrayList<>();
-    private ArrayList<Department> departments = new ArrayList<>();
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Aisle> aisles;
+    private ArrayList<Checkout> checkouts;
+    private ArrayList<Department> departments;
+    private ArrayList<Item> items;
     private Storage storage;
     private Truck truck;
     private Staff unloader;
@@ -29,15 +28,18 @@ public class Supermarket {
         final int MAX_ITEMS_PER_DEPARTMENT = 1;
         final int MAX_STAFF_MEMBERS = 6;
         final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
-
+        
+        aisles = new ArrayList<>();
         for (int i = 0; i < MAX_AISLES; i++) {
             aisles.add(new Aisle("Liquor",new Vector2f(40,40), Item.Category.BEER, Item.Category.LIQUOR));
         }
-
+        
+        checkouts = new ArrayList<>();
         for (int i = 0; i < MAX_CHECKOUTS; i++) {
             checkouts.add(new Checkout(i + 1, new Vector2f(90 - 10 * i, 80)));
         }
-
+        
+        departments = new ArrayList<>();
         for (int i = 0; i < MAX_DEPARTMENTS; i++) {
             departments.add(new Department("Drinks Department",new Vector2f(50,50)));
         }

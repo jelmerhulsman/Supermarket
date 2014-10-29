@@ -1,7 +1,7 @@
 package supermarket;
 
 import com.jme3.math.Vector2f;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Truck extends Object{
 
@@ -9,7 +9,7 @@ public class Truck extends Object{
 
         AWAY, WAITING, UNLOADING, EMPTY
     };
-    private List<Item> items;
+    private ArrayList<Item> items;
     private Status status;
 
     /**
@@ -19,7 +19,7 @@ public class Truck extends Object{
      */
     public Truck(String name, Vector2f location) {
         super(name,location);
-        items = null;
+        items = new ArrayList<>();
         status = Status.AWAY;
     }
 
@@ -47,9 +47,9 @@ public class Truck extends Object{
      *
      * @return items
      */
-    public List<Item> unload() {
-        List<Item> i = items;
-        items.clear();
+    public ArrayList<Item> unload() {
+        ArrayList<Item> i = items;
+        items = new ArrayList<>();
         return i;
     }
 
@@ -58,7 +58,7 @@ public class Truck extends Object{
      *
      * @param items
      */
-    public void order(List<Item> items) {
+    public void order(ArrayList<Item> items) {
      for(Item i : items)
         this.items.add(i);
     }

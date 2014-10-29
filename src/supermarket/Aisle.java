@@ -69,6 +69,28 @@ public class Aisle extends Object {
         return items;
     }
 
+    public int getItemCount(Item item) {
+        int counter = 0;
+        for (Item i : items) {
+            if (i == item) {
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+
+    public Item pickFromShelve(Item item) {
+        for (Item i : items) {
+            if (i == item) {
+                items.remove(i);
+                return(i);
+            }
+        }
+        
+        return null;
+    }
+
     /**
      * Gets the categories of this Aisle
      *

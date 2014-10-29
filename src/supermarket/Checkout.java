@@ -20,7 +20,7 @@ public class Checkout extends Object {
         this.number = number;
         status = Status.CLOSED;
         cashier = null;
-        customers = null;
+        customers = new ArrayList<>();
     }
 
     /**
@@ -31,7 +31,7 @@ public class Checkout extends Object {
     public void open(Cashier cashier) {
         status = Status.OPEN;
         this.cashier = cashier;
-        customers = null;
+        customers = new ArrayList<>();
     }
 
     /**
@@ -44,7 +44,7 @@ public class Checkout extends Object {
 
         status = Status.CLOSED;
         cashier = null;
-        customers = null;
+        customers = new ArrayList<>();
 
         return c;
     }

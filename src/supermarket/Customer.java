@@ -39,7 +39,7 @@ public class Customer {
         }
 
         shoppingList = getShoppingList(stereotype, uniqueItems);
-        shoppingCart = null;
+        shoppingCart = new ArrayList<>();
     }
 
     private float giveSaldo(int min, int max) {
@@ -126,7 +126,22 @@ public class Customer {
                 }
             }
         } while (items.isEmpty());
-        
+
         return items;
+    }
+
+    public ArrayList<Item> getItemsFromAisle(Aisle aisle) {
+        ArrayList<Category> aisleCategories = aisle.getCategories();
+
+        for (Item item : shoppingList) {
+            if (aisleCategories.contains(item.getCategory())) {
+                if (aisle.getItemCount(item) > 0) {
+                    shoppingCart.add(aisle.pickFromShelve(item));
+                    shoppingList.remove(item);
+                }
+            }
+        }
+
+        return shoppingList;
     }
 }
