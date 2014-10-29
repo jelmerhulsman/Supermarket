@@ -13,8 +13,7 @@ public class Customer {
     private Stereotype stereotype;
     private float saldo;
     private float speed;
-    private ArrayList<Item> shoppingList; 
-    private ArrayList<Item> shoppingCart;
+    private ArrayList<Item> shoppingList, shoppingCart;
 
     public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
         this.name = name;
@@ -39,7 +38,7 @@ public class Customer {
                 break;
         }
 
-        shoppingList = getShoppingList(stereotype, uniqueItems);
+        shoppingList = generateShoppingList(stereotype, uniqueItems);
         shoppingCart = new ArrayList<>();
     }
 
@@ -65,7 +64,7 @@ public class Customer {
         return (int) (Math.random() * 101) <= percent;
     }
 
-    private ArrayList<Item> getShoppingList(Stereotype stereotype, ArrayList<Item> uniqueItems) {
+    private ArrayList<Item> generateShoppingList(Stereotype stereotype, ArrayList<Item> uniqueItems) {
         ArrayList<Category> blackList = new ArrayList<>();
         ArrayList<Category> likingList = new ArrayList<>();
 
@@ -133,14 +132,20 @@ public class Customer {
 
     public ArrayList<Item> getItemsFromAisle(Aisle aisle) {
         ArrayList<Category> aisleCategories = aisle.getCategories();
+        ArrayList<Item> checkedItems = new ArrayList<>();
 
         for (Item item : shoppingList) {
             if (aisleCategories.contains(item.getCategory())) {
                 if (aisle.getItemCount(item) > 0) {
                     shoppingCart.add(aisle.pickFromShelve(item));
-                    shoppingList.remove(item);
                 }
+                
+                checkedItems.add(item);
             }
+        }
+
+        for (Item item : checkedItems) {
+            shoppingList.remove(item);
         }
 
         return shoppingList;
