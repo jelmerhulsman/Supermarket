@@ -122,7 +122,7 @@ public class Customer {
                 if (addToList) {
                     if (costs + item.getPrice() <= saldo) {
                         costs += item.getPrice();
-                        shoppingList.add(item);
+                        items.add(item);
                     }
                 }
             }

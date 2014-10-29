@@ -49,7 +49,7 @@ public class CustomerTest {
         item= new Item("Budweiser", Item.Category.BEER, 3, true);
         aisle.loadAisle(item);
         ArrayList<Item> uniqueItems = new ArrayList<Item>();
-        
+        uniqueItems.add(item);
         Customer instance = new Customer("derp", Customer.Stereotype.STUDENT, uniqueItems);
         ArrayList expResult = new ArrayList();
         expResult.add(new Item("Budweiser", Item.Category.BEER, 3, true));
