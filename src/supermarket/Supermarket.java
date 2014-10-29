@@ -2,8 +2,9 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
-import supermarket.StaffTypes.Cashier;
+import supermarket.Item.Category;
 import supermarket.Customer.Stereotype;
+import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Unloader;
 
@@ -18,11 +19,18 @@ public class Supermarket {
     private ArrayList<Aisle> aisles;
     private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;
-    private ArrayList<Item> availableItems;
+    private ArrayList<Item> items;
+    private ArrayList<PartOfShop> allLocations;
     private Storage storage;
     private Truck truck;
     private Staff unloader;
+<<<<<<< HEAD
     private ArrayList<ObjectInShop> allLocations;
+=======
+    private Staff staff;
+    private ArrayList<Cashier> cashier;
+    private ArrayList<Item> availableItems;
+>>>>>>> origin/master
     private ArrayList<Customer> customers;
 
     public Supermarket() {
@@ -62,18 +70,32 @@ public class Supermarket {
         allLocations.addAll(departments);
         allLocations.addAll(aisles);
         allLocations.addAll(checkouts);
+
+        storage = new Storage("Storage", new Vector2f(0, 50));
+        truck = new Truck("Truck", new Vector2f(0, 0));
+
+
         allLocations.add(storage);
         allLocations.add(truck);
 
         //Add staff members
-        unloader = new Unloader("Jannes", storage);
-        System.out.println(unloader.getName() + " : " + unloader.getLocation());
-        System.out.println("Now going to the truck...");
-        unloader.gotoLocation("Truck", allLocations);
-        System.out.println(unloader.getName() + " : " + unloader.getLocation());
-        System.out.println("Now going to the storage...");
-        unloader.gotoLocation("Storage", allLocations);
-        System.out.println(unloader.getName() + " : " + unloader.getLocation());
+        cashier = new ArrayList<>();
+        cashier.add(new Cashier("Johanna", checkouts.get(0)));
+
+        cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), allLocations);
+        cashier.get(0).openCheckout();
+        
+        Unloader unloader = new Unloader("Jannes", storage);
+        //
+
+        items = new ArrayList<>();
+        // Add items
+        for (int i = 0; i < 50; i++) {
+            items.add(new Item("BudWeiser", Category.BEER, 3, true));
+        }
+        //
+        truck.order(items);
+        unloader.getItemsFromTruck(allLocations);
 
         //Add all unique items to a list
         availableItems = new ArrayList<>();
@@ -118,7 +140,7 @@ public class Supermarket {
                         }
                     }
                 } while (stereotype.size() != 1);
-                
+
                 customers.add(new Customer("", stereotype.get(0), availableItems));
             }
         }

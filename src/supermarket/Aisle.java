@@ -84,10 +84,10 @@ public class Aisle extends ObjectInShop {
         for (Item i : items) {
             if (i == item) {
                 items.remove(i);
-                return(i);
+                return (i);
             }
         }
-        
+
         return null;
     }
 
