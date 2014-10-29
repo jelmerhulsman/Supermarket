@@ -36,7 +36,8 @@ public class Staff {
         return location;
     }
 
-    /*
+    
+    /**
      * Gets the CLASS of the current location. For example "Aisle" or "Storage"
      * @return the class of the current location
      */

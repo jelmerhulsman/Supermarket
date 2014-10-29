@@ -38,7 +38,7 @@ public class Customer {
                 break;
         }
 
-        shoppingList = getShoppingList(stereotype, uniqueItems);
+        shoppingList = generateShoppingList(stereotype, uniqueItems);
         shoppingCart = new ArrayList<>();
     }
 
@@ -64,7 +64,7 @@ public class Customer {
         return (int) (Math.random() * 101) <= percent;
     }
 
-    private ArrayList<Item> getShoppingList(Stereotype stereotype, ArrayList<Item> uniqueItems) {
+    private ArrayList<Item> generateShoppingList(Stereotype stereotype, ArrayList<Item> uniqueItems) {
         ArrayList<Category> blackList = new ArrayList<>();
         ArrayList<Category> likingList = new ArrayList<>();
 
@@ -121,7 +121,7 @@ public class Customer {
                 if (addToList) {
                     if (costs + item.getPrice() <= saldo) {
                         costs += item.getPrice();
-                        shoppingList.add(item);
+                        items.add(item);
                     }
                 }
             }
@@ -132,16 +132,35 @@ public class Customer {
 
     public ArrayList<Item> getItemsFromAisle(Aisle aisle) {
         ArrayList<Category> aisleCategories = aisle.getCategories();
+        ArrayList<Item> checkedItems = new ArrayList<>();
 
         for (Item item : shoppingList) {
             if (aisleCategories.contains(item.getCategory())) {
                 if (aisle.getItemCount(item) > 0) {
                     shoppingCart.add(aisle.pickFromShelve(item));
-                    shoppingList.remove(item);
                 }
+                
+                checkedItems.add(item);
             }
+        }
+
+        for (Item item : checkedItems) {
+            shoppingList.remove(item);
         }
 
         return shoppingList;
     }
+
+    public ArrayList<Item> getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+    
+    public float getSaldo() {
+        return saldo;
+    }
+       
 }
