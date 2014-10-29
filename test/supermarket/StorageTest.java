@@ -111,16 +111,27 @@ public class StorageTest {
     /**
      * Test of moveItem method, of class Storage.
      */
-    /*@Test
+    @Test
     public void testMoveItem() {
         System.out.println("moveItem");
-        Item.Category cat = null;
-        int amount = 0;
-        Storage instance = null;
-        ArrayList expResult = null;
-        ArrayList result = instance.moveItem(cat, amount);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
+        Item.Category cat = Item.Category.BEER;
+        int amount = 50;
+        Storage instance = new Storage("storage", Vector2f.ZERO);
+        ArrayList<Item> expResult = new ArrayList<Item>();
+        for(int i = 0; i<50;i++){
+            Item item = new Item("BudWeiser", Item.Category.BEER, 3, false);
+            item.setStatus(Item.Status.IN_STORAGE);
+            expResult.add(item);
+        }
+        ArrayList<Item> result = instance.moveItem(cat, amount);
+        for(int i = 0; i < result.size();i++){
+            result.get(i).setId(0);
+        }
+        if(expResult == result){
+            
+        }
+        else{
+            fail("failed the test");
+        }
+    }
 }
