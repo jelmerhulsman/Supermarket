@@ -14,7 +14,6 @@ import supermarket.StaffTypes.Unloader;
  */
 public class Supermarket {
 
-    private final float SIMULATION_SECOND = 60;
     private final int MAX_CUSTOMERS = 20;
     private ArrayList<Aisle> aisles;
     private ArrayList<Checkout> checkouts;
@@ -23,7 +22,7 @@ public class Supermarket {
     private Storage storage;
     private Truck truck;
     private Staff unloader;
-    private ArrayList<ObjectInShop> allLocations;
+    private ArrayList<ObjectInShop> staticLocations;
     private Staff staff;
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> availableItems;
@@ -62,25 +61,25 @@ public class Supermarket {
         truck = new Truck("Truck", new Vector2f(0, 0));
 
         //Assign locations in the shop
-        allLocations = new ArrayList<>();
-        allLocations.addAll(departments);
-        allLocations.addAll(aisles);
-        allLocations.addAll(checkouts);
+        staticLocations = new ArrayList<>();
+        staticLocations.addAll(departments);
+        staticLocations.addAll(aisles);
+        staticLocations.addAll(checkouts);
 
         storage = new Storage("Storage", new Vector2f(0, 50));
         truck = new Truck("Truck", new Vector2f(0, 0));
 
 
-        allLocations.add(storage);
-        allLocations.add(truck);
+        staticLocations.add(storage);
+        staticLocations.add(truck);
 
         //Add staff members
         cashier = new ArrayList<>();
         cashier.add(new Cashier("Johanna", checkouts.get(0)));
 
-        //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), allLocations);
+        //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), staticLocations);
         //cashier.get(0).openCheckout();
-        
+
         Unloader unloader = new Unloader("Jannes", storage);
         //
 
@@ -91,7 +90,7 @@ public class Supermarket {
         }
         //
         truck.order(items);
-        unloader.getItemsFromTruck(allLocations);
+        unloader.getItemsFromTruck(staticLocations);
 
         //Add all unique items to a list
         availableItems = new ArrayList<>();
@@ -108,14 +107,28 @@ public class Supermarket {
         System.out.println("Supermarket initialized...");
 
         while (true) { //Update loop
-            simulation.newCustomer();
+            simulation.CustomersLoop();
 
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
     }
 
-    private void newCustomer() {
+    private void CustomersLoop() {
+        addEnteringCustomers();
+
+        ArrayList<Customer> leavingCustomers = new ArrayList<>();
+        for (Customer customer : customers) {
+            boolean stopUpdating = customer.update(staticLocations, checkouts);
+            if (stopUpdating) {
+                leavingCustomers.add(customer);
+            }
+        }
+
+        customers.removeAll(leavingCustomers);
+    }
+
+    private ArrayList<Customer> addEnteringCustomers() {
         if (customers.size() < MAX_CUSTOMERS) {
             int percent = 0;
             if (customers.size() < MAX_CUSTOMERS * 0.3f) {
@@ -140,6 +153,8 @@ public class Supermarket {
                 customers.add(new Customer("", stereotype.get(0), availableItems));
             }
         }
+
+        return customers;
     }
 
     private boolean chanceOf(int percent) {

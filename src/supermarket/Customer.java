@@ -2,17 +2,23 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
+import supermarket.Checkout.Status;
 import supermarket.Item.Category;
 
-public class Customer extends ObjectInShop{
+public class Customer extends ObjectInShop {
+
+    private enum Action {
+
+        SHOPPING, CHOOSE_CHECKOUT, WAITING_AT_CHECKOUT
+    }
 
     public enum Stereotype {
 
         ELDER, MOTHER, STUDENT, WORKER
     };
-    
     private Stereotype stereotype;
     private float saldo;
+    private Action action;
     private ArrayList<Item> shoppingList, shoppingCart;
 
     public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
@@ -37,7 +43,8 @@ public class Customer extends ObjectInShop{
                 speed = giveSpeed(chanceOf(20));
                 break;
         }
-        
+
+        action = Action.SHOPPING;
         shoppingList = generateShoppingList(stereotype, uniqueItems);
         shoppingCart = new ArrayList<>();
     }
@@ -64,7 +71,7 @@ public class Customer extends ObjectInShop{
         return (int) (Math.random() * 101) <= percent;
     }
 
-    private ArrayList<Item> generateShoppingList(Stereotype stereotype, ArrayList<Item> uniqueItems) {
+    private ArrayList<Item> generateShoppingList(Stereotype stereotype, ArrayList<Item> availableItems) {
         ArrayList<Category> blackList = new ArrayList<>();
         ArrayList<Category> likingList = new ArrayList<>();
 
@@ -104,7 +111,7 @@ public class Customer extends ObjectInShop{
         ArrayList<Item> items = new ArrayList<>();
         float costs = 0;
         do {
-            for (Item item : uniqueItems) {
+            for (Item item : availableItems) {
                 boolean addToList = false;
                 if (blackList.isEmpty() || !blackList.contains(item.getCategory())) {
                     if (item.isPrimary()) {
@@ -130,7 +137,22 @@ public class Customer extends ObjectInShop{
         return items;
     }
 
-    public ArrayList<Item> getItemsFromAisle(Aisle aisle) {
+    public Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
+        for (ObjectInShop object : staticLocations) {
+            if (object instanceof Aisle) {
+                Aisle aisle = (Aisle) object;
+                for (Category category : aisle.getCategories()) {
+                    if (shoppingList.get(0).getCategory() == category) {
+                        return aisle;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public void getItemsFromAisle(Aisle aisle) {
         ArrayList<Category> aisleCategories = aisle.getCategories();
         ArrayList<Item> checkedItems = new ArrayList<>();
 
@@ -139,16 +161,27 @@ public class Customer extends ObjectInShop{
                 if (aisle.getItemCount(item) > 0) {
                     shoppingCart.add(aisle.pickFromShelve(item));
                 }
-                
+
                 checkedItems.add(item);
             }
         }
 
-        for (Item item : checkedItems) {
-            shoppingList.remove(item);
+        shoppingList.removeAll(checkedItems);
+    }
+
+    public Checkout chooseCheckout(ArrayList<Checkout> checkouts) {
+        Checkout c = null;
+        int size = 1000;
+
+        for (Checkout checkout : checkouts) { //Check all open checkouts
+            Status status = checkout.getStatus();
+            if ((status == Status.OPEN || status == Status.CROWDED) && checkout.getCustomersCount() < size) {
+                c = checkout;
+                size = checkout.getCustomersCount();
+            }
         }
 
-        return shoppingCart;
+        return c;
     }
 
     public ArrayList<Item> getShoppingCart() {
@@ -158,9 +191,39 @@ public class Customer extends ObjectInShop{
     public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
-    
+
     public float getSaldo() {
         return saldo;
     }
-       
+
+    public boolean update(ArrayList<ObjectInShop> staticLocations, ArrayList<Checkout> checkouts) {
+        boolean stopUpdating = false;
+        
+        switch (action) {
+            case SHOPPING:
+                Aisle aisle = getFirstItemLocation(staticLocations);
+                if (location == aisle.getLocation()) {
+                    getItemsFromAisle(aisle);
+                } else {
+                    gotoLocation(aisle.getName(), staticLocations);
+                }
+
+                if (shoppingList.isEmpty()) {
+                    action = Action.CHOOSE_CHECKOUT;
+                }
+                break;
+            case CHOOSE_CHECKOUT:
+                Checkout checkout = chooseCheckout(checkouts);
+                checkout.addCustomer(this);
+                action = action.WAITING_AT_CHECKOUT;
+                break;
+            case WAITING_AT_CHECKOUT:
+                if (shoppingCart.isEmpty()) {
+                    stopUpdating = true;
+                }
+                break;
+        }
+        
+        return stopUpdating;
+    }
 }
