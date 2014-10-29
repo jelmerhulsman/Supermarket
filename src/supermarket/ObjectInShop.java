@@ -13,6 +13,7 @@ public class ObjectInShop {
     protected String name;
     protected Vector2f location;
     protected float speed;
+    protected ObjectInShop curLocObject;
 
     public ObjectInShop(String name, Vector2f location) {
         this.name = name;
@@ -26,6 +27,11 @@ public class ObjectInShop {
         this.speed = speed;
     }
 
+    public ObjectInShop getCurLocObject() {
+        return curLocObject;
+    }
+
+    
     /**
      * Gets the name of the current location
      *
@@ -56,31 +62,36 @@ public class ObjectInShop {
      * arraylist
      */
     public void gotoLocation(String target, ArrayList<ObjectInShop> objects) {
-        if (speed > 0) {
-            Vector2f tarLoc, curLoc;
-            ObjectInShop targetObject = null;
-            float distance;
-            for (ObjectInShop o : objects) {
-                if (o.seekByName(target)) {
-                    targetObject = o;
-                }
-
+        Vector2f tarLoc, curLoc;
+        ObjectInShop targetObject = null;
+        float distance;
+        for (ObjectInShop o : objects) {
+            if (o.seekByName(target)) {
+                targetObject = o;
             }
-            curLoc = this.getLocation();
-            tarLoc = targetObject.getLocation();
-            distance = curLoc.distance(tarLoc);
 
-            float moveX = FastMath.floor(tarLoc.x) - FastMath.floor(curLoc.x);
-            float moveY = FastMath.floor(tarLoc.y) - FastMath.floor(curLoc.y);
-            float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
-
-            moveX = (moveX / moveTotal) * speed;
-            moveY = (moveY / moveTotal) * speed;
-
-            while (distance > 0) {
-                curLoc.addLocal(moveX, moveY);
-                distance = curLoc.distance(tarLoc);
-            }
         }
+        if (targetObject == null) {
+            System.out.println("ERROR: TARGET '" + target + "' AT STAFF MEMBER '" + this.name + "' NOT FOUND! CHECK YOUR CODE!");
+        }
+        curLoc = this.getLocation();
+        tarLoc = targetObject.getLocation();
+        distance = curLoc.distance(tarLoc);
+
+        float moveX = FastMath.floor(tarLoc.x) - FastMath.floor(curLoc.x);
+        float moveY = FastMath.floor(tarLoc.y) - FastMath.floor(curLoc.y);
+        float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
+
+        moveX = (moveX / moveTotal) * speed;
+        moveY = (moveY / moveTotal) * speed;
+
+        System.out.println("STAFF MEMBER " + this.name + " is going to " + target);
+
+        while (distance > 0.1) {
+            curLoc.addLocal(moveX, moveY);
+            distance = curLoc.distance(tarLoc);
+        }
+        System.out.println("STAFF MEMBER " + this.name + " has reached " + target);
+        curLocObject = targetObject;
     }
-}
+    }

@@ -20,17 +20,13 @@ public class Supermarket {
     private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;
     private ArrayList<Item> items;
-    private ArrayList<PartOfShop> allLocations;
     private Storage storage;
     private Truck truck;
     private Staff unloader;
-<<<<<<< HEAD
     private ArrayList<ObjectInShop> allLocations;
-=======
     private Staff staff;
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> availableItems;
->>>>>>> origin/master
     private ArrayList<Customer> customers;
 
     public Supermarket() {
@@ -82,8 +78,8 @@ public class Supermarket {
         cashier = new ArrayList<>();
         cashier.add(new Cashier("Johanna", checkouts.get(0)));
 
-        cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), allLocations);
-        cashier.get(0).openCheckout();
+        //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), allLocations);
+        //cashier.get(0).openCheckout();
         
         Unloader unloader = new Unloader("Jannes", storage);
         //
