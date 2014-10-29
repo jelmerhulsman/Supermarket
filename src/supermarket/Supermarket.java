@@ -22,6 +22,7 @@ public class Supermarket {
     private Storage storage;
     private Truck truck;
     private Staff unloader;
+    private ArrayList<Staff> cashier;
     private ArrayList<PartOfShop> allLocations;
     private ArrayList<Customer> customers;
 
@@ -74,7 +75,15 @@ public class Supermarket {
         System.out.println("Now going to the storage...");
         unloader.gotoLocation("Storage", allLocations);
         System.out.println(unloader.getName() + " : " + unloader.getLocation());
-
+        
+        cashier = new ArrayList<>();
+        cashier.add(new Cashier("Johanna", checkouts.get(0)));
+        System.out.println(cashier.get(0).getName() +": "+ cashier.get(0).getLocation());
+        System.out.println(cashier.get(0).getObjectType().getLocationName() +": "+ cashier.get(0).getObjectType().getLocation());
+        System.out.println("Now going to "+cashier.get(0).getObjectType().getLocationName());
+        cashier.get(0).gotoLocation(cashier.get(0).getObjectType().getLocationName(), allLocations);
+        System.out.println(cashier.get(0).getName() +": "+ cashier.get(0).getLocation());
+        
         //Add items
         availableItems = new ArrayList<>();
         for (int i = 0; i < MAX_UNIQUE_ITEMS; i++) {
