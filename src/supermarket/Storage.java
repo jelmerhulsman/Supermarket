@@ -99,7 +99,6 @@ public class Storage extends ObjectInShop {
      * @return the list of the items
      */
     public ArrayList<Item> moveItem(Item.Category cat, int amount){
-        ArrayList<Item> items = new ArrayList<Item>();
         ArrayList<Item> allItems = getItems();
         int counter = 0;
         for(int i = 0; i<allItems.size();i++){
