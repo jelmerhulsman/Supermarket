@@ -2,6 +2,7 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
+import java.util.Scanner;
 import supermarket.Item.Category;
 import supermarket.Customer.Stereotype;
 import supermarket.StaffTypes.Cashier;
@@ -67,7 +68,7 @@ public class Supermarket {
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
         staticLocations.add(truck);
-        
+
         //Add all unique items to a list
         availableItems = new ArrayList<>();
         for (int i = 0; i < MAX_UNIQUE_ITEMS; i++) {
@@ -76,11 +77,9 @@ public class Supermarket {
 
         //List of customers
         customers = new ArrayList<>();
-        
-        Moreno();
-        //Dylan();
-        //Sander();
-        //Jelmer();
+
+        //Choose debugger
+        chooseDebugger();
     }
 
     public static void main(String[] args) {
@@ -90,7 +89,7 @@ public class Supermarket {
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.staffLoop();
-            
+
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
@@ -110,7 +109,6 @@ public class Supermarket {
         customers.removeAll(leavingCustomers);
     }
 
-    
     private void staffLoop() {
         if (storage.getItems().size() < 10) {
             truck.order(items);
@@ -120,7 +118,7 @@ public class Supermarket {
         }
     }
 
-private ArrayList<Customer> addEnteringCustomers() {
+    private ArrayList<Customer> addEnteringCustomers() {
         if (customers.size() < MAX_CUSTOMERS) {
             int percent = 0;
             if (customers.size() < MAX_CUSTOMERS * 0.3f) {
@@ -160,7 +158,36 @@ private ArrayList<Customer> addEnteringCustomers() {
             Thread.currentThread().interrupt();
         }
     }
-    
+
+    private void chooseDebugger() {
+        boolean loop = true;
+        do {
+            System.out.print("DEBUGGER: ");
+            String debugger = new Scanner(System.in).next();
+            debugger = debugger.trim();
+            debugger = debugger.toUpperCase();
+            
+            switch (debugger) {
+                case "MORENO":
+                    Moreno();
+                    loop = false;
+                    break;
+                case "DYLAN":
+                    Dylan();
+                    loop = false;
+                    break;
+                case "SANDER":
+                    Sander();
+                    loop = false;
+                    break;
+                case "JELMER":
+                    Jelmer();
+                    loop = false;
+                    break;
+            }
+        } while (loop);
+    }
+
     private void Moreno() { //Moreno's testing area
         unloader = new Unloader("Jannes", storage);
 
@@ -168,11 +195,11 @@ private ArrayList<Customer> addEnteringCustomers() {
         for (int i = 0; i < 50; i++) {
             items.add(new Item("BudWeiser", Category.BEER, 3, true));
         }
-        
+
         truck.order(items);
         unloader.getItemsFromTruck(staticLocations);
     }
-    
+
     private void Dylan() { //Dylan's testing area
         cashier = new ArrayList<>();
         cashier.add(new Cashier("Johanna", checkouts.get(0)));
@@ -180,13 +207,10 @@ private ArrayList<Customer> addEnteringCustomers() {
         //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), staticLocations);
         //cashier.get(0).openCheckout();
     }
-    
+
     private void Sander() { //Sander's testing area
-        
     }
-    
+
     private void Jelmer() { //Jelmer's testing area
-        
     }
 }
-
