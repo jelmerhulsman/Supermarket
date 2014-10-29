@@ -2,8 +2,9 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
+import supermarket.StaffTypes.Unloader;
 
-public class Truck extends PartOfShop{
+public class Truck extends PartOfShop {
 
     public enum Status {
 
@@ -11,6 +12,7 @@ public class Truck extends PartOfShop{
     };
     private ArrayList<Item> items;
     private Status status;
+    private Unloader curUnloader;
 
     /**
      * creates a truck
@@ -18,7 +20,7 @@ public class Truck extends PartOfShop{
      * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
     public Truck(String name, Vector2f location) {
-        super(name,location);
+        super(name, location);
         items = new ArrayList<>();
         status = Status.AWAY;
     }
@@ -42,14 +44,36 @@ public class Truck extends PartOfShop{
     }
 
     /**
-     * unloads the truck (returns all the items in the truck in an array and
-     * removes them from the truck)
+     * gets the current unloader which is unloading stuff from the truck
      *
+     * @return The current unloader class
+     */
+    public Unloader getCurUnloader() {
+        return curUnloader;
+    }
+
+    /**
+     * Sets the current unloader which is unloading stuff from the truck
+     *
+     * @param curUnloader the current unloader class
+     */
+    public void setCurUnloader(Unloader curUnloader) {
+        this.curUnloader = curUnloader;
+    }
+
+    /**
+     * unloads x amount of items from the truck (returns x items in the truck in
+     * an array and removes them from the truck)
+     *
+     * @param numberOfItems The total number of items you want to unload
      * @return items
      */
-    public ArrayList<Item> unload() {
-        ArrayList<Item> i = items;
-        items = new ArrayList<>();
+    public ArrayList<Item> unload(int numberOfItems) {
+        ArrayList<Item> i = new ArrayList<>();
+        for (int a = 0; a < numberOfItems; a++) {
+            i.add(items.get(a));
+            items.remove(a);
+        }
         return i;
     }
 
@@ -59,7 +83,8 @@ public class Truck extends PartOfShop{
      * @param items
      */
     public void order(ArrayList<Item> items) {
-     for(Item i : items)
-        this.items.add(i);
+        for (Item i : items) {
+            this.items.add(i);
+        }
     }
 }
