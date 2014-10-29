@@ -28,11 +28,17 @@ public class Unloader extends Staff {
      */
     public void getItemsFromTruck(ArrayList<PartOfShop> locations) {
         gotoLocation("Truck", locations);
-        
         Truck truck = (Truck) getCurLocObject();
-        
-        items.addAll(truck.unload(maxItems));
-        
+        if(truck.getCurUnloader() == null)
+        {
+        truck.setCurUnloader(this);
+            items.addAll(truck.unload(maxItems));
+        }
+        else if(truck.getCurUnloader() == this)
+        {
+            items.addAll(truck.unload(maxItems));
+        }
+        truck.setCurUnloader(null);
         gotoLocation("Storage", locations);
         
         Storage storage = (Storage) getCurLocObject();
@@ -40,5 +46,6 @@ public class Unloader extends Staff {
             i.setStatus(Status.IN_STORAGE);
             storage.addItem(i);
         }
+        
     }
 }

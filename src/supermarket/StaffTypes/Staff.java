@@ -19,7 +19,7 @@ public class Staff {
     public Staff(String name) {
         this.name = name;
         this.speed = 2.0f;
-        this.location = new Vector2f(100, 100);
+        this.location = new Vector2f(0, 50);
         items = new ArrayList<>();
     }
 
@@ -87,7 +87,7 @@ public class Staff {
 
         System.out.println("STAFF MEMBER " + this.name + " is going to " + target);
 
-        while (distance > 0) {
+        while (distance > 0.1) {
             curLoc.addLocal(moveX, moveY);
             distance = curLoc.distance(tarLoc);
             curLocObject = targetObject;
