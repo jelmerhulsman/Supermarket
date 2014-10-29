@@ -25,9 +25,9 @@ public class Aisle extends PartOfShop {
         this.name = name;
         status = Status.EMPTY;
         stocker = null;
-        categories = new ArrayList<Category>();
-        items = new ArrayList<Item>();
-        customers = new ArrayList<Customer>();
+        categories = new ArrayList<>();
+        items = new ArrayList<>();
+        customers = new ArrayList<>();
 
         categories.add(category1);
         categories.add(category2);

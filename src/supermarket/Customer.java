@@ -13,7 +13,8 @@ public class Customer {
     private Stereotype stereotype;
     private float saldo;
     private float speed;
-    private ArrayList<Item> shoppingList, shoppingCart;
+    private ArrayList<Item> shoppingList; 
+    private ArrayList<Item> shoppingCart;
 
     public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
         this.name = name;
