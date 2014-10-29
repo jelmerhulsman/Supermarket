@@ -58,6 +58,7 @@ public class Supermarket {
         truck = new Truck("Truck", new Vector2f(0, 0));
 
         //Assign locations in the shop
+        allLocations = new ArrayList<>();
         allLocations.addAll(departments);
         allLocations.addAll(aisles);
         allLocations.addAll(checkouts);
@@ -80,7 +81,7 @@ public class Supermarket {
             availableItems.add(new Item());
         }
 
-        allLocations = new ArrayList<>();
+        //List of customers
         customers = new ArrayList<>();
     }
 
