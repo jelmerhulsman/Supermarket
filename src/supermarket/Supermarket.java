@@ -80,8 +80,8 @@ public class Supermarket {
 
         //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), allLocations);
         //cashier.get(0).openCheckout();
-        
-       
+
+
 
         items = new ArrayList<>();
         // Add items
@@ -108,18 +108,19 @@ public class Supermarket {
 
         while (true) { //Update loop
             simulation.newCustomer();
-            simulation.simulateStaff();
+            //simulation.simulateStaff();
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
     }
-    
-    private void simulateStaff()
-    {
-        if(storage.getItems().size() < 10)
-        truck.order(items);
-        if(!truck.getItems().isEmpty())
-        unloader.getItemsFromTruck(allLocations);
+
+    private void simulateStaff() {
+        if (storage.getItems().size() < 10) {
+            truck.order(items);
+        }
+        if (!truck.getItems().isEmpty()) {
+            unloader.getItemsFromTruck(allLocations);
+        }
     }
 
     private void newCustomer() {
