@@ -41,13 +41,15 @@ public class Unloader extends Staff {
             getItemsFromTruck(locations);
         }
         truck.setCurUnloader(null);
+        if(items.isEmpty())
+            doNothing();
         gotoLocation("Storage", locations);
         Storage storage = (Storage) getCurLocObject();
         for (Item i : items) {
             System.out.println("STAFF MEMBER " + name + " is adding item " + i.getName() + " to the storage.");
             i.setStatus(Status.IN_STORAGE);
             storage.addItem(i);
-            sleep(1000);
         }
+
     }
 }

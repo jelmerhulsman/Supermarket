@@ -43,6 +43,10 @@ public class Truck extends ObjectInShop {
         this.status = status;
     }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
     /**
      * gets the current unloader which is unloading stuff from the truck
      *     
@@ -70,10 +74,18 @@ public class Truck extends ObjectInShop {
      */
     public ArrayList<Item> unload(int numberOfItems) {
         ArrayList<Item> i = new ArrayList<>();
-        for (int a = 0; a < numberOfItems; a++) {
-            i.add(items.get(a));
-            items.remove(a);
+        if (items.size() < numberOfItems) {
+            for (int a = 0; a < items.size() - 1; a++) {
+                i.add(items.get(a));
+                items.remove(a);
+            }
+        } else {
+            for (int a = 0; a < numberOfItems; a++) {
+                i.add(items.get(a));
+                items.remove(a);
+            }
         }
+
         return i;
     }
 

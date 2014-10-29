@@ -22,7 +22,7 @@ public class Supermarket {
     private ArrayList<Item> items;
     private Storage storage;
     private Truck truck;
-    private Staff unloader;
+    private Unloader unloader;
     private ArrayList<ObjectInShop> allLocations;
     private Staff staff;
     private ArrayList<Cashier> cashier;
@@ -81,8 +81,7 @@ public class Supermarket {
         //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), allLocations);
         //cashier.get(0).openCheckout();
         
-        Unloader unloader = new Unloader("Jannes", storage);
-        //
+       
 
         items = new ArrayList<>();
         // Add items
@@ -91,7 +90,7 @@ public class Supermarket {
         }
         //
         truck.order(items);
-        unloader.getItemsFromTruck(allLocations);
+        unloader = new Unloader("Jannes", storage);
 
         //Add all unique items to a list
         availableItems = new ArrayList<>();
@@ -109,10 +108,18 @@ public class Supermarket {
 
         while (true) { //Update loop
             simulation.newCustomer();
-
+            simulation.simulateStaff();
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
+    }
+    
+    private void simulateStaff()
+    {
+        if(storage.getItems().size() < 10)
+        truck.order(items);
+        if(!truck.getItems().isEmpty())
+        unloader.getItemsFromTruck(allLocations);
     }
 
     private void newCustomer() {

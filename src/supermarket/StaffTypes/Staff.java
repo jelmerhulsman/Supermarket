@@ -18,12 +18,9 @@ public class Staff extends ObjectInShop {
     public ObjectInShop getWorkplace() {
         return workplace;
     }
-
-    public void sleep(int milliseconds) {
-        try {
-            Thread.sleep(milliseconds); //1000 milliseconds is one second.
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+    
+    public void doNothing()
+    {
+        
     }
 }
