@@ -47,16 +47,15 @@ public class CustomerTest {
         Aisle aisle = new Aisle("Liquor",new Vector2f(40,40), Item.Category.BEER, Item.Category.LIQUOR);
         Item item;
         item= new Item("Budweiser", Item.Category.BEER, 3, true);
+        item.setStatus(Item.Status.LOADED);
         aisle.loadAisle(item);
         ArrayList<Item> uniqueItems = new ArrayList<Item>();
         uniqueItems.add(item);
         Customer instance = new Customer("derp", Customer.Stereotype.STUDENT, uniqueItems);
         ArrayList expResult = new ArrayList();
-        expResult.add(new Item("Budweiser", Item.Category.BEER, 3, true));
+        expResult.add(item);
         ArrayList result = instance.getItemsFromAisle(aisle);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
     
