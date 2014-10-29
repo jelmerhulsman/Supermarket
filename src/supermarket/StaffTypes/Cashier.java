@@ -23,8 +23,8 @@ public class Cashier extends Staff {
      * Let the cashier walk to her/his checkout, when she/he arrives open the
      * checkout.
      */
-    public void goToCheckout() {
-        if (this.location == this.workplace.getLocation()) {
+    public void openCheckout() {
+        if (this.location.x == this.workplace.getLocation().x && this.location.y == this.workplace.getLocation().y) {            
             this.checkout.open(this);
         }
     }
@@ -44,4 +44,9 @@ public class Cashier extends Staff {
             }
         }
     }
+
+    public Checkout getCheckout() {
+        return checkout;
+    }
+    
 }
