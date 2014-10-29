@@ -31,21 +31,34 @@ public class Unloader extends Staff {
         Truck truck = (Truck) getCurLocObject();
         if(truck.getCurUnloader() == null)
         {
-        truck.setCurUnloader(this);
+            System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
+            truck.setCurUnloader(this);
+            sleep(5000);
+            
             items.addAll(truck.unload(maxItems));
         }
         else if(truck.getCurUnloader() == this)
         {
+            System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
+            sleep(5000);
             items.addAll(truck.unload(maxItems));
+        }
+        else
+        {
+            getItemsFromTruck(locations);
         }
         truck.setCurUnloader(null);
         gotoLocation("Storage", locations);
         
         Storage storage = (Storage) getCurLocObject();
         for (Item i : items) {
+            System.out.println("STAFF MEMBER " + name + " is adding item " + i.getName() + " to the storage.");
             i.setStatus(Status.IN_STORAGE);
             storage.addItem(i);
+            sleep(1000);
         }
         
     }
+    
+
 }

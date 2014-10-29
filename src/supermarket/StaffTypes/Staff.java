@@ -18,7 +18,7 @@ public class Staff {
 
     public Staff(String name) {
         this.name = name;
-        this.speed = 2.0f;
+        this.speed = 2f;
         this.location = new Vector2f(0, 50);
         items = new ArrayList<>();
     }
@@ -36,9 +36,9 @@ public class Staff {
         return location;
     }
 
-    
     /**
      * Gets the CLASS of the current location. For example "Aisle" or "Storage"
+     *
      * @return the class of the current location
      */
     public PartOfShop getCurLocObject() {
@@ -90,7 +90,17 @@ public class Staff {
         while (distance > 0.1) {
             curLoc.addLocal(moveX, moveY);
             distance = curLoc.distance(tarLoc);
-            curLocObject = targetObject;
+            sleep(100);
+        }
+        System.out.println("STAFF MEMBER " + this.name + " has reached " + target);
+        curLocObject = targetObject;
+    }
+
+    public void sleep(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds); //1000 milliseconds is one second.
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
         }
     }
 }
