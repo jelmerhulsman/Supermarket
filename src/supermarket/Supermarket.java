@@ -25,7 +25,7 @@ public class Supermarket {
     private Truck truck;
     private Staff unloader;
     private Staff staff;
-    private ArrayList<Staff> cashier;
+    private ArrayList<Cashier> cashier;
     private ArrayList<Item> availableItems;
     private ArrayList<Customer> customers;
 
@@ -77,11 +77,8 @@ public class Supermarket {
         //Add staff members
         cashier = new ArrayList<>();
         cashier.add(new Cashier("Johanna", checkouts.get(0)));
-        System.out.println(cashier.get(0).getName() +": "+ cashier.get(0).getLocation());
-        System.out.println(cashier.get(0).getWorkplace().getLocationName() +": "+ cashier.get(0).getWorkplace().getLocation());
-        System.out.println("Now going to "+cashier.get(0).getWorkplace().getLocationName());
         cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), allLocations);
-        System.out.println(cashier.get(0).getName() +": "+ cashier.get(0).getLocation());
+        cashier.get(0).openCheckout();
         
         Unloader unloader = new Unloader("Jannes", storage);
         //
