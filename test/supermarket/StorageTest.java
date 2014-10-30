@@ -115,10 +115,10 @@ public class StorageTest {
     public void testMoveItem() {
         System.out.println("moveItem");
         Item.Category cat = Item.Category.BEER;
-        int amount = 50;
+        int amount = 1;
         Storage instance = new Storage("storage", Vector2f.ZERO);
         ArrayList<Item> expResult = new ArrayList<Item>();
-        for(int i = 0; i<50;i++){
+        for(int i = 0; i<amount;i++){
             Item item = new Item("BudWeiser", Item.Category.BEER, 3, false);
             item.setStatus(Item.Status.IN_STORAGE);
             expResult.add(item);
@@ -127,7 +127,7 @@ public class StorageTest {
         for(int i = 0; i < result.size();i++){
             result.get(i).setId(0);
         }
-        if(expResult == result){
+        if(expResult.get(0).getName().equals(result.get(0).getName())){
             
         }
         else{
