@@ -87,7 +87,7 @@ public class StorageTest {
     @Test
     public void testAddItem() {
         System.out.println("addItem");
-        Item item = new Item("BudWeiser", Item.Category.BEER, 3);
+        Item item = new Item("Heimstel-Jan", 0.80f, Item.Category.BEER);
         Storage instance = new Storage("storage", Vector2f.ZERO);
         try{
             instance.addItem(item);

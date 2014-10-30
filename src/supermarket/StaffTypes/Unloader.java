@@ -30,19 +30,20 @@ public class Unloader extends Staff {
     public void getItemsFromTruck(ArrayList<ObjectInShop> locations) {
         gotoLocation("Truck", locations);
         Truck truck = (Truck) getCurLocObject();
-        if (truck.getCurUnloader() == null) {
+        if (truck.getCurUnloader() == null && !truck.getItems().isEmpty()) {
             System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
             truck.setCurUnloader(this);
             items.addAll(truck.unload(maxItems));
-        } else if (truck.getCurUnloader() == this) {
+        } else if (truck.getCurUnloader() == this && !truck.getItems().isEmpty()) {
             System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
             items.addAll(truck.unload(maxItems));
+        } else if (truck.getItems().isEmpty()) {
+            doNothing();
         } else {
             getItemsFromTruck(locations);
         }
         truck.setCurUnloader(null);
-        if(items.isEmpty())
-            doNothing();
+
         gotoLocation("Storage", locations);
         Storage storage = (Storage) getCurLocObject();
         for (Item i : items) {

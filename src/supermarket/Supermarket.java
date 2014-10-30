@@ -72,15 +72,15 @@ public class Supermarket {
 
         //Add all unique items to a list
         shopItems = new ArrayList<>();
-        shopItems.add(new Item("Heimstel-Jan", Category.BEER, 0.80f, Status.VIRTUAL));
-        shopItems.add(new Item("Ricewaffle", Category.BREAKFAST, 1.20f, Status.VIRTUAL));
-        shopItems.add(new Item("Slurpys", Category.SODA, 2.00f, Status.VIRTUAL));
-        shopItems.add(new Item("Ready 2 Eat Lasagne", Category.READY_TO_EAT, 2.50f, Status.VIRTUAL));
-        shopItems.add(new Item("Nazi-kraut", Category.VEGTABLES, 2.80f, Status.VIRTUAL));
-        shopItems.add(new Item("Tomahawkto", Category.FRUIT, 0.50f, Status.VIRTUAL));
-        shopItems.add(new Item("Moo-Moo Milk", Category.DAIRY, 1.25f, Status.VIRTUAL));
-        shopItems.add(new Item("Lice", Category.FOREIGN, 1.00f, Status.VIRTUAL));
-        shopItems.add(new Item("Ass-Whipe Deluxe", Category.NONFOOD, 1.40f, Status.VIRTUAL));
+        shopItems.add(new Item("Heimstel-Jan", 0.80f, Category.BEER));
+        shopItems.add(new Item("Ricewaffle", 1.20f, Category.BREAKFAST));
+        shopItems.add(new Item("Slurpys", 2.00f, Category.SODA));
+        shopItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Category.READY_TO_EAT));
+        shopItems.add(new Item("Nazi-kraut", 2.80f, Category.VEGTABLES));
+        shopItems.add(new Item("Tomahawkto", 0.50f, Category.FRUIT));
+        shopItems.add(new Item("Moo-Moo Milk", 1.25f, Category.DAIRY));
+        shopItems.add(new Item("Lice", 1.00f, Category.FOREIGN));
+        shopItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Category.NONFOOD));
 
         //List of customers
         customers = new ArrayList<>();
@@ -202,16 +202,15 @@ public class Supermarket {
 
         items = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
-            for (Item shopItem : shopItems)
-            {
-                if (shopItem.getName() == "Heimstel-Jan")
-                {
-                    Item orderItem = new Item(shopItem.getName(), shopItem.getCategory(), shopItem.getPrice());
+            for (Item shopItem : shopItems) {
+                if (shopItem.getName() == "Heimstel-Jan") {
+                    Item orderItem = new Item(shopItem);
                     items.add(orderItem);
                 }
             }
         }
-
+        
+        
         truck.order(items);
         unloader.getItemsFromTruck(staticLocations);
     }
