@@ -47,7 +47,7 @@ public class Unloader extends Staff {
         gotoLocation("Storage", locations);
         Storage storage = (Storage) getCurLocObject();
         for (Item i : items) {
-            System.out.println("STAFF MEMBER " + name + " is adding item " + i.getName() + " to the storage.");
+            System.out.println(this.getClass().toString() + " / " + name + " is adding item " + i.getName() + " to the storage.");
             i.setStatus(Status.IN_STORAGE);
             storage.addItem(i);
         }
