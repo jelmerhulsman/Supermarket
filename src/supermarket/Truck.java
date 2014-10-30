@@ -95,8 +95,7 @@ public class Truck extends ObjectInShop {
 * @param items
      */
     public void order(ArrayList<Item> items) {
-        for (Item i : items) {
-            this.items.add(i);
-        }
+        this.items.addAll(items);
+        items.clear();
     }
 }

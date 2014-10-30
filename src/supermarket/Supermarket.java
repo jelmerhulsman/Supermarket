@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import supermarket.Item.Category;
 import supermarket.Customer.Stereotype;
-import supermarket.Item.Status;
 import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Unloader;
@@ -17,10 +16,12 @@ import supermarket.StaffTypes.Unloader;
 public class Supermarket {
 
     private final int MAX_CUSTOMERS = 20;
+    private final int MIN_STASH = 5;
+    private final int MAX_STASH = 25;
     private ArrayList<Aisle> aisles;
     private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;
-    private ArrayList<Item> items;
+    private ArrayList<Item> order;
     private Storage storage;
     private Truck truck;
     private ArrayList<ObjectInShop> staticLocations;
@@ -30,6 +31,7 @@ public class Supermarket {
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
 
+    @SuppressWarnings("empty-statement")
     public Supermarket() {
         final int MAX_AISLES = 4;
         final int MAX_ITEMS_PER_AISLE = 2;
@@ -94,10 +96,31 @@ public class Supermarket {
         System.out.println("Supermarket initialized...");
 
         while (true) { //Update loop
+            simulation.orderLoop();
             simulation.customersLoop();
 
             //Sleep at the end of the loop
             simulation.sleep(1000);
+        }
+    }
+
+    private void orderLoop() {
+        ArrayList<Item> orderItems = new ArrayList<>();
+        for (Item shopItem : shopItems) {
+            int currentStash = storage.getItemCount(shopItem.getName());
+            if (currentStash < MIN_STASH) {
+                do {
+                    orderItems.add(new Item(shopItem));
+                    currentStash++;
+                } while (currentStash < MAX_STASH);
+            }
+        }
+
+        if (!orderItems.isEmpty()) {
+            truck.order(orderItems);
+
+            unloader = new Unloader("Jannes", storage);
+            unloader.getItemsFromTruck(staticLocations);
         }
     }
 
@@ -117,7 +140,7 @@ public class Supermarket {
 
     private void staffLoop() {
         if (storage.getItems().size() < 10) {
-            truck.order(items);
+            truck.order(order);
         }
         if (!truck.getItems().isEmpty()) {
             unloader.getItemsFromTruck(staticLocations);
@@ -198,20 +221,6 @@ public class Supermarket {
     }
 
     private void Moreno() { //Moreno's testing area
-        unloader = new Unloader("Jannes", storage);
-
-        items = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            for (Item shopItem : shopItems) {
-                if (shopItem.getName() == "Heimstel-Jan") {
-                    Item orderItem = new Item(shopItem);
-                    items.add(orderItem);
-                }
-            }
-        }
-
-        truck.order(items);
-        unloader.getItemsFromTruck(staticLocations);
     }
 
     private void Dylan() { //Dylan's testing area
