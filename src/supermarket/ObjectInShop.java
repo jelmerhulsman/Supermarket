@@ -56,38 +56,5 @@ public class ObjectInShop {
      * @param objects This method needs all the possible location objects in an
      * arraylist
      */
-    public void gotoLocation(String targetName, ArrayList<ObjectInShop> objects) {
-        Vector2f targetLocation = null;
-        ObjectInShop targetObject = null;
-        float distanceToTarget;
-        for (ObjectInShop o : objects) {
-            if (o.seekByName(targetName)) {
-                targetObject = o;
-            }
-        }
-        
-        if (targetObject == null) {
-            System.out.println("ERROR: TARGET / " + targetName + " / " + this.getClass().toString() + " / " + this.name + " NOT FOUND! CHECK YOUR CODE!");
-        }
-        
-        targetLocation = targetObject.getLocation();
-        distanceToTarget = location.distance(targetLocation);
 
-        float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
-        float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
-        float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
-
-        moveX = (moveX / moveTotal) * speed;
-        moveY = (moveY / moveTotal) * speed;
-        
-        String className = this.getClass().getName().substring(8);
-        if (distanceToTarget > speed) {
-            System.out.println(className + name + " is going to " + targetName);
-            location.addLocal(moveX, moveY);
-        } else {
-            location = targetLocation;
-            curLocObject = targetObject;
-            System.out.println(className + name + " has reached " + targetName);
-        }
-    }
 }

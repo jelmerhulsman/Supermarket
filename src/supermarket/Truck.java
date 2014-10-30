@@ -23,6 +23,7 @@ public class Truck extends ObjectInShop {
         super(name, location);
         items = new ArrayList<>();
         status = Status.AWAY;
+        curUnloader = null;
     }
 
     /**

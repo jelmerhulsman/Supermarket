@@ -108,7 +108,6 @@ public class Supermarket {
             simulation.customersLoop();
 
             //simulation.customersLoop();
-            simulation.staffLoop();
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
@@ -146,12 +145,6 @@ public class Supermarket {
         }
 
         customers.removeAll(leavingCustomers);
-    }
-
-    private void staffLoop() {
-        if (storage.getItems().size() < 10) {
-            truck.order(order);
-        }
     }
 
     private ArrayList<Customer> addEnteringCustomers() {

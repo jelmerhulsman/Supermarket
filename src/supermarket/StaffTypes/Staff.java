@@ -5,16 +5,17 @@ import java.util.ArrayList;
 import supermarket.Checkout;
 import supermarket.Item;
 import supermarket.ObjectInShop;
+import supermarket.Person;
 import supermarket.Storage;
 
-public class Staff extends ObjectInShop {
+public class Staff extends Person {
 
     Cashier cashier;
     Unloader unloader;
     Stocker stocker;
     Supervisor supervisor;
     String function;
-    Thread opperation;
+    
     
     protected ObjectInShop workplace;
     protected final int maxItems = 10;
@@ -27,7 +28,8 @@ public class Staff extends ObjectInShop {
     public Staff(String name) {
         super(name, new Vector2f(0, 50), 2f);
         items = new ArrayList<>();
-        this.opperation = new Thread();
+        this.operation = new Thread();
+        this.speed = 2;
     }
     
     /**
@@ -38,7 +40,7 @@ public class Staff extends ObjectInShop {
     public Staff(String name, Checkout checkout){
         cashier = new Cashier(name, checkout);
         this.function = "cashier";
-        this.opperation = new Thread();
+        this.operation = new Thread();
     }
     
     /**
@@ -49,7 +51,7 @@ public class Staff extends ObjectInShop {
     public Staff(String name, Storage storage){
         unloader = new Unloader(name, storage);
         this.function = "unloader";
-        this.opperation = new Thread();
+        this.operation = new Thread();
     }
     
     /**
@@ -110,4 +112,6 @@ public class Staff extends ObjectInShop {
     {
         
     }
+    
+        
 }

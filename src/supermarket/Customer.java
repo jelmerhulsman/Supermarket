@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import supermarket.Checkout.Status;
 import supermarket.Item.Category;
 
-public class Customer extends ObjectInShop {
+public class Customer extends Person {
 
     private enum Action {
 
