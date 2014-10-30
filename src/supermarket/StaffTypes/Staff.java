@@ -14,6 +14,7 @@ public class Staff extends ObjectInShop {
     Stocker stocker;
     Supervisor supervisor;
     String function;
+    Thread opperation;
     
     protected ObjectInShop workplace;
     protected final int maxItems = 10;
@@ -26,6 +27,7 @@ public class Staff extends ObjectInShop {
     public Staff(String name) {
         super(name, new Vector2f(0, 50), 2f);
         items = new ArrayList<>();
+        this.opperation = new Thread();
     }
     
     /**
@@ -36,6 +38,7 @@ public class Staff extends ObjectInShop {
     public Staff(String name, Checkout checkout){
         cashier = new Cashier(name, checkout);
         this.function = "cashier";
+        this.opperation = new Thread();
     }
     
     /**
@@ -46,6 +49,7 @@ public class Staff extends ObjectInShop {
     public Staff(String name, Storage storage){
         unloader = new Unloader(name, storage);
         this.function = "unloader";
+        this.opperation = new Thread();
     }
     
     /**
