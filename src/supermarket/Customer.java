@@ -77,7 +77,7 @@ public class Customer extends ObjectInShop {
 
         switch (stereotype) {
             case ELDER:
-                blackList.add(Category.SPICY);
+                blackList.add(Category.SPICES);
                 blackList.add(Category.FOREIGN);
                 blackList.add(Category.CAFFEINE);
                 likingList.add(Category.VEGTABLES);
@@ -196,24 +196,28 @@ public class Customer extends ObjectInShop {
 
     public boolean update(ArrayList<ObjectInShop> staticLocations, ArrayList<Checkout> checkouts) {
         boolean stopUpdating = false;
-        
+
         switch (action) {
             case SHOPPING:
                 Aisle aisle = getFirstItemLocation(staticLocations);
-                if (location == aisle.getLocation()) {
-                    getItemsFromAisle(aisle);
-                } else {
+                if (location != aisle.getLocation()) {
                     gotoLocation(aisle.getName(), staticLocations);
                 }
+                
+                getItemsFromAisle(aisle);
 
                 if (shoppingList.isEmpty()) {
                     action = Action.CHOOSE_CHECKOUT;
                 }
                 break;
             case CHOOSE_CHECKOUT:
-                Checkout checkout = chooseCheckout(checkouts);
-                checkout.addCustomer(this);
-                action = action.WAITING_AT_CHECKOUT;
+                if (shoppingCart.isEmpty()) {
+                    stopUpdating = true;
+                } else {
+                    Checkout checkout = chooseCheckout(checkouts);
+                    checkout.addCustomer(this);
+                    action = action.WAITING_AT_CHECKOUT;
+                }
                 break;
             case WAITING_AT_CHECKOUT:
                 if (shoppingCart.isEmpty()) {
@@ -221,7 +225,7 @@ public class Customer extends ObjectInShop {
                 }
                 break;
         }
-        
+
         return stopUpdating;
     }
 }

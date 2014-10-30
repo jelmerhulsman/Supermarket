@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import supermarket.Item.Category;
 import supermarket.Customer.Stereotype;
-import supermarket.Item.Status;
 import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Unloader;
@@ -17,19 +16,23 @@ import supermarket.StaffTypes.Unloader;
 public class Supermarket {
 
     private final int MAX_CUSTOMERS = 20;
+    private final int MIN_STASH = 5;
+    private final int MAX_STASH = 25;
     private ArrayList<Aisle> aisles;
     private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;
-    private ArrayList<Item> items;
+    private ArrayList<Item> order;
     private Storage storage;
     private Truck truck;
     private ArrayList<ObjectInShop> staticLocations;
     private Unloader unloader;
     private Staff staff;
+    private ArrayList<Item> availableItems;
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
 
+    @SuppressWarnings("empty-statement")
     public Supermarket() {
         final int MAX_AISLES = 4;
         final int MAX_ITEMS_PER_AISLE = 2;
@@ -41,10 +44,14 @@ public class Supermarket {
 
         //Create aisles
         aisles = new ArrayList<>();
-        for (int i = 0; i < MAX_AISLES; i++) {
-            aisles.add(new Aisle("Liquor", new Vector2f(40, 40), Item.Category.BEER, Item.Category.LIQUOR));
-        }
-
+        aisles.add(new Aisle("Liquor", new Vector2f(40, 40), Item.Category.BEER, Item.Category.LIQUOR, Item.Category.WINE));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(80, 80), Item.Category.BREAD, Item.Category.SPREAD, Item.Category.BREAKFAST));
+        aisles.add(new Aisle("Cooling", new Vector2f(120, 120), Item.Category.FROZEN, Item.Category.READY_TO_EAT, Item.Category.DAIRY));
+        aisles.add(new Aisle("Luxery", new Vector2f(160, 160), Item.Category.SNACK, Item.Category.SODA, Item.Category.CAFFEINE));
+        aisles.add(new Aisle("Durable", new Vector2f(200, 200), Item.Category.SPICES, Item.Category.FOREIGN, Item.Category.PRESERVATION));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(160, 160), Item.Category.VEGTABLES, Item.Category.FRUIT));
+        aisles.add(new Aisle("Nonfood", new Vector2f(160, 160), Item.Category.NONFOOD));
+        
         //Create checkouts
         checkouts = new ArrayList<>();
         for (int i = 0; i < MAX_CHECKOUTS; i++) {
@@ -97,11 +104,33 @@ public class Supermarket {
         System.out.println("Supermarket initialized...");
 
         while (true) { //Update loop
+            simulation.orderLoop();
+            simulation.customersLoop();
 
             //simulation.customersLoop();
             simulation.staffLoop();
             //Sleep at the end of the loop
             simulation.sleep(1000);
+        }
+    }
+
+    private void orderLoop() {
+        ArrayList<Item> orderItems = new ArrayList<>();
+        for (Item shopItem : shopItems) {
+            int currentStash = storage.getItemCount(shopItem.getName());
+            if (currentStash < MIN_STASH) {
+                do {
+                    orderItems.add(new Item(shopItem));
+                    currentStash++;
+                } while (currentStash < MAX_STASH);
+            }
+        }
+
+        if (!orderItems.isEmpty()) {
+            truck.order(orderItems);
+
+            unloader = new Unloader("Jannes", storage);
+            unloader.getItemsFromTruck(staticLocations);
         }
     }
 
@@ -121,7 +150,7 @@ public class Supermarket {
 
     private void staffLoop() {
         if (storage.getItems().size() < 10) {
-            truck.order(items);
+            truck.order(order);
         }
     }
 
@@ -199,24 +228,15 @@ public class Supermarket {
     }
 
     private void Moreno() { //Moreno's testing area
-        items = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            for (Item shopItem : shopItems) {
-                if (shopItem.getName() == "Heimstel-Jan") {
-                    Item orderItem = new Item(shopItem);
-                    items.add(orderItem);
-                }
-            }
-        }
-        unloader.getItemsFromTruck(staticLocations);
     }
 
     private void Dylan() { //Dylan's testing area
         cashier = new ArrayList<>();
-        cashier.add(new Cashier("Johanna", checkouts.get(0)));
-
-        //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), staticLocations);
-        //cashier.get(0).openCheckout();
+        Staff johanna = new Staff("Johanna", checkouts.get(0)); 
+        cashier.add(johanna.getCashier());        
+        
+        cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getName(), staticLocations);
+        cashier.get(0).getCashier().goToCheckout();
     }
 
     private void Sander() { //Sander's testing area
