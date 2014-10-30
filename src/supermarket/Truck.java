@@ -75,12 +75,12 @@ public class Truck extends ObjectInShop {
     public ArrayList<Item> unload(int numberOfItems) {
         ArrayList<Item> i = new ArrayList<>();
         if (items.size() < numberOfItems) {
-            for (int a = items.size() - 1; a > 0; a--) {
+            for (int a = items.size() - 1; a >= 0; a--) {
                 i.add(items.get(a));
                 items.remove(a);
             }
         } else {
-            for (int a = items.size() - 1; a > 0; a--) {
+            for (int a = items.size() - 1; a >= 0; a--) {
                 i.add(items.get(a));
                 items.remove(a);
             }
@@ -95,8 +95,7 @@ public class Truck extends ObjectInShop {
 * @param items
      */
     public void order(ArrayList<Item> items) {
-        for (Item i : items) {
-            this.items.add(i);
-        }
+        this.items.addAll(items);
+        items.clear();
     }
 }
