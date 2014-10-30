@@ -52,41 +52,42 @@ public class ObjectInShop {
     /**
      * Moves this object to the specified location name
      *
-     * @param target For example: "The liquor Aisle"
+     * @param targetName For example: "The liquor Aisle"
      * @param objects This method needs all the possible location objects in an
      * arraylist
      */
-    public void gotoLocation(String target, ArrayList<ObjectInShop> objects) {
-        Vector2f tarLoc, curLoc;
+    public void gotoLocation(String targetName, ArrayList<ObjectInShop> objects) {
+        Vector2f targetLocation = null;
         ObjectInShop targetObject = null;
-        float distance;
+        float distanceToTarget;
         for (ObjectInShop o : objects) {
-            if (o.seekByName(target)) {
+            if (o.seekByName(targetName)) {
                 targetObject = o;
             }
-
         }
+        
         if (targetObject == null) {
-            System.out.println("ERROR: TARGET / " + target + " / " + this.getClass().toString() + " / " + this.name + " NOT FOUND! CHECK YOUR CODE!");
+            System.out.println("ERROR: TARGET / " + targetName + " / " + this.getClass().toString() + " / " + this.name + " NOT FOUND! CHECK YOUR CODE!");
         }
-        curLoc = getLocation();
-        tarLoc = targetObject.getLocation();
-        distance = curLoc.distance(tarLoc);
+        
+        targetLocation = targetObject.getLocation();
+        distanceToTarget = location.distance(targetLocation);
 
-        float moveX = FastMath.floor(tarLoc.x) - FastMath.floor(curLoc.x);
-        float moveY = FastMath.floor(tarLoc.y) - FastMath.floor(curLoc.y);
+        float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
+        float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
 
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
-
-        System.out.println(this.getClass().toString() + " " + this.name + " is going to " + target);
-
-        while (distance > 0.1) {
-            curLoc.addLocal(moveX, moveY);
-            distance = curLoc.distance(tarLoc);
+        
+        String className = this.getClass().getName().substring(8);
+        if (distanceToTarget > speed) {
+            System.out.println(className + name + " is going to " + targetName);
+            location.addLocal(moveX, moveY);
+        } else {
+            location = targetLocation;
+            curLocObject = targetObject;
+            System.out.println(className + name + " has reached " + targetName);
         }
-        System.out.println(this.getClass().toString() + " " + this.name + " has reached " + target);
-        curLocObject = targetObject;
     }
 }

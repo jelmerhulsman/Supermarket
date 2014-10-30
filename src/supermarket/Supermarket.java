@@ -44,10 +44,14 @@ public class Supermarket {
 
         //Create aisles
         aisles = new ArrayList<>();
-        for (int i = 0; i < MAX_AISLES; i++) {
-            aisles.add(new Aisle("Liquor", new Vector2f(40, 40), Item.Category.BEER, Item.Category.LIQUOR));
-        }
-
+        aisles.add(new Aisle("Liquor", new Vector2f(40, 40), Item.Category.BEER, Item.Category.LIQUOR, Item.Category.WINE));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(80, 80), Item.Category.BREAD, Item.Category.SPREAD, Item.Category.BREAKFAST));
+        aisles.add(new Aisle("Cooling", new Vector2f(120, 120), Item.Category.FROZEN, Item.Category.READY_TO_EAT, Item.Category.DAIRY));
+        aisles.add(new Aisle("Luxery", new Vector2f(160, 160), Item.Category.SNACK, Item.Category.SODA, Item.Category.CAFFEINE));
+        aisles.add(new Aisle("Durable", new Vector2f(200, 200), Item.Category.SPICES, Item.Category.FOREIGN, Item.Category.PRESERVATION));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(160, 160), Item.Category.VEGTABLES, Item.Category.FRUIT));
+        aisles.add(new Aisle("Nonfood", new Vector2f(160, 160), Item.Category.NONFOOD));
+        
         //Create checkouts
         checkouts = new ArrayList<>();
         for (int i = 0; i < MAX_CHECKOUTS; i++) {

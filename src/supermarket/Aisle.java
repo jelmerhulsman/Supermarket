@@ -20,6 +20,18 @@ public class Aisle extends ObjectInShop {
     private ArrayList<Item> items;
     private ArrayList<Customer> customers;
 
+    public Aisle(String name, Vector2f location, Category category1) {
+        super(name, location);
+        this.name = name;
+        status = Status.EMPTY;
+        stocker = null;
+        categories = new ArrayList<>();
+        items = new ArrayList<>();
+        customers = new ArrayList<>();
+
+        categories.add(category1);
+    }
+    
     public Aisle(String name, Vector2f location, Category category1, Category category2) {
         super(name, location);
         this.name = name;
@@ -31,6 +43,20 @@ public class Aisle extends ObjectInShop {
 
         categories.add(category1);
         categories.add(category2);
+    }
+    
+    public Aisle(String name, Vector2f location, Category category1, Category category2, Category category3) {
+        super(name, location);
+        this.name = name;
+        status = Status.EMPTY;
+        stocker = null;
+        categories = new ArrayList<>();
+        items = new ArrayList<>();
+        customers = new ArrayList<>();
+
+        categories.add(category1);
+        categories.add(category2);
+        categories.add(category3);
     }
 
     /**
