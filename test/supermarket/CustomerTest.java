@@ -46,7 +46,7 @@ public class CustomerTest {
         System.out.println("getItemsFromAisle");
         Aisle aisle = new Aisle("Liquor",new Vector2f(40,40), Item.Category.BEER, Item.Category.LIQUOR);
         Item item;
-        item= new Item("Budweiser", Item.Category.BEER, 3, true);
+        item= new Item("Budweiser", Item.Category.BEER, 3);
         item.setStatus(Item.Status.LOADED);
         aisle.loadAisle(item);
         ArrayList<Item> uniqueItems = new ArrayList<Item>();
