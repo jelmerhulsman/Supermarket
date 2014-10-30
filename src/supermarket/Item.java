@@ -1,15 +1,16 @@
 package supermarket;
 
 import javax.persistence.*;
+
 @Entity
-@Table(name="items")
-public class Item{
-    
-    @Id @GeneratedValue
+@Table(name = "items")
+public class Item {
+
+    @Id
+    @GeneratedValue
     @Column(name = "id")
     private int id;
 
-    
     public enum Category {
 
         BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICY, NONFOOD, FROZEN, PRESERVATION, BREAD, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT
@@ -17,31 +18,31 @@ public class Item{
 
     public enum Status {
 
-        LOADED, IN_STORAGE, ON_CUSTOMER, ON_STAFF, IN_TRUCK
+        LOADED, IN_STORAGE, ON_CUSTOMER, ON_STAFF, IN_TRUCK, VIRTUAL
     }
     @Column(name = "name")
     private String name;
     @Column(name = "price")
     private float price;
-    @Transient
-    private boolean isPrimary;
-    @Column(name="status")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
-    @Column(name="category")
+    @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    public Item() {
-        this.status = Status.IN_STORAGE;
-    }
-
-    public Item(String name, Category category, float price, boolean primary) {
+    public Item(String name, Category category, float price) {
         this.name = name;
         this.price = price;
-        this.isPrimary = primary;
         this.category = category;
         this.status = Status.IN_TRUCK;
+    }
+
+    public Item(String name, Category category, float price, Status status) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.status = status;
     }
 
     /**
@@ -49,7 +50,6 @@ public class Item{
      *
      * @return wether the item is loaded, at a customer, purchased and whatever
      */
-    
     public Status getStatus() {
         return status;
     }
@@ -59,58 +59,41 @@ public class Item{
      *
      * @return The current category
      */
-        public Category getCategory() {
+    public Category getCategory() {
         return category;
     }
 
     /**
-     * sets the primary thingy
-     * @param primary 
-     */
-    public void setPrimary(boolean primary) {
-        this.isPrimary = primary;
-    }
-    
-    /**
-     * Returns the primary status of this item
-     *
-     * @return The primary status of this item
-     */
-    
-    public boolean isPrimary() {
-        return isPrimary;
-    }
-
-    /**
      * gets the ID of the item
-     * @return 
+     *
+     * @return
      */
-    
     public int getId() {
         return id;
     }
-    
+
     /**
      * sets the ID of the item
-     * @param id 
+     *
+     * @param id
      */
     public void setId(int id) {
         this.id = id;
     }
-    
+
     /**
      * Gets the current price for the customer
      *
      * @return The current price for the customer
      */
-    
     public float getPrice() {
         return price;
     }
-    
+
     /**
      * sets the price of the product
-     * @param price 
+     *
+     * @param price
      */
     public void setPrice(float price) {
         this.price = price;
@@ -121,14 +104,14 @@ public class Item{
      *
      * @return The name of this item
      */
-    
     public String getName() {
         return name;
     }
 
     /**
      * sets the name of the item
-     * @param name 
+     *
+     * @param name
      */
     public void setName(String name) {
         this.name = name;

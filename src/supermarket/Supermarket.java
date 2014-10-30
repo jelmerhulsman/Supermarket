@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import supermarket.Item.Category;
 import supermarket.Customer.Stereotype;
+import supermarket.Item.Status;
 import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Unloader;
@@ -26,7 +27,7 @@ public class Supermarket {
     private Unloader unloader;
     private Staff staff;
     private ArrayList<Cashier> cashier;
-    private ArrayList<Item> availableItems;
+    private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
 
     public Supermarket() {
@@ -70,10 +71,16 @@ public class Supermarket {
         staticLocations.add(truck);
 
         //Add all unique items to a list
-        availableItems = new ArrayList<>();
-        for (int i = 0; i < MAX_UNIQUE_ITEMS; i++) {
-            availableItems.add(new Item());
-        }
+        shopItems = new ArrayList<>();
+        shopItems.add(new Item("Heimstel-Jan", Category.BEER, 0.80f, Status.VIRTUAL));
+        shopItems.add(new Item("Ricewaffle", Category.BREAKFAST, 1.20f, Status.VIRTUAL));
+        shopItems.add(new Item("Slurpys", Category.SODA, 2.00f, Status.VIRTUAL));
+        shopItems.add(new Item("Ready 2 Eat Lasagne", Category.READY_TO_EAT, 2.50f, Status.VIRTUAL));
+        shopItems.add(new Item("Nazi-kraut", Category.VEGTABLES, 2.80f, Status.VIRTUAL));
+        shopItems.add(new Item("Tomahawkto", Category.FRUIT, 0.50f, Status.VIRTUAL));
+        shopItems.add(new Item("Moo-Moo Milk", Category.DAIRY, 1.25f, Status.VIRTUAL));
+        shopItems.add(new Item("Lice", Category.FOREIGN, 1.00f, Status.VIRTUAL));
+        shopItems.add(new Item("Ass-Whipe Deluxe", Category.NONFOOD, 1.40f, Status.VIRTUAL));
 
         //List of customers
         customers = new ArrayList<>();
@@ -88,7 +95,6 @@ public class Supermarket {
 
         while (true) { //Update loop
             simulation.customersLoop();
-            simulation.staffLoop();
 
             //Sleep at the end of the loop
             simulation.sleep(1000);
@@ -140,7 +146,7 @@ public class Supermarket {
                     }
                 } while (stereotype.size() != 1);
 
-                customers.add(new Customer("", stereotype.get(0), availableItems));
+                customers.add(new Customer("", stereotype.get(0), shopItems));
             }
         }
 
@@ -166,7 +172,7 @@ public class Supermarket {
             String debugger = new Scanner(System.in).next();
             debugger = debugger.trim();
             debugger = debugger.toUpperCase();
-            
+
             switch (debugger) {
                 case "MORENO":
                     Moreno();
@@ -184,6 +190,9 @@ public class Supermarket {
                     Jelmer();
                     loop = false;
                     break;
+                case "BREAK":
+                    loop = false;
+                    break;
             }
         } while (loop);
     }
@@ -193,7 +202,14 @@ public class Supermarket {
 
         items = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
-            items.add(new Item("BudWeiser", Category.BEER, 3, true));
+            for (Item shopItem : shopItems)
+            {
+                if (shopItem.getName() == "Heimstel-Jan")
+                {
+                    Item orderItem = new Item(shopItem.getName(), shopItem.getCategory(), shopItem.getPrice());
+                    items.add(orderItem);
+                }
+            }
         }
 
         truck.order(items);
