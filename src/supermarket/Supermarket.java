@@ -25,7 +25,7 @@ public class Supermarket {
     private ArrayList<ObjectInShop> staticLocations;
     private Unloader unloader;
     private Staff staff;
-    private ArrayList<Cashier> cashier;
+    private ArrayList<Staff> cashier;
     private ArrayList<Item> availableItems;
     private ArrayList<Customer> customers;
 
@@ -202,10 +202,11 @@ public class Supermarket {
 
     private void Dylan() { //Dylan's testing area
         cashier = new ArrayList<>();
-        cashier.add(new Cashier("Johanna", checkouts.get(0)));
-
-        //cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getLocationName(), staticLocations);
-        //cashier.get(0).openCheckout();
+        Staff johanna = new Staff("Johanna", checkouts.get(0)); 
+        cashier.add(johanna.getCashier());        
+        
+        cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getName(), staticLocations);
+        cashier.get(0).getCashier().goToCheckout();
     }
 
     private void Sander() { //Sander's testing area
