@@ -72,14 +72,13 @@ public class StorageTest {
     public void testGetItems() {
         System.out.println("getItems");
         Storage instance = new Storage("storage", Vector2f.ZERO);
-        ArrayList expResult = new ArrayList<Item>() ;
-        Item item = new Item();
-        item.setName("Budweiser");
-        item.setCategory(Item.Category.BEER);
-        item.setPrice(3);
-        item.setPrimary(true);
-        expResult.add(item);
-        ArrayList result = instance.getItems();
+        ArrayList<Item> expResult = new ArrayList<Item>() ;
+        ArrayList<Item> result = instance.getItems();
+        for(int i = 0; i<result.size();i++){
+            expResult.add(new Item("BudWeiser", Item.Category.BEER, 3, false));
+            expResult.get(i).setId(result.get(i).getId());
+            expResult.get(i).setStatus(Item.Status.IN_STORAGE);
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -91,11 +90,7 @@ public class StorageTest {
     @Test
     public void testAddItem() {
         System.out.println("addItem");
-        Item item = new Item();
-        item.setName("Budweiser");
-        item.setCategory(Item.Category.BEER);
-        item.setPrice(3);
-        item.setPrimary(true);
+        Item item = new Item("BudWeiser", Item.Category.BEER, 3, false);
         Storage instance = new Storage("storage", Vector2f.ZERO);
         try{
             instance.addItem(item);
@@ -127,7 +122,10 @@ public class StorageTest {
         for(int i = 0; i < result.size();i++){
             result.get(i).setId(0);
         }
-        if(expResult.get(0).getName().equals(result.get(0).getName())){
+        String expected = expResult.get(0).getName();
+        String actual = result.get(0).getName();
+        
+        if(expected.equals(actual)){
             
         }
         else{
