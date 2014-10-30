@@ -114,14 +114,12 @@ public class Customer extends ObjectInShop {
             for (Item item : availableItems) {
                 boolean addToList = false;
                 if (blackList.isEmpty() || !blackList.contains(item.getCategory())) {
-                    if (item.isPrimary()) {
-                        addToList = chanceOf(90);
-                    } else if (likingList.isEmpty()) {
+                    if (likingList.isEmpty()) {
                         addToList = chanceOf(60);
                     } else if (likingList.contains(item.getCategory())) {
                         addToList = chanceOf(80);
                     } else {
-                        addToList = chanceOf(20);
+                        addToList = chanceOf(50);
                     }
                 }
 
