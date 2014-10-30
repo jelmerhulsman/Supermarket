@@ -31,6 +31,10 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    public Item() {
+        this.status = Status.IN_TRUCK;
+    }
+    
     public Item(Item item) {
         this.name = item.name;
         this.price = item.price;

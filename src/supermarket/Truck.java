@@ -75,12 +75,12 @@ public class Truck extends ObjectInShop {
     public ArrayList<Item> unload(int numberOfItems) {
         ArrayList<Item> i = new ArrayList<>();
         if (items.size() < numberOfItems) {
-            for (int a = 0; a < items.size(); a++) {
+            for (int a = items.size() - 1; a >= 0; a--) {
                 i.add(items.get(a));
                 items.remove(a);
             }
         } else {
-            for (int a = 0; a < numberOfItems; a++) {
+            for (int a = items.size() - 1; a >= 0; a--) {
                 i.add(items.get(a));
                 items.remove(a);
             }
