@@ -31,18 +31,18 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    public Item(String name, Category category, float price) {
-        this.name = name;
-        this.price = price;
-        this.category = category;
+    public Item(Item item) {
+        this.name = item.name;
+        this.price = item.price;
         this.status = Status.IN_TRUCK;
+        this.category = item.category;
     }
 
-    public Item(String name, Category category, float price, Status status) {
+    public Item(String name, float price, Category category) {
         this.name = name;
         this.price = price;
+        this.status = Status.VIRTUAL;
         this.category = category;
-        this.status = status;
     }
 
     /**
