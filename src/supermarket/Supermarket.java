@@ -62,6 +62,9 @@ public class Supermarket {
         storage = new Storage("Storage", new Vector2f(0, 50));
         truck = new Truck("Truck", new Vector2f(0, 0));
 
+        //Create Staff members
+        unloader = new Unloader("Jannes", storage);
+
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
         staticLocations.addAll(departments);
@@ -94,8 +97,9 @@ public class Supermarket {
         System.out.println("Supermarket initialized...");
 
         while (true) { //Update loop
-            simulation.customersLoop();
 
+            //simulation.customersLoop();
+            simulation.staffLoop();
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
@@ -118,9 +122,6 @@ public class Supermarket {
     private void staffLoop() {
         if (storage.getItems().size() < 10) {
             truck.order(items);
-        }
-        if (!truck.getItems().isEmpty()) {
-            unloader.getItemsFromTruck(staticLocations);
         }
     }
 
@@ -198,8 +199,6 @@ public class Supermarket {
     }
 
     private void Moreno() { //Moreno's testing area
-        unloader = new Unloader("Jannes", storage);
-
         items = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             for (Item shopItem : shopItems) {
@@ -209,9 +208,6 @@ public class Supermarket {
                 }
             }
         }
-        
-        
-        truck.order(items);
         unloader.getItemsFromTruck(staticLocations);
     }
 
