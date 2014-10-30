@@ -33,7 +33,7 @@ public class Item{
     private Category category;
 
     public Item() {
-        this.status = Status.IN_STORAGE;
+        this.status = Status.IN_TRUCK;
     }
 
     public Item(String name, Category category, float price, boolean primary) {

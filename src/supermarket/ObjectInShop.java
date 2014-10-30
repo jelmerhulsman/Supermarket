@@ -65,7 +65,7 @@ public class ObjectInShop {
 
         }
         if (targetObject == null) {
-            System.out.println("ERROR: TARGET '" + target + "' AT STAFF MEMBER '" + this.name + "' NOT FOUND! CHECK YOUR CODE!");
+            System.out.println("ERROR: TARGET / " + target + " / " + this.getClass().toString() + " / " + this.name + " NOT FOUND! CHECK YOUR CODE!");
         }
         curLoc = getLocation();
         tarLoc = targetObject.getLocation();
@@ -78,13 +78,13 @@ public class ObjectInShop {
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
 
-        System.out.println("STAFF MEMBER " + this.name + " is going to " + target);
+        System.out.println(this.getClass().toString() + " " + this.name + " is going to " + target);
 
         while (distance > 0.1) {
             curLoc.addLocal(moveX, moveY);
             distance = curLoc.distance(tarLoc);
         }
-        System.out.println("STAFF MEMBER " + this.name + " has reached " + target);
+        System.out.println(this.getClass().toString() + " " + this.name + " has reached " + target);
         curLocObject = targetObject;
     }
 }

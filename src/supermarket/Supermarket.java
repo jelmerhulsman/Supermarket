@@ -192,10 +192,11 @@ public class Supermarket {
         unloader = new Unloader("Jannes", storage);
 
         items = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             items.add(new Item("BudWeiser", Category.BEER, 3, true));
         }
-
+        
+        
         truck.order(items);
         unloader.getItemsFromTruck(staticLocations);
     }
