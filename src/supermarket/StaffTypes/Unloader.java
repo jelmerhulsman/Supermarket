@@ -42,35 +42,33 @@ public class Unloader extends Staff {
                 storage = (Storage) o;
             }
         }
-        if (location != truck.getLocation()) {
-            gotoLocation("Truck", locations);
+
+        gotoLocation("Truck", locations);
+
+        if (truck.getCurUnloader() == null && !truck.getItems().isEmpty()) {
+            System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
+            truck.setCurUnloader(this);
+            items.addAll(truck.unload(maxItems));
+        } else if (truck.getCurUnloader() == this && !truck.getItems().isEmpty()) {
+            System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
+            items.addAll(truck.unload(maxItems));
+        } else if (truck.getItems().isEmpty()) {
+            doNothing();
         } else {
-            if (truck.getCurUnloader() == null && !truck.getItems().isEmpty()) {
-                System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
-                truck.setCurUnloader(this);
-                items.addAll(truck.unload(maxItems));
-            } else if (truck.getCurUnloader() == this && !truck.getItems().isEmpty()) {
-                System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
-                items.addAll(truck.unload(maxItems));
-            } else if (truck.getItems().isEmpty()) {
-                doNothing();
-            } else {
-                getItemsFromTruck(locations);
-            }
-            truck.setCurUnloader(null);
-            putItemsInStorage(locations);
+            getItemsFromTruck(locations);
         }
+        truck.setCurUnloader(null);
+        putItemsInStorage(locations);
+
     }
 
     public void putItemsInStorage(ArrayList<ObjectInShop> locations) {
-        if (location != storage.getLocation()) {
-            gotoLocation("Storage", locations);
-        } else {
-            for (Item i : items) {
-                System.out.println(this.getClass().toString() + " / " + name + " is adding item " + i.getName() + " to the storage.");
-                i.setStatus(Status.IN_STORAGE);
-                storage.addItem(i);
-            }
+        gotoLocation("Storage", locations);
+        for (Item i : items) {
+            System.out.println(this.getClass().toString() + " / " + name + " is adding item " + i.getName() + " to the storage.");
+            i.setStatus(Status.IN_STORAGE);
+            storage.addItem(i);
         }
+
     }
 }
