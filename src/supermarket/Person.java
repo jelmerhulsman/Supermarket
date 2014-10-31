@@ -12,25 +12,36 @@ import java.util.ArrayList;
  *
  * @author Moreno
  */
-public class Person extends ObjectInShop implements Runnable{
+public class Person extends ObjectInShop {
 
     protected Thread operation;
 
+    protected enum Action {
+
+        WALKING, PICKUP_ITEMS, WAITING, WORKING
+    }
+    protected Action action;
+    protected String targetLocationName;
+
     public Person() {
-        operation = new Thread(this);
-        this.operation.start();
     }
 
     public Person(String name, Vector2f location) {
         super(name, location);
-        operation = new Thread(this);
-        this.operation.start();
     }
 
     public Person(String name, Vector2f location, float speed) {
         super(name, location, speed);
-        operation = new Thread(this);
-        this.operation.start();
+    }
+
+    public void doThings(final ArrayList<ObjectInShop> locations) {
+        operation = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                        gotoLocation(targetLocationName, locations);
+            }
+        });
+        operation.start();
     }
 
     public void gotoLocation(String targetName, ArrayList<ObjectInShop> objects) {
@@ -77,10 +88,5 @@ public class Person extends ObjectInShop implements Runnable{
         } catch (InterruptedException ex) {
             operation.currentThread().interrupt();
         }
-    }
-
-    @Override
-    public void run() {
-       
     }
 }

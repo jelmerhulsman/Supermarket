@@ -42,8 +42,10 @@ public class Unloader extends Staff {
                 storage = (Storage) o;
             }
         }
-
-        gotoLocation("Truck", locations);
+        this.action = action.WALKING;
+        this.targetLocationName = "Truck";
+        doThings(locations);
+        //gotoLocation("Truck", locations);
 
         if (truck.getCurUnloader() == null && !truck.getItems().isEmpty()) {
             System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
@@ -63,7 +65,10 @@ public class Unloader extends Staff {
     }
 
     public void putItemsInStorage(ArrayList<ObjectInShop> locations) {
-        gotoLocation("Storage", locations);
+        this.action = action.WALKING;
+        this.targetLocationName = "Storage";
+        doThings(locations);
+        //gotoLocation("Storage", locations);
         for (Item i : items) {
             System.out.println(this.getClass().toString() + " / " + name + " is adding item " + i.getName() + " to the storage.");
             i.setStatus(Status.IN_STORAGE);

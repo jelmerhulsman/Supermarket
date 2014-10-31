@@ -9,7 +9,7 @@ public class Customer extends Person {
 
     private enum Action {
 
-        SHOPPING, CHOOSE_CHECKOUT, WAITING_AT_CHECKOUT
+        SHOPPING, CHOOSE_CHECKOUT, WAITING_AT_CHECKOUT, WALKING
     }
 
     public enum Stereotype {
@@ -201,7 +201,10 @@ public class Customer extends Person {
             case SHOPPING:
                 Aisle aisle = getFirstItemLocation(staticLocations);
                 if (location != aisle.getLocation()) {
-                    gotoLocation(aisle.getName(), staticLocations);
+                    this.action = action.WALKING;
+                    this.targetLocationName = aisle.getName();
+                    doThings(staticLocations);
+                    //gotoLocation(aisle.getName(), staticLocations);
                 }
                 
                 getItemsFromAisle(aisle);

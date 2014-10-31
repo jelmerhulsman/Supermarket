@@ -1,5 +1,6 @@
 package supermarket;
 
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,6 +32,7 @@ public class Supermarket {
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
+    int customerNumber = 0;
 
     @SuppressWarnings("empty-statement")
     public Supermarket() {
@@ -168,8 +170,9 @@ public class Supermarket {
                         }
                     }
                 } while (stereotype.size() != 1);
-
-                customers.add(new Customer("", stereotype.get(0), shopItems));
+                customerNumber++;
+                
+                customers.add(new Customer("Nr. " + customerNumber, stereotype.get(0), shopItems));
             }
         }
 
