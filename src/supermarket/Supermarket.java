@@ -32,7 +32,6 @@ public class Supermarket {
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
-    int customerNumber = 0;
 
     @SuppressWarnings("empty-statement")
     public Supermarket() {
@@ -53,7 +52,7 @@ public class Supermarket {
         aisles.add(new Aisle("Durable", new Vector2f(20, 20), Item.Category.SPICES, Item.Category.FOREIGN, Item.Category.PRESERVATION));
         aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(160, 160), Item.Category.VEGTABLES, Item.Category.FRUIT));
         aisles.add(new Aisle("Nonfood", new Vector2f(60, 60), Item.Category.NONFOOD));
-        
+
         //Create checkouts
         checkouts = new ArrayList<>();
         for (int i = 0; i < MAX_CHECKOUTS; i++) {
@@ -170,9 +169,8 @@ public class Supermarket {
                         }
                     }
                 } while (stereotype.size() != 1);
-                customerNumber++;
-                
-                customers.add(new Customer("Nr. " + customerNumber, stereotype.get(0), shopItems));
+
+                customers.add(new Customer("Nr. " + ((int) customers.size() + 1), stereotype.get(0), shopItems));
             }
         }
 
@@ -228,9 +226,9 @@ public class Supermarket {
 
     private void Dylan() { //Dylan's testing area
         cashier = new ArrayList<>();
-        Staff johanna = new Staff("Johanna", checkouts.get(0)); 
-        cashier.add(johanna.getCashier());        
-        
+        Staff johanna = new Staff("Johanna", checkouts.get(0));
+        cashier.add(johanna.getCashier());
+
         cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getName(), staticLocations);
         cashier.get(0).getCashier().goToCheckout();
     }

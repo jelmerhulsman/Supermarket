@@ -38,7 +38,11 @@ public class Person extends ObjectInShop {
         operation = new Thread(new Runnable() {
             @Override
             public void run() {
+                switch (action) {
+                    case WALKING:
                         gotoLocation(targetLocationName, locations);
+                        break;
+                }
             }
         });
         operation.start();
