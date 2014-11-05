@@ -28,7 +28,7 @@ public class Supermarket {
     private ArrayList<ObjectInShop> staticLocations;
     private Unloader unloader;
     private Stocker stocker;
-    private Staff staff;
+    private ArrayList<Staff> flexibleStaff;
     private ArrayList<Item> availableItems;
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> shopItems;
@@ -72,8 +72,10 @@ public class Supermarket {
         truck = new Truck("Truck", new Vector2f(0, 0));
 
         //Create Staff members
-        unloader = new Unloader("Jannes", storage);
+        unloader = new Unloader("Jannes", storage, truck);
+        unloader.update(staticLocations);
         stocker = new Stocker("Jan de Bierman", storage);
+        stocker.update(staticLocations);
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -82,6 +84,7 @@ public class Supermarket {
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
         staticLocations.add(truck);
+        staticLocations.add(new ObjectInShop("Entrance/Exit", new Vector2f(100,100)));
 
         //Add all unique items to a list
         shopItems = new ArrayList<>();
@@ -130,13 +133,13 @@ public class Supermarket {
 
         if (!orderItems.isEmpty()) {
             truck.order(orderItems);
-
-            unloader = new Unloader("Jannes", storage);
-            unloader.getItemsFromTruck(staticLocations);
+            
+            unloader = new Unloader("Jannes", storage,truck);
+            unloader.getItemsFromTruck();
         }
         if(!storage.getItems().isEmpty())
         {
-            //stocker.getItemsFromStorage(staticLocations, Category.BEER);
+            stocker.getItemsFromStorage(Category.BEER);
         }
     }
 
@@ -145,8 +148,7 @@ public class Supermarket {
 
         ArrayList<Customer> leavingCustomers = new ArrayList<>();
         for (Customer customer : customers) {
-            boolean stopUpdating = customer.update(staticLocations, checkouts);
-            if (stopUpdating) {
+            if (customer.isLeaving()) {
                 leavingCustomers.add(customer);
             }
         }
@@ -177,6 +179,7 @@ public class Supermarket {
                 } while (stereotype.size() != 1);
 
                 customers.add(new Customer("Nr. " + ((int) customers.size() + 1), stereotype.get(0), shopItems));
+                customers.get(customers.size() - 1).update(staticLocations, checkouts);
             }
         }
 

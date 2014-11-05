@@ -9,8 +9,13 @@ import supermarket.Truck;
 
 public class Unloader extends Staff {
 
-    Storage storage;
-    Truck truck;
+    private enum Action {
+
+        UNLOAD_TRUCK, STORE_ITEMS, WAITING
+    }
+    private Action action;
+    private Storage storage;
+    private Truck truck;
 
     /**
      * Constructor for the Unloader staff member
@@ -18,62 +23,72 @@ public class Unloader extends Staff {
      * @param name Specify the name of this person
      * @param storage Specify the workplace of this person
      */
-    public Unloader(String name, Storage storage) {
+    public Unloader(String name, Storage storage, Truck truck) {
         super(name);
         this.workplace = storage;
-        storage = null;
-        truck = null;
+
+        action = Action.WAITING;
+        this.storage = storage;
+        this.truck = truck;
     }
 
     /**
      * Gets the maximum # of items this person can carry from the truck and puts
      * it in the Storage
      *
-     * @param locations This method needs all the possible location objects in
-     * an arraylist
+     * @param staticLocations This method needs all the possible location
+     * objects in an arraylist
      */
-    public void getItemsFromTruck(ArrayList<ObjectInShop> locations) {
-
-        for (ObjectInShop o : locations) {
-            if (o instanceof Truck) {
-                truck = (Truck) o;
-            }
-            if (o instanceof Storage) {
-                storage = (Storage) o;
-            }
-        }
-        this.action = action.WALKING;
-        this.targetLocationName = "Truck";
-        doThings(locations);
-        //gotoLocation("Truck", locations);
-
+    public void getItemsFromTruck() {
         if (truck.getCurUnloader() == null && !truck.getItems().isEmpty()) {
             System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
             truck.setCurUnloader(this);
             items.addAll(truck.unload(maxItems));
+            sleep(maxItems * ITEM_INTERACTION_TIME);
         } else if (truck.getCurUnloader() == this && !truck.getItems().isEmpty()) {
             System.out.println("STAFF MEMBER " + name + " is picking up items from truck...");
             items.addAll(truck.unload(maxItems));
-        } else if (truck.getItems().isEmpty()) {
-            doNothing();
-        } else {
-            getItemsFromTruck(locations);
+            sleep(items.size() * ITEM_INTERACTION_TIME);
         }
-        truck.setCurUnloader(null);
-        putItemsInStorage(locations);
-
     }
 
-    public void putItemsInStorage(ArrayList<ObjectInShop> locations) {
-        this.action = action.WALKING;
-        this.targetLocationName = "Storage";
-        doThings(locations);
-        //gotoLocation("Storage", locations);
+    public void storeItemsInStorage() {
         for (Item i : items) {
             System.out.println(this.getClass().toString() + " / " + name + " is adding item " + i.getName() + " to the storage.");
             i.setStatus(Status.IN_STORAGE);
             storage.addItem(i);
+            sleep(ITEM_INTERACTION_TIME);
         }
+    }
 
+    public void update(final ArrayList<ObjectInShop> staticLocations) {
+        operation = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                switch (action) {
+                    case UNLOAD_TRUCK:
+                        gotoLocation("Truck", staticLocations);
+                        getItemsFromTruck();
+                        action = Action.STORE_ITEMS;
+                        break;
+                    case STORE_ITEMS:
+                        gotoLocation("Storage", staticLocations);
+                        storeItemsInStorage();
+
+                        if (truck.getItems().isEmpty()) {
+                            action = Action.WAITING;
+                        } else {
+                            action = Action.UNLOAD_TRUCK;
+                        }
+                        break;
+                    case WAITING:
+                        if (!truck.getItems().isEmpty()) {
+                            action = Action.UNLOAD_TRUCK;
+                        }
+                        break;
+                }
+            }
+        });
+        operation.start();
     }
 }

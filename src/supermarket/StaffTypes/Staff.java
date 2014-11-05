@@ -7,13 +7,13 @@ import supermarket.Item;
 import supermarket.ObjectInShop;
 import supermarket.Person;
 import supermarket.Storage;
+import supermarket.Truck;
 
 public class Staff extends Person {
 
     Cashier cashier;
     Unloader unloader;
     Stocker stocker;
-    Supervisor supervisor;
     String function;
     
     
@@ -48,8 +48,8 @@ public class Staff extends Person {
      * @param name
      * @param storage 
      */
-    public Staff(String name, Storage storage){
-        unloader = new Unloader(name, storage);
+    public Staff(String name, Storage storage, Truck truck){
+        unloader = new Unloader(name, storage, truck);
         this.function = "unloader";
         this.operation = new Thread();
     }
@@ -94,14 +94,6 @@ public class Staff extends Person {
      */
     public Stocker getStocker() {
         return stocker;
-    }
-    
-    /**
-     * Get supervisor class.
-     * @return supervisor
-     */
-    public Supervisor getSupervisor() {
-        return supervisor;
     }
 
     public ObjectInShop getWorkplace() {
