@@ -20,7 +20,7 @@ public class Customer extends Person {
     private float saldo;
     private Action action;
     private ArrayList<Item> shoppingList, shoppingCart;
-
+    
     public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
         super(name, new Vector2f(100, 100));
         this.stereotype = stereotype;

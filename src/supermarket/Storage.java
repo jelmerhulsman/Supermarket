@@ -6,11 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
+import supermarket.Item.Category;
 import supermarket.Item.Status;
 import supermarket.StaffTypes.Unloader;
 
 public class Storage extends ObjectInShop {
-
+    
     private ArrayList<Item> items;
     private Unloader currentUnloader;
     private static SessionFactory factory;
@@ -57,7 +58,7 @@ public class Storage extends ObjectInShop {
      * @return items
      */
     public ArrayList<Item> getItems() {
-
+        
         Session session = factory.openSession();
         Transaction tx = null;
         try {
@@ -77,18 +78,31 @@ public class Storage extends ObjectInShop {
         }
         return items;
     }
-    
-        public ArrayList<Item> getItems(int count) {
 
+    /**
+     * returns gets items from the storage and removes it in the database
+     *
+     * @param count Total number of items to pick
+     * @param category From which category
+     * @return
+     */
+    public ArrayList<Item> getItems(int count, Category category) {
+        items.clear();
         Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql = "FROM supermarket.Item";
+            String hql = "FROM supermarket.Item WHERE Category = '" + category.toString() + "'";
             List itemsList = session.createQuery(hql).list();
+            if (itemsList.size() < count) {
+                count = itemsList.size();
+            }
             for (int i = 0; i < count; i++) {
                 Iterator iterator = itemsList.iterator();
-                items.add((Item) iterator.next());
+                Item item = (Item) iterator.next();
+                items.add(item);
+                session.delete(item);
+                itemsList.remove(item);
             }
         } catch (HibernateException e) {
             if (tx != null) {

@@ -136,7 +136,7 @@ public class Supermarket {
         }
         if(!storage.getItems().isEmpty())
         {
-            //stocker.getItemsFromStorage(staticLocations, Category.BEER);
+            stocker.getItemsFromStorage(staticLocations, Category.BEER);
         }
     }
 
