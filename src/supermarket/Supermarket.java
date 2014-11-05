@@ -82,6 +82,7 @@ public class Supermarket {
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
         staticLocations.add(truck);
+        staticLocations.add(new ObjectInShop("Entrance/Exit", new Vector2f(100,100)));
 
         //Add all unique items to a list
         shopItems = new ArrayList<>();
@@ -145,8 +146,7 @@ public class Supermarket {
 
         ArrayList<Customer> leavingCustomers = new ArrayList<>();
         for (Customer customer : customers) {
-            boolean stopUpdating = customer.update(staticLocations, checkouts);
-            if (stopUpdating) {
+            if (customer.isLeaving()) {
                 leavingCustomers.add(customer);
             }
         }
@@ -177,6 +177,7 @@ public class Supermarket {
                 } while (stereotype.size() != 1);
 
                 customers.add(new Customer("Nr. " + ((int) customers.size() + 1), stereotype.get(0), shopItems));
+                customers.get(customers.size() - 1).update(staticLocations, checkouts);
             }
         }
 

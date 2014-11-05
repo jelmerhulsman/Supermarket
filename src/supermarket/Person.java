@@ -4,20 +4,12 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 
-/**
- *
- * @author Moreno
- */
 public class Person extends ObjectInShop {
-
+    
+    final protected int ITEM_INTERACTION_TIME = 250;
+    final private int STEP_TIME = 100;
+    
     protected Thread operation;
-
-    protected enum Action {
-
-        WALKING, PICKUP_ITEMS, WAITING, WORKING
-    }
-    protected Action action;
-    protected String targetLocationName;
 
     public Person() {
     }
@@ -28,20 +20,6 @@ public class Person extends ObjectInShop {
 
     public Person(String name, Vector2f location, float speed) {
         super(name, location, speed);
-    }
-
-    public void doThings(final ArrayList<ObjectInShop> locations) {
-        operation = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                switch (action) {
-                    case WALKING:
-                        gotoLocation(targetLocationName, locations);
-                        break;
-                }
-            }
-        });
-        operation.start();
     }
 
     public void gotoLocation(String targetName, ArrayList<ObjectInShop> objects) {
@@ -73,8 +51,7 @@ public class Person extends ObjectInShop {
         while (distanceToTarget > speed) {
             location.addLocal(moveX, moveY);
             distanceToTarget = location.distance(targetLocation);
-            System.out.println(className + " " + name + " is at" + location);
-            sleep(100);
+            sleep(STEP_TIME);
         }
         location = targetLocation;
         curLocObject = targetObject;

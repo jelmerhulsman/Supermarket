@@ -9,7 +9,7 @@ public class Customer extends Person {
 
     private enum Action {
 
-        SHOPPING, CHOOSE_CHECKOUT, WAITING_AT_CHECKOUT
+        SHOPPING, CHOOSE_CHECKOUT, WAITING_AT_CHECKOUT, LEAVING
     }
 
     public enum Stereotype {
@@ -17,9 +17,12 @@ public class Customer extends Person {
         ELDER, MOTHER, STUDENT, WORKER
     };
     private Stereotype stereotype;
+    private float beginWithSaldo;
     private float saldo;
     private Action action;
     private ArrayList<Item> shoppingList, shoppingCart;
+    private int collectedItemsCount;
+    private Customer me;
 
     public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
         super(name, new Vector2f(100, 100));
@@ -44,9 +47,13 @@ public class Customer extends Person {
                 break;
         }
 
+        beginWithSaldo = saldo;
         action = Action.SHOPPING;
         shoppingList = generateShoppingList(stereotype, uniqueItems);
         shoppingCart = new ArrayList<>();
+        collectedItemsCount = 0;
+
+        me = this;
     }
 
     private float giveSaldo(int min, int max) {
@@ -69,6 +76,15 @@ public class Customer extends Person {
 
     private boolean chanceOf(int percent) {
         return (int) (Math.random() * 101) <= percent;
+    }
+
+    public boolean isLeaving() {
+        if (action == Action.LEAVING) {
+            operation.stop();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private ArrayList<Item> generateShoppingList(Stereotype stereotype, ArrayList<Item> availableItems) {
@@ -136,9 +152,9 @@ public class Customer extends Person {
     }
 
     public Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
-        for (ObjectInShop object : staticLocations) {
-            if (object instanceof Aisle) {
-                Aisle aisle = (Aisle) object;
+        for (ObjectInShop o : staticLocations) {
+            if (o instanceof Aisle) {
+                Aisle aisle = (Aisle) o;
                 for (Category category : aisle.getCategories()) {
                     if (shoppingList.get(0).getCategory() == category) {
                         return aisle;
@@ -160,6 +176,7 @@ public class Customer extends Person {
                     shoppingCart.add(aisle.pickFromShelve(item));
                 }
 
+                sleep(ITEM_INTERACTION_TIME);
                 checkedItems.add(item);
             }
         }
@@ -194,41 +211,43 @@ public class Customer extends Person {
         return saldo;
     }
 
-    public boolean update(ArrayList<ObjectInShop> staticLocations, ArrayList<Checkout> checkouts) {
-        boolean stopUpdating = false;
+    public void update(final ArrayList<ObjectInShop> staticLocations, final ArrayList<Checkout> checkouts) {
+        operation = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                switch (action) {
+                    case SHOPPING:
+                        Aisle aisle = getFirstItemLocation(staticLocations);
+                        if (location != aisle.getLocation()) {
+                            gotoLocation(aisle.getName(), staticLocations);
+                        }
 
-        switch (action) {
-            case SHOPPING:
-                Aisle aisle = getFirstItemLocation(staticLocations);
-                if (location != aisle.getLocation()) {
-                    super.action = super.action.WALKING;
-                    this.targetLocationName = aisle.getName();
-                    doThings(staticLocations);
-                    //gotoLocation(aisle.getName(), staticLocations);
-                }
+                        getItemsFromAisle(aisle);
 
-                getItemsFromAisle(aisle);
-
-                if (shoppingList.isEmpty()) {
-                    action = Action.CHOOSE_CHECKOUT;
+                        if (shoppingList.isEmpty()) {
+                            gotoLocation("Entrance/Exit", staticLocations);
+                            action = Action.LEAVING;
+                        }
+                        break;
+                    case CHOOSE_CHECKOUT:
+                        if (shoppingCart.isEmpty()) {
+                            operation.stop();
+                        } else {
+                            Checkout checkout = chooseCheckout(checkouts);
+                            checkout.addCustomer(me);
+                            collectedItemsCount = shoppingCart.size();
+                            action = Action.WAITING_AT_CHECKOUT;
+                        }
+                        break;
+                    case WAITING_AT_CHECKOUT:
+                        if (saldo < beginWithSaldo && shoppingCart.size() == collectedItemsCount) {
+                            gotoLocation("Entrance/Exit", staticLocations);
+                            action = Action.LEAVING;
+                        }
+                        break;
                 }
-                break;
-            case CHOOSE_CHECKOUT:
-                if (shoppingCart.isEmpty()) {
-                    stopUpdating = true;
-                } else {
-                    Checkout checkout = chooseCheckout(checkouts);
-                    checkout.addCustomer(this);
-                    action = action.WAITING_AT_CHECKOUT;
-                }
-                break;
-            case WAITING_AT_CHECKOUT:
-                if (shoppingCart.isEmpty()) {
-                    stopUpdating = true;
-                }
-                break;
-        }
-
-        return stopUpdating;
+            }
+        });
+        operation.start();
     }
 }

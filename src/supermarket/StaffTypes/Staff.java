@@ -13,7 +13,6 @@ public class Staff extends Person {
     Cashier cashier;
     Unloader unloader;
     Stocker stocker;
-    Supervisor supervisor;
     String function;
     
     
@@ -94,14 +93,6 @@ public class Staff extends Person {
      */
     public Stocker getStocker() {
         return stocker;
-    }
-    
-    /**
-     * Get supervisor class.
-     * @return supervisor
-     */
-    public Supervisor getSupervisor() {
-        return supervisor;
     }
 
     public ObjectInShop getWorkplace() {
