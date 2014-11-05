@@ -6,42 +6,18 @@ import supermarket.StaffTypes.Unloader;
 
 public class Truck extends ObjectInShop {
 
-    public enum Status {
-
-        AWAY, WAITING, UNLOADING, EMPTY
-    };
     private ArrayList<Item> items;
-    private Status status;
     private Unloader curUnloader;
 
     /**
      * creates a truck
      *     
-* @param status WAITING, UNLOADING, AWAY, EMPTY
+     * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
     public Truck(String name, Vector2f location) {
         super(name, location);
         items = new ArrayList<>();
-        status = Status.AWAY;
         curUnloader = null;
-    }
-
-    /**
-     * returns the status of the truck
-     *     
-* @return WAITING, UNLOADING, AWAY, EMPTY
-     */
-    public Status getStatus() {
-        return status;
-    }
-
-    /**
-     * sets the status of the truck
-     *     
-* @param status WAITING, UNLOADING, AWAY, EMPTY
-     */
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public ArrayList<Item> getItems() {
@@ -50,8 +26,8 @@ public class Truck extends ObjectInShop {
 
     /**
      * gets the current unloader which is unloading stuff from the truck
-     *     
-* @return The current unloader class
+     *
+     * @return The current unloader class
      */
     public Unloader getCurUnloader() {
         return curUnloader;
@@ -59,8 +35,8 @@ public class Truck extends ObjectInShop {
 
     /**
      * Sets the current unloader which is unloading stuff from the truck
-     *     
-* @param curUnloader the current unloader class
+     *
+     * @param curUnloader the current unloader class
      */
     public void setCurUnloader(Unloader curUnloader) {
         this.curUnloader = curUnloader;
@@ -69,8 +45,8 @@ public class Truck extends ObjectInShop {
     /**
      * unloads x amount of items from the truck (returns x items in the truck in
      * an array and removes them from the truck)
-     *     
-* @param numberOfItems The total number of items you want to unload
+     *
+     * @param numberOfItems The total number of items you want to unload
      * @return items
      */
     public ArrayList<Item> unload(int numberOfItems) {
