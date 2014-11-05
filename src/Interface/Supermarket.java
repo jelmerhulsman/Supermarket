@@ -278,6 +278,8 @@ public class Supermarket extends javax.swing.JFrame {
 //        g.setColor(Color.CYAN);
 //        for(Staff staff:flexibleStaff)
 //            g.drawRect((int)staff.getLocation().x, (int)staff.getLocation().y, 5, 5);
+       g.drawRect((int)unloader.getLocation().x, (int)unloader.getLocation().y, 5, 5);
+       g.drawRect((int)stocker.getLocation().x, (int)stocker.getLocation().y, 5, 5);
         
         g.setColor(Color.DARK_GRAY);
         g.drawRect((int)truck.getLocation().x, (int)truck.getLocation().y, 20, 40);
