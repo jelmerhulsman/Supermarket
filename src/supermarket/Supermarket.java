@@ -1,6 +1,5 @@
 package supermarket;
 
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,6 +7,7 @@ import supermarket.Item.Category;
 import supermarket.Customer.Stereotype;
 import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
+import supermarket.StaffTypes.Stocker;
 import supermarket.StaffTypes.Unloader;
 
 /**
@@ -27,6 +27,7 @@ public class Supermarket {
     private Truck truck;
     private ArrayList<ObjectInShop> staticLocations;
     private Unloader unloader;
+    private Stocker stocker;
     private Staff staff;
     private ArrayList<Item> availableItems;
     private ArrayList<Cashier> cashier;
@@ -72,6 +73,7 @@ public class Supermarket {
 
         //Create Staff members
         unloader = new Unloader("Jannes", storage);
+        stocker = new Stocker("Jan de Bierman", storage);
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -131,6 +133,10 @@ public class Supermarket {
 
             unloader = new Unloader("Jannes", storage);
             unloader.getItemsFromTruck(staticLocations);
+        }
+        if(!storage.getItems().isEmpty())
+        {
+            //stocker.getItemsFromStorage(staticLocations, Category.BEER);
         }
     }
 

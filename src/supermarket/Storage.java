@@ -77,6 +77,29 @@ public class Storage extends ObjectInShop {
         }
         return items;
     }
+    
+        public ArrayList<Item> getItems(int count) {
+
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "FROM supermarket.Item";
+            List itemsList = session.createQuery(hql).list();
+            for (int i = 0; i < count; i++) {
+                Iterator iterator = itemsList.iterator();
+                items.add((Item) iterator.next());
+            }
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return items;
+    }
 
     /**
      * return the item count from the item in the storage
@@ -91,10 +114,8 @@ public class Storage extends ObjectInShop {
             tx = session.beginTransaction();
             String hql = "SELECT I.name FROM supermarket.Item I";
             List itemsList = session.createQuery(hql).list();
-            for (Object o : itemsList)
-            {
-                if (itemName.equals(o))
-                {
+            for (Object o : itemsList) {
+                if (itemName.equals(o)) {
                     count++;
                 }
             }
@@ -141,7 +162,7 @@ public class Storage extends ObjectInShop {
      * @return the list of the items
      */
     public ArrayList<Item> moveItem(Item.Category cat, int amount) {
-        ArrayList<Item> items = new ArrayList<Item>();
+        ArrayList<Item> items = new ArrayList<>();
         ArrayList<Item> allItems = getItems();
         int counter = 0;
         for (int i = 0; i < allItems.size(); i++) {

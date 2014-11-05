@@ -1,8 +1,6 @@
 package supermarket;
 
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
-import java.util.ArrayList;
 
 /**
  *
@@ -15,8 +13,9 @@ public class ObjectInShop {
     protected float speed;
     protected ObjectInShop curLocObject;
 
-    public ObjectInShop(){}
-    
+    public ObjectInShop() {
+    }
+
     public ObjectInShop(String name, Vector2f location) {
         this.name = name;
         this.location = location;
@@ -42,13 +41,12 @@ public class ObjectInShop {
     }
 
     public boolean seekByName(String name) {
-        if (this.getName() == name) {
+        if (this.getName().equals(name)) {
             return true;
         } else {
             return false;
         }
     }
-
     /**
      * Moves this object to the specified location name
      *
@@ -56,5 +54,4 @@ public class ObjectInShop {
      * @param objects This method needs all the possible location objects in an
      * arraylist
      */
-
 }

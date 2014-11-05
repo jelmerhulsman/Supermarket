@@ -4,7 +4,7 @@ import supermarket.Checkout;
 import supermarket.Customer;
 
 public class Cashier extends Staff {
-    
+
     private Checkout checkout;
 
     /**

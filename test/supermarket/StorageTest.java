@@ -19,22 +19,22 @@ import supermarket.StaffTypes.*;
  * @author Sander
  */
 public class StorageTest {
-    
+
     public StorageTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -49,21 +49,19 @@ public class StorageTest {
         Unloader unloader = new Unloader("derp", instance);
         instance.setCurrentUnloader(unloader);
         Unloader result = null;
-        try{
-        result = instance.getCurrentUnloader();
-        }catch(Exception e){
+        try {
+            result = instance.getCurrentUnloader();
+        } catch (Exception e) {
             fail("failed because " + e);
         }
-        if(result != null){
-            
-        }else{
+        if (result != null) {
+        } else {
             fail("no unloader returned");
         }
     }
 
     //setCurrentUnloader is not tested, is already tested in the 
     //getCurrentunloader test
-
     /**
      * Test of getItems method, of class Storage.
      */
@@ -72,9 +70,8 @@ public class StorageTest {
         System.out.println("getItems");
         Storage instance = new Storage("storage", Vector2f.ZERO);
         ArrayList<Item> result = instance.getItems();
-        if(result.size()>0){
-            
-        }else{
+        if (result.size() > 0) {
+        } else {
             fail("Nothing returned (is database empty?)");
         }
         // TODO review the generated test code and remove the default call to fail.
@@ -89,15 +86,15 @@ public class StorageTest {
         System.out.println("addItem");
         Item item = new Item("Heimstel-Jan", 0.80f, Item.Category.BEER);
         Storage instance = new Storage("storage", Vector2f.ZERO);
-        try{
+        try {
             instance.addItem(item);
             System.out.println("addItem OK");
-        }catch(Exception e){
+        } catch (Exception e) {
             fail("Item was not added  " + e);
         }
-        
+
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -110,10 +107,8 @@ public class StorageTest {
         int amount = 1;
         Storage instance = new Storage("storage", Vector2f.ZERO);
         ArrayList<Item> result = instance.moveItem(cat, amount);
-        if(result.size() <= amount){
-            
-        }
-        else{
+        if (result.size() <= amount) {
+        } else {
             fail("did not return the righ amount of items");
         }
     }

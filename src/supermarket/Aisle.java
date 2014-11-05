@@ -13,7 +13,6 @@ public class Aisle extends ObjectInShop {
 
         EMPTY, STOCKED, FULL
     }
-    private String name;
     private Status status;
     private Stocker stocker;
     private ArrayList<Category> categories;
@@ -31,7 +30,7 @@ public class Aisle extends ObjectInShop {
 
         categories.add(category1);
     }
-    
+
     public Aisle(String name, Vector2f location, Category category1, Category category2) {
         super(name, location);
         this.name = name;
@@ -44,7 +43,7 @@ public class Aisle extends ObjectInShop {
         categories.add(category1);
         categories.add(category2);
     }
-    
+
     public Aisle(String name, Vector2f location, Category category1, Category category2, Category category3) {
         super(name, location);
         this.name = name;
@@ -57,15 +56,6 @@ public class Aisle extends ObjectInShop {
         categories.add(category1);
         categories.add(category2);
         categories.add(category3);
-    }
-
-    /**
-     * Gets the name of this Aisle
-     *
-     * @return The name e.g. "Snack Aisle" or w/e
-     */
-    public String getName() {
-        return name;
     }
 
     /**
