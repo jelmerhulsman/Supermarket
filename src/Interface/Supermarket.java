@@ -1,0 +1,364 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Interface;
+
+import com.jme3.math.Vector2f;
+import java.util.ArrayList;
+import java.util.Scanner;
+import supermarket.Aisle;
+import supermarket.Checkout;
+import supermarket.Customer;
+import supermarket.Department;
+import supermarket.Item;
+import supermarket.ObjectInShop;
+import supermarket.StaffTypes.Cashier;
+import supermarket.StaffTypes.Staff;
+import supermarket.StaffTypes.Stocker;
+import supermarket.StaffTypes.Unloader;
+import supermarket.Storage;
+import supermarket.Truck;
+
+/**
+ *
+ * @author Sander
+ */
+public class Supermarket extends javax.swing.JFrame {
+    
+    private final int MAX_CUSTOMERS = 20;
+    private final int MIN_STASH = 5;
+    private final int MAX_STASH = 25;
+    private ArrayList<Aisle> aisles;
+    private ArrayList<Checkout> checkouts;
+    private ArrayList<Department> departments;
+    private ArrayList<Item> order;
+    private Storage storage;
+    private Truck truck;
+    private ArrayList<ObjectInShop> staticLocations;
+    private Unloader unloader;
+    private Stocker stocker;
+    private Staff staff;
+    private ArrayList<Item> availableItems;
+    private ArrayList<Cashier> cashier;
+    private ArrayList<Item> shopItems;
+    private ArrayList<Customer> customers;
+    
+    /**
+     * Creates new form Supermarket
+     */
+    @SuppressWarnings("empty-statement")
+    public Supermarket() {
+        initComponents();
+        final int MAX_AISLES = 4;
+        final int MAX_ITEMS_PER_AISLE = 2;
+        final int MAX_CHECKOUTS = 4;
+        final int MAX_DEPARTMENTS = 2;
+        final int MAX_ITEMS_PER_DEPARTMENT = 1;
+        final int MAX_STAFF_MEMBERS = 6;
+        final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
+
+        //Create aisles
+        aisles = new ArrayList<>();
+        aisles.add(new Aisle("Liquor", new Vector2f(40, 40), Item.Category.BEER, Item.Category.LIQUOR, Item.Category.WINE));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(80, 80), Item.Category.BREAD, Item.Category.SPREAD, Item.Category.BREAKFAST));
+        aisles.add(new Aisle("Cooling", new Vector2f(20, 20), Item.Category.FROZEN, Item.Category.READY_TO_EAT, Item.Category.DAIRY));
+        aisles.add(new Aisle("Luxury", new Vector2f(60, 60), Item.Category.SNACK, Item.Category.SODA, Item.Category.CAFFEINE));
+        aisles.add(new Aisle("Durable", new Vector2f(20, 20), Item.Category.SPICES, Item.Category.FOREIGN, Item.Category.PRESERVATION));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(160, 160), Item.Category.VEGTABLES, Item.Category.FRUIT));
+        aisles.add(new Aisle("Nonfood", new Vector2f(60, 60), Item.Category.NONFOOD));
+
+        //Create checkouts
+        checkouts = new ArrayList<>();
+        for (int i = 0; i < MAX_CHECKOUTS; i++) {
+            checkouts.add(new Checkout(i + 1, new Vector2f(90 - 10 * i, 80)));
+        }
+
+        //Create departments
+        departments = new ArrayList<>();
+        for (int i = 0; i < MAX_DEPARTMENTS; i++) {
+            departments.add(new Department("Drinks Department", new Vector2f(50, 50)));
+
+        }
+
+        //Create storage and truck
+        storage = new Storage("Storage", new Vector2f(0, 50));
+        truck = new Truck("Truck", new Vector2f(0, 0));
+
+        //Create Staff members
+        unloader = new Unloader("Jannes", storage);
+        stocker = new Stocker("Jan de Bierman", storage);
+
+        //Assign locations in the shop
+        staticLocations = new ArrayList<>();
+        staticLocations.addAll(departments);
+        staticLocations.addAll(aisles);
+        staticLocations.addAll(checkouts);
+        staticLocations.add(storage);
+        staticLocations.add(truck);
+
+        //Add all unique items to a list
+        shopItems = new ArrayList<>();
+        shopItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
+        shopItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
+        shopItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
+        shopItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
+        shopItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
+        shopItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
+        shopItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
+        shopItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
+        shopItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
+
+        //List of customers
+        customers = new ArrayList<>();
+
+        //Choose debugger
+        chooseDebugger();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        list2 = new java.awt.List();
+        list3 = new java.awt.List();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addTab("tab2", jTabbedPane4);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(list2, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(list3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                    .addComponent(list3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab2", jPanel1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+
+        Supermarket simulation;
+        simulation = new Supermarket();
+        simulation.setVisible(true);
+        System.out.println("Supermarket initialized...");
+
+        while (true) { //Update loop
+            simulation.orderLoop();
+            simulation.customersLoop();
+
+            //simulation.customersLoop();
+            //Sleep at the end of the loop
+
+            
+            simulation.sleep(1000);
+        }
+    }
+    
+    private void orderLoop() {
+        ArrayList<Item> orderItems = new ArrayList<>();
+        for (Item shopItem : shopItems) {
+            int currentStash = storage.getItemCount(shopItem.getName());
+            if (currentStash < MIN_STASH) {
+                do {
+                    orderItems.add(new Item(shopItem));
+                    currentStash++;
+                } while (currentStash < MAX_STASH);
+            }
+        }
+
+        if (!orderItems.isEmpty()) {
+            truck.order(orderItems);
+
+            unloader = new Unloader("Jannes", storage);
+            unloader.getItemsFromTruck(staticLocations);
+        }
+        if(!storage.getItems().isEmpty())
+        {
+            //stocker.getItemsFromStorage(staticLocations, Category.BEER);
+        }
+    }
+
+    private void customersLoop() {
+        addEnteringCustomers();
+        
+        list2.removeAll();
+        list3.removeAll();
+        ArrayList<Customer> leavingCustomers = new ArrayList<>();
+        for (Customer customer : customers) {
+            boolean stopUpdating = customer.update(staticLocations, checkouts);
+            if (stopUpdating) {
+                leavingCustomers.add(customer);
+            }
+            list2.add(customer.getName());
+            try{
+                list3.add(customer.getCurLocObject().getName());
+            }catch(Exception e){
+                list3.add("Walking");
+            }
+        }
+
+        customers.removeAll(leavingCustomers);
+    }
+
+    private ArrayList<Customer> addEnteringCustomers() {
+        if (customers.size() < MAX_CUSTOMERS) {
+            int percent = 0;
+            if (customers.size() < MAX_CUSTOMERS * 0.3f) {
+                percent = 35;
+            } else if (customers.size() < MAX_CUSTOMERS * 0.8f) {
+                percent = 25;
+            } else {
+                percent = 15;
+            }
+
+            if (chanceOf(percent)) {
+                ArrayList<Customer.Stereotype> stereotype;
+                do {
+                    stereotype = new ArrayList<>();
+                    for (Customer.Stereotype s : Customer.Stereotype.values()) {
+                        if (chanceOf(25)) {
+                            stereotype.add(s);
+                        }
+                    }
+                } while (stereotype.size() != 1);
+
+                customers.add(new Customer("Nr. " + ((int) customers.size() + 1), stereotype.get(0), shopItems));
+            }
+        }
+
+        return customers;
+    }
+
+    private boolean chanceOf(int percent) {
+        return (int) (Math.random() * 101) <= percent;
+    }
+
+    private void sleep(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds); //1000 milliseconds is one second.
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void chooseDebugger() {
+        boolean loop = true;
+        do {
+            System.out.print("DEBUGGER: ");
+            String debugger = new Scanner(System.in).next();
+            debugger = debugger.trim();
+            debugger = debugger.toUpperCase();
+
+            switch (debugger) {
+                case "MORENO":
+                    Moreno();
+                    loop = false;
+                    break;
+                case "DYLAN":
+                    Dylan();
+                    loop = false;
+                    break;
+                case "SANDER":
+                    Sander();
+                    loop = false;
+                    break;
+                case "JELMER":
+                    Jelmer();
+                    loop = false;
+                    break;
+                case "BREAK":
+                    loop = false;
+                    break;
+            }
+        } while (loop);
+    }
+
+    private void Moreno() { //Moreno's testing area
+    }
+
+    private void Dylan() { //Dylan's testing area
+        cashier = new ArrayList<>();
+        Staff johanna = new Staff("Johanna", checkouts.get(0));
+        cashier.add(johanna.getCashier());
+
+        cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getName(), staticLocations);
+        cashier.get(0).getCashier().goToCheckout();
+    }
+
+    private void Sander() { //Sander's testing area
+    }
+
+    private void Jelmer() { //Jelmer's testing area
+    }
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane4;
+    private java.awt.List list2;
+    private java.awt.List list3;
+    // End of variables declaration//GEN-END:variables
+}
