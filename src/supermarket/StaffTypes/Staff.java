@@ -7,6 +7,7 @@ import supermarket.Item;
 import supermarket.ObjectInShop;
 import supermarket.Person;
 import supermarket.Storage;
+import supermarket.Truck;
 
 public class Staff extends Person {
 
@@ -47,8 +48,8 @@ public class Staff extends Person {
      * @param name
      * @param storage 
      */
-    public Staff(String name, Storage storage){
-        unloader = new Unloader(name, storage);
+    public Staff(String name, Storage storage, Truck truck){
+        unloader = new Unloader(name, storage, truck);
         this.function = "unloader";
         this.operation = new Thread();
     }

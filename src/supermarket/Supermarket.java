@@ -28,7 +28,7 @@ public class Supermarket {
     private ArrayList<ObjectInShop> staticLocations;
     private Unloader unloader;
     private Stocker stocker;
-    private Staff staff;
+    private ArrayList<Staff> flexibleStaff;
     private ArrayList<Item> availableItems;
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> shopItems;
@@ -72,8 +72,10 @@ public class Supermarket {
         truck = new Truck("Truck", new Vector2f(0, 0));
 
         //Create Staff members
-        unloader = new Unloader("Jannes", storage);
+        unloader = new Unloader("Jannes", storage, truck);
+        unloader.update(staticLocations);
         stocker = new Stocker("Jan de Bierman", storage);
+        stocker.update(staticLocations);
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -131,13 +133,6 @@ public class Supermarket {
 
         if (!orderItems.isEmpty()) {
             truck.order(orderItems);
-
-            unloader = new Unloader("Jannes", storage);
-            unloader.getItemsFromTruck(staticLocations);
-        }
-        if(!storage.getItems().isEmpty())
-        {
-            //stocker.getItemsFromStorage(staticLocations, Category.BEER);
         }
     }
 
