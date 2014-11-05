@@ -73,7 +73,7 @@ public class Person extends ObjectInShop {
         while (distanceToTarget > speed) {
             location.addLocal(moveX, moveY);
             distanceToTarget = location.distance(targetLocation);
-            System.out.println(className + " " + name + " is at" + location);
+            //System.out.println(className + " " + name + " is at" + location);
             sleep(100);
         }
         location = targetLocation;

@@ -5,6 +5,8 @@
 package Interface;
 
 import com.jme3.math.Vector2f;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Scanner;
 import supermarket.Aisle;
@@ -43,6 +45,7 @@ public class Supermarket extends javax.swing.JFrame {
     private ArrayList<Cashier> cashier;
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
+    Graphics g;
     
     /**
      * Creates new form Supermarket
@@ -57,7 +60,9 @@ public class Supermarket extends javax.swing.JFrame {
         final int MAX_ITEMS_PER_DEPARTMENT = 1;
         final int MAX_STAFF_MEMBERS = 6;
         final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
-
+        canvas1.setBackground(Color.white);
+        g = canvas1.getGraphics();
+        
         //Create aisles
         aisles = new ArrayList<>();
         aisles.add(new Aisle("Liquor", new Vector2f(40, 40), Item.Category.BEER, Item.Category.LIQUOR, Item.Category.WINE));
@@ -83,6 +88,7 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Create storage and truck
         storage = new Storage("Storage", new Vector2f(0, 50));
+        
         truck = new Truck("Truck", new Vector2f(0, 0));
 
         //Create Staff members
@@ -114,6 +120,9 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Choose debugger
         chooseDebugger();
+        
+        
+        
     }
 
     /**
@@ -126,14 +135,13 @@ public class Supermarket extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         list2 = new java.awt.List();
         list3 = new java.awt.List();
+        jPanel2 = new javax.swing.JPanel();
+        canvas1 = new java.awt.Canvas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jTabbedPane1.addTab("tab2", jTabbedPane4);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,7 +152,7 @@ public class Supermarket extends javax.swing.JFrame {
                 .addComponent(list2, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(list3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,10 +161,29 @@ public class Supermarket extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                     .addComponent(list3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(239, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel1);
+        jTabbedPane1.addTab("Customers", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Map", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,17 +231,40 @@ public class Supermarket extends javax.swing.JFrame {
         simulation = new Supermarket();
         simulation.setVisible(true);
         System.out.println("Supermarket initialized...");
-
+        
         while (true) { //Update loop
             simulation.orderLoop();
             simulation.customersLoop();
-
+            simulation.interfaceUpdate();
             //simulation.customersLoop();
             //Sleep at the end of the loop
 
             
             simulation.sleep(1000);
         }
+    }
+    
+    private void interfaceUpdate(){
+        g.clearRect(0, 0, 5000, 5000);
+        list2.removeAll();
+        list3.removeAll();
+        
+        g.setColor(Color.blue);
+        g.drawRect((int)storage.getLocation().x*4, (int)storage.getLocation().y*4, 20, 20);
+        
+        g.setColor(Color.green);
+        for(Aisle aisle:aisles){
+            g.drawRect((int)aisle.getLocation().x*4, (int)aisle.getLocation().y*4, 15, 15);
+            list2.add(aisle.getName());
+            list3.add(aisle.getLocation().x + "   " + aisle.getLocation().y);
+        }
+        
+        g.setColor(Color.red);
+        for(Customer customer:customers)
+            g.drawRect((int)customer.getLocation().x*4, (int)customer.getLocation().y*4, 10, 10);
+        
+        g.setColor(Color.DARK_GRAY);
+        g.drawRect((int)truck.getLocation().x, (int)truck.getLocation().y, 20, 40);
     }
     
     private void orderLoop() {
@@ -244,20 +294,16 @@ public class Supermarket extends javax.swing.JFrame {
     private void customersLoop() {
         addEnteringCustomers();
         
-        list2.removeAll();
-        list3.removeAll();
+        
+        
         ArrayList<Customer> leavingCustomers = new ArrayList<>();
         for (Customer customer : customers) {
             boolean stopUpdating = customer.update(staticLocations, checkouts);
             if (stopUpdating) {
                 leavingCustomers.add(customer);
             }
-            list2.add(customer.getName());
-            try{
-                list3.add(customer.getCurLocObject().getName());
-            }catch(Exception e){
-                list3.add("Walking");
-            }
+            
+            
         }
 
         customers.removeAll(leavingCustomers);
@@ -355,9 +401,10 @@ public class Supermarket extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Canvas canvas1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane4;
     private java.awt.List list2;
     private java.awt.List list3;
     // End of variables declaration//GEN-END:variables
