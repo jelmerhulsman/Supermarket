@@ -9,7 +9,7 @@ public class Customer extends Person {
 
     private enum Action {
 
-        SHOPPING, CHOOSE_CHECKOUT, WAITING_AT_CHECKOUT, LEAVING
+        ENTERING, SHOPPING, CHOOSING_CHECKOUT, WAITING, LEAVING
     }
 
     public enum Stereotype {
@@ -21,12 +21,11 @@ public class Customer extends Person {
     private float saldo;
     private Action action;
     private ArrayList<Item> shoppingList, shoppingCart;
-    
     private int collectedItemsCount;
     private Customer me;
 
-    public Customer(String name, Stereotype stereotype, ArrayList<Item> uniqueItems) {
-        super(name, new Vector2f(100, 100));
+    public Customer(String name, Vector2f spawnLocation, Stereotype stereotype, ArrayList<Item> uniqueItems) {
+        super(name, spawnLocation);
         this.stereotype = stereotype;
 
         switch (stereotype) {
@@ -185,15 +184,18 @@ public class Customer extends Person {
         shoppingList.removeAll(checkedItems);
     }
 
-    public Checkout chooseCheckout(ArrayList<Checkout> checkouts) {
+    public Checkout chooseCheckout(ArrayList<ObjectInShop> staticLocations) {
         Checkout c = null;
         int size = 1000;
 
-        for (Checkout checkout : checkouts) { //Check all open checkouts
-            Status status = checkout.getStatus();
-            if ((status == Status.OPEN || status == Status.CROWDED) && checkout.getCustomersCount() < size) {
-                c = checkout;
-                size = checkout.getCustomersCount();
+        for (Object o : staticLocations) { //Check all open checkouts
+            if (o instanceof Checkout) {
+                Checkout temp = (Checkout) o;
+                Status status = temp.getStatus();
+                if ((status == Status.OPEN || status == Status.CROWDED) && temp.getCustomersCount() < size) {
+                    c = temp;
+                    size = temp.getCustomersCount();
+                }
             }
         }
 
@@ -212,11 +214,14 @@ public class Customer extends Person {
         return saldo;
     }
 
-    public void update(final ArrayList<ObjectInShop> staticLocations, final ArrayList<Checkout> checkouts) {
+    @Override
+    public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {
             @Override
             public void run() {
                 switch (action) {
+                    case ENTERING:
+                        gotoCoords(new Vector2f(25, 80), true);
                     case SHOPPING:
                         Aisle aisle = getFirstItemLocation(staticLocations);
                         if (location != aisle.getLocation()) {
@@ -230,17 +235,19 @@ public class Customer extends Person {
                             action = Action.LEAVING;
                         }
                         break;
-                    case CHOOSE_CHECKOUT:
+                    case CHOOSING_CHECKOUT:
                         if (shoppingCart.isEmpty()) {
                             operation.stop();
                         } else {
-                            Checkout checkout = chooseCheckout(checkouts);
-                            checkout.addCustomer(me);
-                            collectedItemsCount = shoppingCart.size();
-                            action = Action.WAITING_AT_CHECKOUT;
+                            Checkout checkout = chooseCheckout(staticLocations);
+                            if (checkout != null) {
+                                checkout.addCustomer(me);
+                                collectedItemsCount = shoppingCart.size();
+                                action = Action.WAITING;
+                            }
                         }
                         break;
-                    case WAITING_AT_CHECKOUT:
+                    case WAITING:
                         if (saldo < beginWithSaldo && shoppingCart.size() == collectedItemsCount) {
                             gotoLocation("Entrance/Exit", staticLocations);
                             action = Action.LEAVING;

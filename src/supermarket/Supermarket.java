@@ -26,11 +26,8 @@ public class Supermarket {
     private Storage storage;
     private Truck truck;
     private ArrayList<ObjectInShop> staticLocations;
-    private Unloader unloader;
-    private Stocker stocker;
-    private ArrayList<Staff> flexibleStaff;
+    private ArrayList<Staff> staffMembers;
     private ArrayList<Item> availableItems;
-    private ArrayList<Cashier> cashier;
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
 
@@ -72,10 +69,12 @@ public class Supermarket {
         truck = new Truck("Truck", new Vector2f(0, 0));
 
         //Create Staff members
-        unloader = new Unloader("Jannes", storage, truck);
-        unloader.update(staticLocations);
-        stocker = new Stocker("Jan de Bierman", storage);
-        stocker.update(staticLocations);
+        staffMembers = new ArrayList<>();
+        staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, shopItems));
+        staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage, aisles.get(0)));
+        for (Staff staff: staffMembers) {
+            staff.update(staticLocations);
+        }
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -84,7 +83,7 @@ public class Supermarket {
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
         staticLocations.add(truck);
-        staticLocations.add(new ObjectInShop("Entrance/Exit", new Vector2f(100,100)));
+        staticLocations.add(new ObjectInShop("Entrance/Exit", new Vector2f(25, 100)));
 
         //Add all unique items to a list
         shopItems = new ArrayList<>();
@@ -133,13 +132,6 @@ public class Supermarket {
 
         if (!orderItems.isEmpty()) {
             truck.order(orderItems);
-            
-            unloader = new Unloader("Jannes", storage,truck);
-            unloader.getItemsFromTruck();
-        }
-        if(!storage.getItems().isEmpty())
-        {
-            stocker.getItemsFromStorage(Category.BEER);
         }
     }
 
@@ -152,7 +144,7 @@ public class Supermarket {
                 leavingCustomers.add(customer);
             }
         }
-
+        
         customers.removeAll(leavingCustomers);
     }
 
@@ -177,9 +169,17 @@ public class Supermarket {
                         }
                     }
                 } while (stereotype.size() != 1);
-
-                customers.add(new Customer("Nr. " + ((int) customers.size() + 1), stereotype.get(0), shopItems));
-                customers.get(customers.size() - 1).update(staticLocations, checkouts);
+                
+                
+                for (ObjectInShop o : staticLocations)
+                {
+                    if (o.getName().equals("Entrance/Exit"))
+                    {
+                        String name = "Nr. " + ((int) customers.size() + 1);
+                        customers.add(new Customer(name, o.getLocation(), stereotype.get(0), shopItems));
+                        customers.get(customers.size() - 1).update(staticLocations);
+                    }
+                }
             }
         }
 
@@ -234,12 +234,6 @@ public class Supermarket {
     }
 
     private void Dylan() { //Dylan's testing area
-        cashier = new ArrayList<>();
-        Staff johanna = new Staff("Johanna", checkouts.get(0));
-        cashier.add(johanna.getCashier());
-
-        cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getName(), staticLocations);
-        cashier.get(0).getCashier().goToCheckout();
     }
 
     private void Sander() { //Sander's testing area

@@ -29,23 +29,16 @@ import supermarket.Truck;
 public class Supermarket extends javax.swing.JFrame {
     
     private final int MAX_CUSTOMERS = 20;
-    private final int MIN_STASH = 5;
-    private final int MAX_STASH = 25;
     private ArrayList<Aisle> aisles;
     private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;
-    private ArrayList<Item> order;
     private Storage storage;
     private Truck truck;
     private ArrayList<ObjectInShop> staticLocations;
-    private Unloader unloader;
-    private Stocker stocker;
-    private ArrayList<Staff> flexibleStaff;
-    private ArrayList<Item> availableItems;
-    private ArrayList<Cashier> cashier;
+    private ArrayList<Staff> staffMembers;
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
-    Graphics g;
+    private Graphics g;
     
     /**
      * Creates new form Supermarket
@@ -61,9 +54,21 @@ public class Supermarket extends javax.swing.JFrame {
         final int MAX_STAFF_MEMBERS = 6;
         final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
         
+        //Graphics
         canvas1.setBackground(Color.white);
         g = canvas1.getGraphics();
         
+        //Add all unique items to a list
+        shopItems = new ArrayList<>();
+        shopItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
+        shopItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
+        shopItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
+        shopItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
+        shopItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
+        shopItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
+        shopItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
+        shopItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
+        shopItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
         
         //Create aisles
         aisles = new ArrayList<>();
@@ -93,10 +98,12 @@ public class Supermarket extends javax.swing.JFrame {
         truck = new Truck("Truck", new Vector2f(0, 0));
 
         //Create Staff members
-        unloader = new Unloader("Jannes", storage, truck);
-        unloader.update(staticLocations);
-        stocker = new Stocker("Jan de Bierman", storage);
-        stocker.update(staticLocations);
+        staffMembers = new ArrayList<>();
+        staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, shopItems));
+        staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage, aisles.get(0)));
+        for (Staff staff: staffMembers) {
+            staff.update(staticLocations);
+        }
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -107,26 +114,13 @@ public class Supermarket extends javax.swing.JFrame {
         staticLocations.add(truck);
         staticLocations.add(new ObjectInShop("Entrance/Exit", new Vector2f(100,100)));
 
-        //Add all unique items to a list
-        shopItems = new ArrayList<>();
-        shopItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
-        shopItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
-        shopItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
-        shopItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
-        shopItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
-        shopItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
-        shopItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
-        shopItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
-        shopItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
+        
 
         //List of customers
         customers = new ArrayList<>();
 
         //Choose debugger
         chooseDebugger();
-        
-        
-        
     }
 
     /**
@@ -237,13 +231,10 @@ public class Supermarket extends javax.swing.JFrame {
         System.out.println("Supermarket initialized...");
         
         while (true) { //Update loop
-            simulation.orderLoop();
             simulation.customersLoop();
             simulation.interfaceUpdate();
-            //simulation.customersLoop();
-            //Sleep at the end of the loop
-
             
+            //Sleep at the end of the loop
             simulation.sleep(1000);
         }
     }
@@ -276,37 +267,13 @@ public class Supermarket extends javax.swing.JFrame {
             g.drawRect((int)checkout.getLocation().x, (int)checkout.getLocation().y, 10, 10);
         
 //        g.setColor(Color.CYAN);
-//        for(Staff staff:flexibleStaff)
+//        for(Staff staff:staffMembers)
 //            g.drawRect((int)staff.getLocation().x, (int)staff.getLocation().y, 5, 5);
-       g.drawRect((int)unloader.getLocation().x, (int)unloader.getLocation().y, 5, 5);
-       g.drawRect((int)stocker.getLocation().x, (int)stocker.getLocation().y, 5, 5);
+//       g.drawRect((int)unloader.getLocation().x, (int)unloader.getLocation().y, 5, 5);
+//       g.drawRect((int)stocker.getLocation().x, (int)stocker.getLocation().y, 5, 5);
         
         g.setColor(Color.DARK_GRAY);
         g.drawRect((int)truck.getLocation().x, (int)truck.getLocation().y, 20, 40);
-    }
-    
-    private void orderLoop() {
-        ArrayList<Item> orderItems = new ArrayList<>();
-        for (Item shopItem : shopItems) {
-            int currentStash = storage.getItemCount(shopItem.getName());
-            if (currentStash < MIN_STASH) {
-                do {
-                    orderItems.add(new Item(shopItem));
-                    currentStash++;
-                } while (currentStash < MAX_STASH);
-            }
-        }
-
-        if (!orderItems.isEmpty()) {
-            truck.order(orderItems);
-            
-            unloader = new Unloader("Jannes", storage,truck);
-            unloader.getItemsFromTruck();
-        }
-        if(!storage.getItems().isEmpty())
-        {
-            stocker.getItemsFromStorage(Item.Category.BEER);
-        }
     }
 
     private void customersLoop() {
@@ -322,7 +289,7 @@ public class Supermarket extends javax.swing.JFrame {
         customers.removeAll(leavingCustomers);
     }
 
-    private ArrayList<Customer> addEnteringCustomers() {
+    private void addEnteringCustomers() {
         if (customers.size() < MAX_CUSTOMERS) {
             int percent = 0;
             if (customers.size() < MAX_CUSTOMERS * 0.3f) {
@@ -343,13 +310,19 @@ public class Supermarket extends javax.swing.JFrame {
                         }
                     }
                 } while (stereotype.size() != 1);
-
-                customers.add(new Customer("Nr. " + ((int) customers.size() + 1), stereotype.get(0), shopItems));
-                customers.get(customers.size() - 1).update(staticLocations, checkouts);
+                
+                
+                for (ObjectInShop o : staticLocations)
+                {
+                    if (o.getName().equals("Entrance/Exit"))
+                    {
+                        String name = "Nr. " + ((int) customers.size() + 1);
+                        customers.add(new Customer("CUSTOMER " + name, o.getLocation(), stereotype.get(0), shopItems));
+                        customers.get(customers.size() - 1).update(staticLocations);
+                    }
+                }
             }
         }
-
-        return customers;
     }
 
     private boolean chanceOf(int percent) {
@@ -400,12 +373,6 @@ public class Supermarket extends javax.swing.JFrame {
     }
 
     private void Dylan() { //Dylan's testing area
-        cashier = new ArrayList<>();
-        Staff johanna = new Staff("Johanna", checkouts.get(0));
-        cashier.add(johanna.getCashier());
-
-        cashier.get(0).gotoLocation(cashier.get(0).getWorkplace().getName(), staticLocations);
-        cashier.get(0).getCashier().goToCheckout();
     }
 
     private void Sander() { //Sander's testing area

@@ -1,5 +1,6 @@
 package supermarket.StaffTypes;
 
+import com.jme3.math.Vector2f;
 import supermarket.Checkout;
 import supermarket.Customer;
 
@@ -13,9 +14,8 @@ public class Cashier extends Staff {
      * @param name Specify the name of this person
      * @param workplace Specify the workspace of this person
      */
-    public Cashier(String name, Checkout checkout) {
-        super(name);
-        workplace = checkout;
+    public Cashier(String name, Vector2f spawnLocation, Checkout checkout) {
+        super(name, spawnLocation);
         this.checkout = checkout;
     }
 
@@ -24,8 +24,8 @@ public class Cashier extends Staff {
      * checkout.
      */
     public void goToCheckout() {
-        if (this.location == this.workplace.getLocation()) {
-            this.checkout.open(this);
+        if (location == checkout.getLocation()) {
+            checkout.open(this);
         }
     }
 
@@ -33,14 +33,14 @@ public class Cashier extends Staff {
      * Help the customer.
      */
     public void processCustsomer() {
-        Customer c = this.checkout.getFirstCustomer();
+        Customer c = checkout.getFirstCustomer();
         if (c != null) {
-            float toPay = this.checkout.printReceipt(c.getShoppingCart());
+            float toPay = checkout.printReceipt(c.getShoppingCart());
             c.setSaldo(c.getSaldo() - toPay);
-            this.checkout.removeFirstCustomer();
+            checkout.removeFirstCustomer();
         } else {
-            if (this.checkout.getStatus() == Checkout.Status.CLOSING) {
-                this.checkout.close();
+            if (checkout.getStatus() == Checkout.Status.CLOSING) {
+                checkout.close();
             }
         }
     }

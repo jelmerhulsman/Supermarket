@@ -1,5 +1,6 @@
 package supermarket.StaffTypes;
 
+import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Aisle;
 import supermarket.Item;
@@ -17,20 +18,18 @@ public class Stocker extends Staff {
     private Storage storage;
     private Aisle aisle;
 
-    public Stocker(String name, Storage storage) {
-        super(name);
-        workplace = storage;
+    public Stocker(String name, Vector2f spawnLocation, Storage storage, Aisle aisle) {
+        super(name, spawnLocation);
         
         action = Action.WAITING;
         this.storage = storage;
+        this.aisle = aisle;
     }
 
     public void getItemsFromStorage(Category category) {
         if (!storage.getItems().isEmpty()) {
             System.out.println("STAFF MEMBER " + name + " is picking up items from storage...");
-            items.addAll(storage.getItems(maxItems, category));
-        } else {
-            doNothing();
+            items.addAll(storage.getItems(MAX_ITEMS, category));
         }
     }
 
@@ -41,7 +40,7 @@ public class Stocker extends Staff {
     public void putItemsInAisle() {
  
             System.out.println("STOCKER " + name + " is picking up items from storage...");
-            //items.addAll(storage.getItems(maxItems));
+            //items.addAll(storage.getItems(MAX_ITEMS));
             sleep(items.size() * ITEM_INTERACTION_TIME);
         }
     
@@ -49,9 +48,9 @@ public class Stocker extends Staff {
     {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
-                Aisle tempAisle = (Aisle) o;
-                if (tempAisle.getCategories().contains(items.get(0).getCategory())) {
-                    return tempAisle;
+                Aisle temp = (Aisle) o;
+                if (temp.getCategories().contains(items.get(0).getCategory())) {
+                    return temp;
                 }
             }
         }
@@ -66,6 +65,7 @@ public class Stocker extends Staff {
         }
     }
     
+    @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {
             @Override
