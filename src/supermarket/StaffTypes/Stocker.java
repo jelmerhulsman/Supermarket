@@ -8,56 +8,42 @@ import supermarket.ObjectInShop;
 import supermarket.Storage;
 
 public class Stocker extends Staff {
-    
+
     private enum Action {
+
         GET_ITEMS, STORE_ITEMS, WAITING
     }
-    
     private Action action;
     private Storage storage;
     private Aisle aisle;
+    private boolean isWorking;
 
     public Stocker(String name, Storage storage) {
         super(name);
         workplace = storage;
-        
+
         action = Action.WAITING;
         this.storage = storage;
     }
 
-    public void getItemsFromStorage(Category category) {
-        if (!storage.getItems().isEmpty()) {
-            System.out.println("STAFF MEMBER " + name + " is picking up items from storage...");
-            items.addAll(storage.getItems(maxItems, category));
-        } else {
-            doNothing();
+    public void getItemsFromStorage() {
+        System.out.println("STAFF MEMBER " + name + " is picking up items from storage...");
+        for (Category category : aisle.getCategories()) {
+            if (storage.getItems(storage.getItems().size(), category).size() > 0) {
+                items.addAll(storage.getItems(maxItems, category));
+                sleep(items.size() * ITEM_INTERACTION_TIME);
+            }
         }
+    }
+
+    public boolean GetIsWorking() {
+        return isWorking;
     }
 
     public void setAisle(Aisle aisle) {
         this.aisle = aisle;
     }
 
-    public void putItemsInAisle() {
- 
-            System.out.println("STOCKER " + name + " is picking up items from storage...");
-            //items.addAll(storage.getItems(maxItems));
-            sleep(items.size() * ITEM_INTERACTION_TIME);
-        }
-    
-    public Aisle getAisleOfFirstItem(ArrayList<ObjectInShop> staticLocations)
-    {
-        for (ObjectInShop o : staticLocations) {
-            if (o instanceof Aisle) {
-                Aisle tempAisle = (Aisle) o;
-                if (tempAisle.getCategories().contains(items.get(0).getCategory())) {
-                    return tempAisle;
-                }
-            }
-        }
-        
-        return null;
-    }
     public void storeItemsInAisle() {
         for (Item i : items) {
             System.out.println("Stocker " + name + " is storing item" + i.getName() + " in aisle " + aisle.getName());
@@ -65,7 +51,7 @@ public class Stocker extends Staff {
             sleep(ITEM_INTERACTION_TIME);
         }
     }
-    
+
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {
             @Override
@@ -73,20 +59,33 @@ public class Stocker extends Staff {
                 switch (action) {
                     case GET_ITEMS:
                         gotoLocation("Storage", staticLocations);
-                        //getItemsFromStorage(Catego);
-                        action = Action.STORE_ITEMS;
+                        if (storage.getItems().isEmpty()) {
+                            action = action.WAITING;
+                        } else {
+                            getItemsFromStorage();
+                            isWorking = true;
+                            action = Action.STORE_ITEMS;
+                        }
                         break;
                     case STORE_ITEMS:
-                        aisle = getAisleOfFirstItem(staticLocations);
                         gotoLocation(aisle.getName(), staticLocations);
                         storeItemsInAisle();
+                        isWorking = true;
+                        action = action.GET_ITEMS;
+
                         break;
                     case WAITING:
-                        
+                        isWorking = false;
+                        if (!storage.getItems().isEmpty()) {
+                            action = action.GET_ITEMS;
+                        } else {
+                            action = action.WAITING;
+                        }
                         break;
                 }
             }
         });
+        operation.setName(this.getName() + " Thread");
         operation.start();
     }
 }

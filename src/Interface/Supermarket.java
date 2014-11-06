@@ -27,7 +27,7 @@ import supermarket.Truck;
  * @author Sander
  */
 public class Supermarket extends javax.swing.JFrame {
-    
+
     private final int MAX_CUSTOMERS = 20;
     private final int MIN_STASH = 5;
     private final int MAX_STASH = 25;
@@ -46,7 +46,7 @@ public class Supermarket extends javax.swing.JFrame {
     private ArrayList<Item> shopItems;
     private ArrayList<Customer> customers;
     Graphics g;
-    
+
     /**
      * Creates new form Supermarket
      */
@@ -60,11 +60,11 @@ public class Supermarket extends javax.swing.JFrame {
         final int MAX_ITEMS_PER_DEPARTMENT = 1;
         final int MAX_STAFF_MEMBERS = 6;
         final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
-        
+
         canvas1.setBackground(Color.white);
         g = canvas1.getGraphics();
-        
-        
+
+
         //Create aisles
         aisles = new ArrayList<>();
         aisles.add(new Aisle("Liquor", new Vector2f(40, 60), Item.Category.BEER, Item.Category.LIQUOR, Item.Category.WINE));
@@ -94,9 +94,7 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Create Staff members
         unloader = new Unloader("Jannes", storage, truck);
-        unloader.update(staticLocations);
         stocker = new Stocker("Jan de Bierman", storage);
-        stocker.update(staticLocations);
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -105,7 +103,7 @@ public class Supermarket extends javax.swing.JFrame {
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
         staticLocations.add(truck);
-        staticLocations.add(new ObjectInShop("Entrance/Exit", new Vector2f(100,100)));
+        staticLocations.add(new ObjectInShop("Entrance/Exit", new Vector2f(100, 100)));
 
         //Add all unique items to a list
         shopItems = new ArrayList<>();
@@ -124,9 +122,9 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Choose debugger
         chooseDebugger();
-        
-        
-        
+
+        stocker.update(staticLocations);
+        unloader.update(staticLocations);
     }
 
     /**
@@ -235,7 +233,7 @@ public class Supermarket extends javax.swing.JFrame {
         simulation = new Supermarket();
         simulation.setVisible(true);
         System.out.println("Supermarket initialized...");
-        
+
         while (true) { //Update loop
             simulation.orderLoop();
             simulation.customersLoop();
@@ -243,48 +241,53 @@ public class Supermarket extends javax.swing.JFrame {
             //simulation.customersLoop();
             //Sleep at the end of the loop
 
-            
+
             simulation.sleep(1000);
         }
     }
-    
-    private void interfaceUpdate(){
+
+    private void interfaceUpdate() {
         g.clearRect(0, 0, 5000, 5000);
         list2.removeAll();
         list3.removeAll();
-        
+
         g.setColor(Color.blue);
-        g.drawRect((int)storage.getLocation().x*4, (int)storage.getLocation().y*4, 20, 20);
-        
+        g.drawRect((int) storage.getLocation().x * 4, (int) storage.getLocation().y * 4, 20, 20);
+
         g.setColor(Color.green);
-        for(Aisle aisle:aisles)
-            g.drawRect((int)aisle.getLocation().x*4, (int)aisle.getLocation().y*4, 15, 30);
-        
+        for (Aisle aisle : aisles) {
+            g.drawRect((int) aisle.getLocation().x * 4, (int) aisle.getLocation().y * 4, 15, 30);
+        }
+
         g.setColor(Color.red);
-        for(Customer customer:customers){
-            g.drawRect((int)customer.getLocation().x*4, (int)customer.getLocation().y*4, 10, 10);
+        for (Customer customer : customers) {
+            g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
+            g.drawString(customer.getName(), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
             list2.add(customer.getName());
             list3.add(customer.getLocation().x + "   " + customer.getLocation().y);
         }
-        
+
+
         g.setColor(Color.PINK);
-        for(Department department:departments)
-            g.drawRect((int)department.getLocation().x, (int)department.getLocation().y, 15, 15);
-        
+        for (Department department : departments) {
+            g.drawRect((int) department.getLocation().x, (int) department.getLocation().y, 15, 15);
+        }
+
         g.setColor(Color.orange);
-        for(Checkout checkout:checkouts)
-            g.drawRect((int)checkout.getLocation().x, (int)checkout.getLocation().y, 10, 10);
-        
+        for (Checkout checkout : checkouts) {
+            g.drawRect((int) checkout.getLocation().x, (int) checkout.getLocation().y, 10, 10);
+        }
+
         g.setColor(Color.CYAN);
 //        for(Staff staff:flexibleStaff)
 //            g.drawRect((int)staff.getLocation().x, (int)staff.getLocation().y, 5, 5);
-       g.drawRect((int)unloader.getLocation().x, (int)unloader.getLocation().y, 5, 5);
-       g.drawRect((int)stocker.getLocation().x, (int)stocker.getLocation().y, 5, 5);
-        
+        g.drawRect((int) unloader.getLocation().x * 4, (int) unloader.getLocation().y * 4, 5, 5);
+        g.drawRect((int) stocker.getLocation().x * 4, (int) stocker.getLocation().y * 4, 5, 5);
+
         g.setColor(Color.DARK_GRAY);
-        g.drawRect((int)truck.getLocation().x, (int)truck.getLocation().y, 20, 40);
+        g.drawRect((int) truck.getLocation().x, (int) truck.getLocation().y, 20, 40);
     }
-    
+
     private void orderLoop() {
         ArrayList<Item> orderItems = new ArrayList<>();
         for (Item shopItem : shopItems) {
@@ -299,14 +302,18 @@ public class Supermarket extends javax.swing.JFrame {
 
         if (!orderItems.isEmpty()) {
             truck.order(orderItems);
-            
-            unloader = new Unloader("Jannes", storage,truck);
-            unloader.getItemsFromTruck();
+
+
+
         }
-        if(!storage.getItems().isEmpty())
-        {
-            stocker.getItemsFromStorage(Item.Category.BEER);
+        if (!storage.getItems().isEmpty()) {
+            for (Aisle aisle : aisles) {
+                if (aisle.getItems().size() < 10 && !stocker.GetIsWorking()) {
+                    stocker.setAisle(aisle);
+                }
+            }
         }
+
     }
 
     private void customersLoop() {
@@ -413,7 +420,6 @@ public class Supermarket extends javax.swing.JFrame {
 
     private void Jelmer() { //Jelmer's testing area
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
     private javax.swing.JPanel jPanel1;

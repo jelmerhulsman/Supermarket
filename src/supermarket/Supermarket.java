@@ -73,9 +73,9 @@ public class Supermarket {
 
         //Create Staff members
         unloader = new Unloader("Jannes", storage, truck);
-        unloader.update(staticLocations);
+        
         stocker = new Stocker("Jan de Bierman", storage);
-        stocker.update(staticLocations);
+        
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -102,13 +102,17 @@ public class Supermarket {
         customers = new ArrayList<>();
 
         //Choose debugger
-        chooseDebugger();
+        unloader.update(staticLocations);
+        stocker.update(staticLocations);
+        
     }
 
     public static void main(String[] args) {
         Supermarket simulation = new Supermarket();
         System.out.println("Supermarket initialized...");
 
+        
+        
         while (true) { //Update loop
             simulation.orderLoop();
             simulation.customersLoop();
@@ -134,12 +138,12 @@ public class Supermarket {
         if (!orderItems.isEmpty()) {
             truck.order(orderItems);
             
-            unloader = new Unloader("Jannes", storage,truck);
-            unloader.getItemsFromTruck();
+            
+            unloader.update(staticLocations);
         }
         if(!storage.getItems().isEmpty())
         {
-            stocker.getItemsFromStorage(Category.BEER);
+            stocker.update(staticLocations);
         }
     }
 
