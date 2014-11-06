@@ -105,7 +105,7 @@ public class Supermarket extends javax.swing.JFrame {
         //Create storage and truck
         storage = new Storage("Storage", new Vector2f(0, 50));
         truck = new Truck("Truck", new Vector2f(0, 0));
-        entrance = new ObjectInShop("Entrance/Exit", new Vector2f(100, 100));
+        entrance = new ObjectInShop("Entrance/Exit", new Vector2f(25, 100));
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -120,9 +120,6 @@ public class Supermarket extends javax.swing.JFrame {
         staffMembers = new ArrayList<>();
         staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, shopItems));
         staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage, aisles.get(0)));
-        for (Staff staff : staffMembers) {
-            staff.update(staticLocations);
-        }
 
         //List of customers
         customers = new ArrayList<>();
@@ -443,16 +440,28 @@ public class Supermarket extends javax.swing.JFrame {
         simulation.setVisible(true);
         System.out.println("Supermarket initialized...");
 
+        simulation.staffUpdate();
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.aislesLoop();
             simulation.interfaceUpdate();
-
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
     }
 
+    private void staffUpdate()
+    {
+        for(Staff staff : staffMembers)
+        {
+            if(staff.getFunction().equals("stocker"))
+            {
+                
+                Stocker a = staff.getStocker();
+                a.update(staticLocations);
+            }
+        }
+    }
     private void interfaceUpdate() {
         g.clearRect(0, 0, 5000, 5000);
         list2.removeAll();

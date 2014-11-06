@@ -48,7 +48,7 @@ public class Customer extends Person {
         }
 
         beginWithSaldo = saldo;
-        action = Action.SHOPPING;
+        action = Action.ENTERING;
         shoppingList = generateShoppingList(stereotype, uniqueItems);
         shoppingCart = new ArrayList<>();
         collectedItemsCount = 0;
@@ -226,7 +226,9 @@ public class Customer extends Person {
             public void run() {
                 switch (action) {
                     case ENTERING:
-                        gotoCoords(new Vector2f(25, 80), true);
+                        gotoCoords(location);
+                        gotoCoords(new Vector2f(location.x, 80));
+                        action = Action.SHOPPING;
                     case SHOPPING:
                         Aisle aisle = getFirstItemLocation(staticLocations);
                         if (location != aisle.getLocation()) {

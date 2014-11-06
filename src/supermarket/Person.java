@@ -13,7 +13,7 @@ public class Person extends ObjectInShop {
 
     public Person() {
     }
-    
+
     public Person(String name, Vector2f spawnLocation) {
         super(name, spawnLocation);
         operation = new Thread();
@@ -32,7 +32,7 @@ public class Person extends ObjectInShop {
         }
 
         Vector2f targetLocation = targetObject.getLocation();
-        
+
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
@@ -42,25 +42,27 @@ public class Person extends ObjectInShop {
 
         String className = this.getClass().getName().substring(12);
         System.out.println(className + " " + name + " is going to " + targetName);
-        
-        float distanceToTarget = location.distance(targetLocation);
-        while (distanceToTarget > speed) {
-            location.addLocal(moveX, moveY);
-            distanceToTarget = location.distance(targetLocation);
 
+        float distanceToTarget = location.distance(targetLocation);
+        if (distanceToTarget > speed) {
+            while (distanceToTarget > speed) {
+                location.addLocal(moveX, moveY);
+                distanceToTarget = location.distance(targetLocation);
+
+                sleep(STEP_TIME);
+            }
+        } else {
             sleep(STEP_TIME);
         }
+
         location = targetLocation;
         curLocObject = targetObject;
         System.out.println(className + " " + name + " has reached " + targetName);
 
     }
-    
-    public void gotoCoords(Vector2f targetLocation, boolean absolute) {
-        if (!absolute) {
-            targetLocation = targetLocation.add(location);
-        }
-        
+
+    public void gotoCoords(Vector2f targetLocation) {
+
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
@@ -70,15 +72,19 @@ public class Person extends ObjectInShop {
 
         String className = this.getClass().getName().substring(12);
         System.out.println(className + " " + name + " is going to " + targetLocation.toString());
-        
-        float distanceToTarget = location.distance(targetLocation);
-        while (distanceToTarget > speed) {
-            location.addLocal(moveX, moveY);
-            distanceToTarget = location.distance(targetLocation);
 
+        float distanceToTarget = location.distance(targetLocation);
+        if (distanceToTarget > speed) {
+            while (distanceToTarget > speed) {
+                location.addLocal(moveX, moveY);
+                distanceToTarget = location.distance(targetLocation);
+
+                sleep(STEP_TIME);
+            }
+        } else {
             sleep(STEP_TIME);
         }
-        
+
         location = targetLocation;
         System.out.println(className + " " + name + " has reached " + targetLocation.toString());
     }
@@ -90,6 +96,7 @@ public class Person extends ObjectInShop {
             operation.currentThread().interrupt();
         }
     }
-    
-    public void update(final ArrayList<ObjectInShop> staticLocations) {};
+
+    public void update(final ArrayList<ObjectInShop> staticLocations) {
+    }
 }
