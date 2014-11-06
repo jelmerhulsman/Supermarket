@@ -39,10 +39,8 @@ public class Person extends ObjectInShop {
 
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
-
-        String className = this.getClass().getName().substring(12);
-        System.out.println(className + " " + name + " is going to " + targetName);
-
+        
+        System.out.println(name + " is going to " + targetName);
         float distanceToTarget = location.distance(targetLocation);
         if (distanceToTarget > speed) {
             while (distanceToTarget > speed) {
@@ -57,11 +55,11 @@ public class Person extends ObjectInShop {
         
         location = targetLocation;
         curLocObject = targetObject;
-        System.out.println(className + " " + name + " has reached " + targetName);
+        System.out.println(name + " has reached " + targetName);
 
     }
 
-    public void gotoCoords(Vector2f targetLocation) {
+    public void gotoCoords(Vector2f targetLocation, String targetName) {
 
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
@@ -70,9 +68,7 @@ public class Person extends ObjectInShop {
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
 
-        String className = this.getClass().getName().substring(12);
-        System.out.println(className + " " + name + " is going to " + targetLocation.toString());
-
+        System.out.println(name + " is going to " + targetName);
         float distanceToTarget = location.distance(targetLocation);
         if (distanceToTarget > speed) {
             while (distanceToTarget > speed) {
@@ -86,7 +82,7 @@ public class Person extends ObjectInShop {
         }
 
         location = targetLocation;
-        System.out.println(className + " " + name + " has reached " + targetLocation.toString());
+        System.out.println(name + " has reached " + targetName);
     }
 
     public void sleep(int milliseconds) {

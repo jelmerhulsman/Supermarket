@@ -53,7 +53,7 @@ public class Storage extends ObjectInShop {
     }
 
     /**
-     * returs a list of all the items in teh storage
+     * returs a list of all the items in the storage
      *
      * @return items
      */

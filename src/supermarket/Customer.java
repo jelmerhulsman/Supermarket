@@ -226,8 +226,8 @@ public class Customer extends Person {
             public void run() {
                 switch (action) {
                     case ENTERING:
-                        gotoCoords(location);
-                        gotoCoords(new Vector2f(location.x, 80));
+                        String targetName = "Entrance";
+                        gotoCoords(new Vector2f(location.x, location.y - 20), targetName);
                         action = Action.SHOPPING;
                     case SHOPPING:
                         Aisle aisle = getFirstItemLocation(staticLocations);

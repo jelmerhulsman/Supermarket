@@ -29,7 +29,7 @@ public class ObjectInShop {
     }
 
     public Vector2f getLocation() {
-        return location;
+        return new Vector2f(location);
     }
 
     public boolean seekByName(String name) {
