@@ -5,10 +5,9 @@ import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 
 public class Person extends ObjectInShop {
-    
+
     final protected int ITEM_INTERACTION_TIME = 250;
     final private int STEP_TIME = 100;
-    
     protected Thread operation;
     protected float speed;
 

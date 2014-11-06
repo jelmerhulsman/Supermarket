@@ -166,6 +166,11 @@ public class Customer extends Person {
         return null;
     }
 
+    public ArrayList<Item> getShoppingList() {
+        return shoppingList;
+    }
+
+    
     public void getItemsFromAisle(Aisle aisle) {
         ArrayList<Category> aisleCategories = aisle.getCategories();
         ArrayList<Item> checkedItems = new ArrayList<>();
