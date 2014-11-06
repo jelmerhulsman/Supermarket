@@ -48,7 +48,7 @@ public class Customer extends Person {
         }
 
         beginWithSaldo = saldo;
-        action = Action.SHOPPING;
+        action = Action.ENTERING;
         shoppingList = generateShoppingList(stereotype, uniqueItems);
         shoppingCart = new ArrayList<>();
         collectedItemsCount = 0;
@@ -151,7 +151,7 @@ public class Customer extends Person {
         return items;
     }
 
-    public Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
+    private Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
                 Aisle aisle = (Aisle) o;
@@ -171,7 +171,7 @@ public class Customer extends Person {
     }
 
     
-    public void getItemsFromAisle(Aisle aisle) {
+    private void getItemsFromAisle(Aisle aisle) {
         ArrayList<Category> aisleCategories = aisle.getCategories();
         ArrayList<Item> checkedItems = new ArrayList<>();
 
@@ -226,7 +226,9 @@ public class Customer extends Person {
             public void run() {
                 switch (action) {
                     case ENTERING:
-                        gotoCoords(new Vector2f(25, 80), true);
+                        gotoCoords(location);
+                        gotoCoords(new Vector2f(location.x, 80));
+                        action = Action.SHOPPING;
                     case SHOPPING:
                         Aisle aisle = getFirstItemLocation(staticLocations);
                         if (location != aisle.getLocation()) {

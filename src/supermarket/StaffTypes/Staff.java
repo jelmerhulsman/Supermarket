@@ -44,8 +44,8 @@ public class Staff extends Person {
      * @param name
      * @param storage & aisle
      */
-    public Staff(String name, Vector2f spawnLocation, Storage storage, Aisle aisle){
-        stocker = new Stocker("STOCKER " + name, spawnLocation, storage, aisle);
+    public Staff(String name, Vector2f spawnLocation, Storage storage){
+        stocker = new Stocker("STOCKER " + name, spawnLocation, storage);
         function = "stocker";
     }
     

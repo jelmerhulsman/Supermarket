@@ -105,7 +105,7 @@ public class Supermarket extends javax.swing.JFrame {
         //Create storage and truck
         storage = new Storage("Storage", new Vector2f(0, 50));
         truck = new Truck("Truck", new Vector2f(0, 0));
-        entrance = new ObjectInShop("Entrance/Exit", new Vector2f(100, 100));
+        entrance = new ObjectInShop("Entrance/Exit", new Vector2f(25, 100));
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -120,13 +120,10 @@ public class Supermarket extends javax.swing.JFrame {
         staffMembers = new ArrayList<>();
         staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, shopItems));
         staffMembers.add(new Staff("Johanna", storage.getLocation(), checkouts.get(0)));
-        staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage, aisles.get(0)));
-        staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage, aisles.get(0)));
-        staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage, aisles.get(0)));
-        staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage, aisles.get(0)));
-        for (Staff staff : staffMembers) {
-            staff.update(staticLocations);
-        }
+        staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage));
+        staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
+        staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
+        staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
 
         //List of customers
         customers = new ArrayList<>();
@@ -177,6 +174,8 @@ public class Supermarket extends javax.swing.JFrame {
         label11 = new java.awt.Label();
         list11 = new java.awt.List();
         label12 = new java.awt.Label();
+        jPanel4 = new javax.swing.JPanel();
+        list6 = new java.awt.List();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -383,6 +382,25 @@ public class Supermarket extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Aisles", jPanel3);
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(list6, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(list6, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Storage", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -447,16 +465,28 @@ public class Supermarket extends javax.swing.JFrame {
         simulation.setVisible(true);
         System.out.println("Supermarket initialized...");
 
+        simulation.staffUpdate();
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.aislesLoop();
             simulation.interfaceUpdate();
-
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
     }
 
+    private void staffUpdate()
+    {
+        for(Staff staff : staffMembers)
+        {
+            if(staff.getFunction().equals("stocker"))
+            {
+                
+                Stocker a = staff.getStocker();
+                a.update(staticLocations);
+            }
+        }
+    }
     private void interfaceUpdate() {
         g.clearRect(0, 0, 5000, 5000);
         list2.removeAll();
@@ -518,17 +548,21 @@ public class Supermarket extends javax.swing.JFrame {
             lists.get(i).clear();
             for(Item shopItem: shopItems){
                 counter = aisles.get(i).getItemCount(shopItem);
-                
                 if(counter>0){
                     lists.get(i).add(counter + " " + shopItem.getName());
                 }
             }
-             
         }
         
+        list6.clear();
         
+        for(Item item : shopItems){
+            counter = storage.getItemCount(item.getName());
+            if(counter>0){
+                list6.add(counter + " " + item.getName());
+            }
+        }
     }
-
        
 
     private void aislesLoop() {
@@ -585,6 +619,7 @@ public class Supermarket extends javax.swing.JFrame {
 
                 String name = "Nr. " + ((int) customers.size() + 1);
                 customers.add(new Customer("CUSTOMER " + name, entrance.getLocation(), stereotype.get(0), shopItems));
+                customerSelector.addItem(customers.get(customers.size() - 1).getName());
                 customers.get(customers.size() - 1).update(staticLocations);
             }
 
@@ -652,6 +687,7 @@ public class Supermarket extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private java.awt.Label label1;
     private java.awt.Label label10;
@@ -672,6 +708,7 @@ public class Supermarket extends javax.swing.JFrame {
     private java.awt.List list3;
     private java.awt.List list4;
     private java.awt.List list5;
+    private java.awt.List list6;
     private java.awt.List list7;
     private java.awt.List list8;
     private java.awt.List list9;
