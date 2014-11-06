@@ -4,6 +4,10 @@ import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Unloader;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Truck extends ObjectInShop {
 
     private ArrayList<Item> items;
@@ -11,7 +15,7 @@ public class Truck extends ObjectInShop {
 
     /**
      * creates a truck
-     *     
+     *
      * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
     public Truck(String name, Vector2f location) {

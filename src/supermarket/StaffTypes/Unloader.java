@@ -8,6 +8,10 @@ import supermarket.ObjectInShop;
 import supermarket.Storage;
 import supermarket.Truck;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Unloader extends Staff {
 
     private final int MIN_STASH = 5;

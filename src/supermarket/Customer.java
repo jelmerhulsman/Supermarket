@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import supermarket.Checkout.Status;
 import supermarket.Item.Category;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Customer extends Person {
 
     private enum Action {

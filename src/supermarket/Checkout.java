@@ -4,6 +4,10 @@ import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.StaffTypes.Cashier;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Checkout extends ObjectInShop {
 
     public enum Status {
