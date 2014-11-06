@@ -119,7 +119,11 @@ public class Supermarket extends javax.swing.JFrame {
         //Create Staff members
         staffMembers = new ArrayList<>();
         staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, shopItems));
+        staffMembers.add(new Staff("Johanna", storage.getLocation(), checkouts.get(0)));
         staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage, aisles.get(0)));
+        staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage, aisles.get(0)));
+        staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage, aisles.get(0)));
+        staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage, aisles.get(0)));
         for (Staff staff : staffMembers) {
             staff.update(staticLocations);
         }

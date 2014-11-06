@@ -236,13 +236,13 @@ public class Customer extends Person {
                         getItemsFromAisle(aisle);
 
                         if (shoppingList.isEmpty()) {
-                            gotoLocation("Entrance/Exit", staticLocations);
-                            action = Action.LEAVING;
+                            action = Action.CHOOSING_CHECKOUT;
                         }
                         break;
                     case CHOOSING_CHECKOUT:
                         if (shoppingCart.isEmpty()) {
-                            operation.stop();
+                            gotoLocation("Entrance/Exit", staticLocations);
+                            action = Action.LEAVING;
                         } else {
                             Checkout checkout = chooseCheckout(staticLocations);
                             if (checkout != null) {

@@ -1,12 +1,21 @@
 package supermarket.StaffTypes;
 
 import com.jme3.math.Vector2f;
+import java.util.ArrayList;
 import supermarket.Checkout;
+import supermarket.Checkout.Status;
 import supermarket.Customer;
+import supermarket.ObjectInShop;
 
 public class Cashier extends Staff {
 
+    private enum Action {
+
+        GO_TO_CHECKOUT, WORKING, WAITING
+    }
+    private Action action;
     private Checkout checkout;
+    private Cashier me;
 
     /**
      * Constructor for the Cashier staff member
@@ -16,17 +25,10 @@ public class Cashier extends Staff {
      */
     public Cashier(String name, Vector2f spawnLocation, Checkout checkout) {
         super(name, spawnLocation);
+        
+        action = Action.GO_TO_CHECKOUT;
         this.checkout = checkout;
-    }
-
-    /**
-     * Let the cashier walk to her/his checkout, when she/he arrives open the
-     * checkout.
-     */
-    public void goToCheckout() {
-        if (location == checkout.getLocation()) {
-            checkout.open(this);
-        }
+        me = this;
     }
 
     /**
@@ -39,7 +41,7 @@ public class Cashier extends Staff {
             c.setSaldo(c.getSaldo() - toPay);
             checkout.removeFirstCustomer();
         } else {
-            if (checkout.getStatus() == Checkout.Status.CLOSING) {
+            if (checkout.getStatus() == Status.CLOSING) {
                 checkout.close();
             }
         }
@@ -52,5 +54,29 @@ public class Cashier extends Staff {
      */
     public Checkout getCheckOut() {
         return checkout;
+    }
+    
+    @Override
+    public void update(final ArrayList<ObjectInShop> staticLocations) {
+        operation = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                switch (action) {
+                    case GO_TO_CHECKOUT:
+                        gotoLocation(checkout.getName(), staticLocations);
+                        checkout.open(me);
+                        action = Action.WORKING;
+                    case WORKING:
+                        processCustsomer();
+                        if(checkout.getStatus() == Status.CLOSED)
+                            action = Action.WAITING;
+                        break;                    
+                    case WAITING:
+                        gotoLocation("Storage", staticLocations);
+                        break;
+                }
+            }
+        });
+        operation.start();
     }
 }

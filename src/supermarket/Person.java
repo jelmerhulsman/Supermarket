@@ -31,7 +31,7 @@ public class Person extends ObjectInShop {
             System.out.println("ERROR: TARGET / " + targetName + " / " + this.getClass().toString() + " / " + this.name + " NOT FOUND! CHECK YOUR CODE!");
         }
 
-        Vector2f targetLocation = targetObject.getLocation();
+        Vector2f targetLocation = new Vector2f(targetObject.getLocation());
         
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
@@ -50,6 +50,7 @@ public class Person extends ObjectInShop {
 
             sleep(STEP_TIME);
         }
+        
         location = targetLocation;
         curLocObject = targetObject;
         System.out.println(className + " " + name + " has reached " + targetName);
