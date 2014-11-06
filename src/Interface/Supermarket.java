@@ -8,8 +8,12 @@ import com.jme3.math.Vector2f;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.List;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 import supermarket.Aisle;
 import supermarket.Checkout;
 import supermarket.Customer;
@@ -176,6 +180,13 @@ public class Supermarket extends javax.swing.JFrame {
         label12 = new java.awt.Label();
         jPanel4 = new javax.swing.JPanel();
         list6 = new java.awt.List();
+        jPanel5 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        list12 = new java.awt.List();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -401,6 +412,59 @@ public class Supermarket extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Storage", jPanel4);
 
+        jLabel1.setText("Select staff member");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(list12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(309, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(list12, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Staff", jPanel5);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Console Output", jPanel6);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -562,6 +626,37 @@ public class Supermarket extends javax.swing.JFrame {
                 list6.add(counter + " " + item.getName());
             }
         }
+        
+        redirectSystemStreams();
+    }
+    
+    private void updateTextArea(final String text) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                jTextArea1.append(text);
+            }
+        });
+    }
+    
+    private void redirectSystemStreams() {
+        OutputStream out = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                updateTextArea(String.valueOf((char) b));
+            }       
+ 
+            @Override
+            public void write(byte[] b, int off, int len) throws IOException {
+              updateTextArea(new String(b, off, len));
+            }
+ 
+            @Override
+            public void write(byte[] b) throws IOException {
+              write(b, 0, b.length);
+            }
+        };
+        System.setOut(new PrintStream(out, true));
+        System.setErr(new PrintStream(out, true));
     }
        
 
@@ -684,11 +779,17 @@ public class Supermarket extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
     private javax.swing.JComboBox customerSelector;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
     private java.awt.Label label1;
     private java.awt.Label label10;
     private java.awt.Label label11;
@@ -704,6 +805,7 @@ public class Supermarket extends javax.swing.JFrame {
     private java.awt.List list1;
     private java.awt.List list10;
     private java.awt.List list11;
+    private java.awt.List list12;
     private java.awt.List list2;
     private java.awt.List list3;
     private java.awt.List list4;
