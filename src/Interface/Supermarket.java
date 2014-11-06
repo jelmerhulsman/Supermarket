@@ -525,18 +525,7 @@ public class Supermarket extends javax.swing.JFrame {
         
     }
 
-        for (int i = 0; i < lists.size(); i++) {
-            for (Item item : aisles.get(i).getItems()) {
-                lists.get(i).add(item.getName());
-            }
-        }
-
-
-
-    }
-
-    private void fillAsilesForm() {
-    }
+       
 
     private void aislesLoop() {
         if (!storage.getItems().isEmpty()) {
