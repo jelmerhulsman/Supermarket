@@ -475,8 +475,6 @@ public class Supermarket extends javax.swing.JFrame {
         for (Customer customer : customers) {
             g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
             g.drawString(customer.getName(), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
-            list2.add(customer.getName());
-            list3.add(customer.getLocation().x + "   " + customer.getLocation().y);
         }
 
 
@@ -521,10 +519,19 @@ public class Supermarket extends javax.swing.JFrame {
         lists.add(list10);
         lists.add(list9);
         
-        for(int i = 0;i<lists.size();i++)
-            for(Item item:aisles.get(i).getItems())
-                lists.get(i).add(item.getName());
         
+        int counter = 0;
+        for(int i = 0;i<lists.size();i++){
+            lists.get(i).clear();
+            for(Item shopItem: shopItems){
+                counter = aisles.get(i).getItemCount(shopItem);
+                
+                if(counter>0){
+                    lists.get(i).add(counter + " " + shopItem.getName());
+                }
+            }
+             
+        }
         
         
     }
