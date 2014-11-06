@@ -7,6 +7,10 @@ import supermarket.Checkout.Status;
 import supermarket.Customer;
 import supermarket.ObjectInShop;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Cashier extends Staff {
 
     private enum Action {
@@ -25,7 +29,7 @@ public class Cashier extends Staff {
      */
     public Cashier(String name, Vector2f spawnLocation, Checkout checkout) {
         super(name, spawnLocation);
-        
+
         action = Action.GO_TO_CHECKOUT;
         this.checkout = checkout;
         me = this;
@@ -55,7 +59,7 @@ public class Cashier extends Staff {
     public Checkout getCheckOut() {
         return checkout;
     }
-    
+
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {
@@ -68,9 +72,10 @@ public class Cashier extends Staff {
                         action = Action.WORKING;
                     case WORKING:
                         processCustsomer();
-                        if(checkout.getStatus() == Status.CLOSED)
+                        if (checkout.getStatus() == Status.CLOSED) {
                             action = Action.WAITING;
-                        break;                    
+                        }
+                        break;
                     case WAITING:
                         gotoLocation("Storage", staticLocations);
                         break;

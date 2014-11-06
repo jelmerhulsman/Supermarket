@@ -10,8 +10,12 @@ import supermarket.Item.Category;
 import supermarket.Item.Status;
 import supermarket.StaffTypes.Unloader;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Storage extends ObjectInShop {
-    
+
     private ArrayList<Item> items;
     private Unloader currentUnloader;
     private static SessionFactory factory;
@@ -58,7 +62,7 @@ public class Storage extends ObjectInShop {
      * @return items
      */
     public ArrayList<Item> getItems() {
-        
+
         Session session = factory.openSession();
         Transaction tx = null;
         try {
@@ -176,7 +180,7 @@ public class Storage extends ObjectInShop {
      * @return the list of the items
      */
     public ArrayList<Item> moveItem(Item.Category cat, int amount) {
-        ArrayList<Item> items = new ArrayList<>();
+        items.clear();
         ArrayList<Item> allItems = getItems();
         int counter = 0;
         for (int i = 0; i < allItems.size(); i++) {

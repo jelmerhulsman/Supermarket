@@ -4,7 +4,7 @@ import com.jme3.math.Vector2f;
 
 /**
  *
- * @author Moreno
+ * @author SDJM
  */
 public class ObjectInShop {
 

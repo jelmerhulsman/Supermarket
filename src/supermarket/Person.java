@@ -4,6 +4,10 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Person extends ObjectInShop {
 
     final protected int ITEM_INTERACTION_TIME = 250;
@@ -32,14 +36,14 @@ public class Person extends ObjectInShop {
         }
 
         Vector2f targetLocation = new Vector2f(targetObject.getLocation());
-        
+
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
 
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
-        
+
         System.out.println(name + " is going to " + targetName);
         float distanceToTarget = location.distance(targetLocation);
         if (distanceToTarget > speed) {
@@ -52,7 +56,7 @@ public class Person extends ObjectInShop {
         } else {
             sleep(STEP_TIME);
         }
-        
+
         location = targetLocation;
         curLocObject = targetObject;
         System.out.println(name + " has reached " + targetName);

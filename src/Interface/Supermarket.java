@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interface;
 
 import com.jme3.math.Vector2f;
@@ -20,16 +16,14 @@ import supermarket.Customer;
 import supermarket.Department;
 import supermarket.Item;
 import supermarket.ObjectInShop;
-import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
-import supermarket.StaffTypes.Unloader;
 import supermarket.Storage;
 import supermarket.Truck;
 
 /**
  *
- * @author Sander
+ * @author SDJM
  */
 public class Supermarket extends javax.swing.JFrame {
 
@@ -512,13 +506,7 @@ public class Supermarket extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -539,18 +527,16 @@ public class Supermarket extends javax.swing.JFrame {
         }
     }
 
-    private void staffUpdate()
-    {
-        for(Staff staff : staffMembers)
-        {
-            if(staff.getFunction().equals("stocker"))
-            {
-                
+    private void staffUpdate() {
+        for (Staff staff : staffMembers) {
+            if (staff.getFunction().equals("stocker")) {
+
                 Stocker a = staff.getStocker();
                 a.update(staticLocations);
             }
         }
     }
+
     private void interfaceUpdate() {
         g.clearRect(0, 0, 5000, 5000);
         list2.removeAll();
@@ -576,16 +562,16 @@ public class Supermarket extends javax.swing.JFrame {
         }
         g.setColor(Color.PINK);
         for (Department department : departments) {
-            g.drawRect((int) department.getLocation().x* 4, (int) department.getLocation().y* 4, 15, 15);
+            g.drawRect((int) department.getLocation().x * 4, (int) department.getLocation().y * 4, 15, 15);
         }
 
         g.setColor(Color.orange);
         for (Checkout checkout : checkouts) {
-            g.drawRect((int) checkout.getLocation().x* 4, (int) checkout.getLocation().y* 4, 10, 10);
+            g.drawRect((int) checkout.getLocation().x * 4, (int) checkout.getLocation().y * 4, 10, 10);
         }
 
         g.setColor(Color.DARK_GRAY);
-        g.drawRect((int) truck.getLocation().x* 4, (int) truck.getLocation().y* 4, 20, 40);
+        g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
 
         try {
             list3.clear();
@@ -605,24 +591,24 @@ public class Supermarket extends javax.swing.JFrame {
         lists.add(list8);
         lists.add(list10);
         lists.add(list9);
-        
-        
+
+
         int counter = 0;
-        for(int i = 0;i<lists.size();i++){
+        for (int i = 0; i < lists.size(); i++) {
             lists.get(i).clear();
-            for(Item shopItem: shopItems){
+            for (Item shopItem : shopItems) {
                 counter = aisles.get(i).getItemCount(shopItem);
-                if(counter>0){
+                if (counter > 0) {
                     lists.get(i).add(counter + " " + shopItem.getName());
                 }
             }
         }
-        
+
         list6.clear();
-        
-        for(Item item : shopItems){
+
+        for (Item item : shopItems) {
             counter = storage.getItemCount(item.getName());
-            if(counter>0){
+            if (counter > 0) {
                 list6.add(counter + " " + item.getName());
             }
         }
@@ -658,7 +644,6 @@ public class Supermarket extends javax.swing.JFrame {
         System.setOut(new PrintStream(out, true));
         System.setErr(new PrintStream(out, true));
     }
-       
 
     private void aislesLoop() {
         if (!storage.getItems().isEmpty()) {

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import supermarket.Checkout.Status;
 import supermarket.Item.Category;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Customer extends Person {
 
     private enum Action {
@@ -170,7 +174,6 @@ public class Customer extends Person {
         return shoppingList;
     }
 
-    
     private void getItemsFromAisle(Aisle aisle) {
         ArrayList<Category> aisleCategories = aisle.getCategories();
         ArrayList<Item> checkedItems = new ArrayList<>();

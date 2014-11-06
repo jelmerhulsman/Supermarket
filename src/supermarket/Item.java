@@ -2,6 +2,10 @@ package supermarket;
 
 import javax.persistence.*;
 
+/**
+ *
+ * @author SDJM
+ */
 @Entity
 @Table(name = "items")
 public class Item {
