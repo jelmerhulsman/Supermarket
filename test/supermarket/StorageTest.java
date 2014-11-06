@@ -46,7 +46,9 @@ public class StorageTest {
     public void testGetCurrentUnloader() {
         System.out.println("getCurrentUnloader");
         Storage instance = new Storage("storage", Vector2f.ZERO);
-        Unloader unloader = new Unloader("derp", instance);
+        Truck truck = new Truck("derp", Vector2f.ZERO);
+        ArrayList<Item> items = new ArrayList<>();
+        Unloader unloader = new Unloader("derp",Vector2f.ZERO, instance, truck,items);
         instance.setCurrentUnloader(unloader);
         Unloader result = null;
         try {

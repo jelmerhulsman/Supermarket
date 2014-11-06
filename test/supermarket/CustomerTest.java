@@ -37,27 +37,9 @@ public class CustomerTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of getItemsFromAisle method, of class Customer.
-     */
-    @Test
-    public void testGetItemsFromAisle() {
-        System.out.println("getItemsFromAisle");
-        Aisle aisle = new Aisle("Liquor",new Vector2f(40,40), Item.Category.BEER, Item.Category.LIQUOR);
-        Item item;
-        item= new Item("Heimstel-Jan", 0.80f, Item.Category.BEER);
-        item.setStatus(Item.Status.LOADED);
-        aisle.loadAisle(item);
-        ArrayList<Item> uniqueItems = new ArrayList<Item>();
-        uniqueItems.add(item);
-        Customer instance = new Customer("derp", Customer.Stereotype.STUDENT, uniqueItems);
-        try{
-        instance.getItemsFromAisle(aisle);
-        }catch(Exception e){
-            fail("failed to get items from isle");
-        }
+    
     }
+
     
+
     
-}

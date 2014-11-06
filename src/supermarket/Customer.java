@@ -151,7 +151,7 @@ public class Customer extends Person {
         return items;
     }
 
-    public Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
+    private Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
                 Aisle aisle = (Aisle) o;
@@ -171,7 +171,7 @@ public class Customer extends Person {
     }
 
     
-    public void getItemsFromAisle(Aisle aisle) {
+    private void getItemsFromAisle(Aisle aisle) {
         ArrayList<Category> aisleCategories = aisle.getCategories();
         ArrayList<Item> checkedItems = new ArrayList<>();
 

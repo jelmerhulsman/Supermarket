@@ -170,6 +170,8 @@ public class Supermarket extends javax.swing.JFrame {
         label11 = new java.awt.Label();
         list11 = new java.awt.List();
         label12 = new java.awt.Label();
+        jPanel4 = new javax.swing.JPanel();
+        list6 = new java.awt.List();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -376,6 +378,25 @@ public class Supermarket extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Aisles", jPanel3);
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(list6, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(list6, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Storage", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -479,8 +500,6 @@ public class Supermarket extends javax.swing.JFrame {
         for (Customer customer : customers) {
             g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
             g.drawString(customer.getName(), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
-            list2.add(customer.getName());
-            list3.add(customer.getLocation().x + "   " + customer.getLocation().y);
         }
 
 
@@ -518,19 +537,29 @@ public class Supermarket extends javax.swing.JFrame {
         lists.add(list8);
         lists.add(list10);
         lists.add(list9);
-
-        for (int i = 0; i < lists.size(); i++) {
-            for (Item item : aisles.get(i).getItems()) {
-                lists.get(i).add(item.getName());
+        
+        
+        int counter = 0;
+        for(int i = 0;i<lists.size();i++){
+            lists.get(i).clear();
+            for(Item shopItem: shopItems){
+                counter = aisles.get(i).getItemCount(shopItem);
+                if(counter>0){
+                    lists.get(i).add(counter + " " + shopItem.getName());
+                }
             }
         }
-
-
-
+        
+        list6.clear();
+        
+        for(Item item : shopItems){
+            counter = storage.getItemCount(item.getName());
+            if(counter>0){
+                list6.add(counter + " " + item.getName());
+            }
+        }
     }
-
-    private void fillAsilesForm() {
-    }
+       
 
     private void aislesLoop() {
         if (!storage.getItems().isEmpty()) {
@@ -586,6 +615,7 @@ public class Supermarket extends javax.swing.JFrame {
 
                 String name = "Nr. " + ((int) customers.size() + 1);
                 customers.add(new Customer("CUSTOMER " + name, entrance.getLocation(), stereotype.get(0), shopItems));
+                customerSelector.addItem(customers.get(customers.size() - 1).getName());
                 customers.get(customers.size() - 1).update(staticLocations);
             }
 
@@ -653,6 +683,7 @@ public class Supermarket extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private java.awt.Label label1;
     private java.awt.Label label10;
@@ -673,6 +704,7 @@ public class Supermarket extends javax.swing.JFrame {
     private java.awt.List list3;
     private java.awt.List list4;
     private java.awt.List list5;
+    private java.awt.List list6;
     private java.awt.List list7;
     private java.awt.List list8;
     private java.awt.List list9;
