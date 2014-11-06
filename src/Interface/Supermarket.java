@@ -38,7 +38,7 @@ public class Supermarket extends javax.swing.JFrame {
     private ObjectInShop entrance;
     private ArrayList<ObjectInShop> staticLocations;
     private ArrayList<Staff> staffMembers;
-    private ArrayList<Item> shopItems;
+    private ArrayList<Item> storeItems;
     private ArrayList<Customer> customers;
     private Graphics g;
 
@@ -61,16 +61,16 @@ public class Supermarket extends javax.swing.JFrame {
         g = canvas1.getGraphics();
 
         //Add all unique items to a list
-        shopItems = new ArrayList<>();
-        shopItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
-        shopItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
-        shopItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
-        shopItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
-        shopItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
-        shopItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
-        shopItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
-        shopItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
-        shopItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
+        storeItems = new ArrayList<>();
+        storeItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
+        storeItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
+        storeItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
+        storeItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
+        storeItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
+        storeItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
+        storeItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
+        storeItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
+        storeItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
 
         //Create aisles
         aisles = new ArrayList<>();
@@ -118,7 +118,7 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Create Staff members
         staffMembers = new ArrayList<>();
-        staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, shopItems));
+        staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, storeItems));
         staffMembers.add(new Staff("Johanna", storage.getLocation(), checkouts.get(0)));
         staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage));
         staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
@@ -546,7 +546,7 @@ public class Supermarket extends javax.swing.JFrame {
         int counter = 0;
         for(int i = 0;i<lists.size();i++){
             lists.get(i).clear();
-            for(Item shopItem: shopItems){
+            for(Item shopItem: storeItems){
                 counter = aisles.get(i).getItemCount(shopItem);
                 if(counter>0){
                     lists.get(i).add(counter + " " + shopItem.getName());
@@ -556,7 +556,7 @@ public class Supermarket extends javax.swing.JFrame {
         
         list6.clear();
         
-        for(Item item : shopItems){
+        for(Item item : storeItems){
             counter = storage.getItemCount(item.getName());
             if(counter>0){
                 list6.add(counter + " " + item.getName());
@@ -618,7 +618,7 @@ public class Supermarket extends javax.swing.JFrame {
 
 
                 String name = "Nr. " + ((int) customers.size() + 1);
-                customers.add(new Customer("CUSTOMER " + name, entrance.getLocation(), stereotype.get(0), shopItems));
+                customers.add(new Customer("CUSTOMER " + name, entrance.getLocation(), stereotype.get(0), storeItems));
                 customerSelector.addItem(customers.get(customers.size() - 1).getName());
                 customers.get(customers.size() - 1).update(staticLocations);
             }

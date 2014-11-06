@@ -84,6 +84,20 @@ public class Aisle extends ObjectInShop {
     public ArrayList<Item> getItems() {
         return items;
     }
+    
+    public ArrayList<String> getItemNames() {
+        ArrayList<String> itemNames = new ArrayList<>();
+        
+        for (Item item : items)
+        {
+            if (!itemNames.contains(item.getName()))
+            {
+                itemNames.add(item.getName());
+            }
+        }
+        
+        return itemNames;
+    }
 
     public int getItemCount(Item item) {
         int counter = 0;

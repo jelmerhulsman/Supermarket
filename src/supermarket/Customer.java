@@ -154,11 +154,10 @@ public class Customer extends Person {
     private Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
-                Aisle aisle = (Aisle) o;
-                for (Category category : aisle.getCategories()) {
-                    if (shoppingList.get(0).getCategory() == category) {
-                        return aisle;
-                    }
+                Aisle temp = (Aisle) o;
+                ArrayList<String> aisleItemNames = temp.getItemNames();
+                if (aisleItemNames.contains(shoppingList.get(0).getName())) {
+                    return temp;
                 }
             }
         }
@@ -170,13 +169,12 @@ public class Customer extends Person {
         return shoppingList;
     }
 
-    
     private void getItemsFromAisle(Aisle aisle) {
-        ArrayList<Category> aisleCategories = aisle.getCategories();
+        ArrayList<String> aisleItemNames = aisle.getItemNames();
         ArrayList<Item> checkedItems = new ArrayList<>();
 
         for (Item item : shoppingList) {
-            if (aisleCategories.contains(item.getCategory())) {
+            if (aisleItemNames.contains(item.getName())) {
                 if (aisle.getItemCount(item) > 0) {
                     shoppingCart.add(aisle.pickFromShelve(item));
                 }
@@ -231,10 +229,8 @@ public class Customer extends Person {
                         action = Action.SHOPPING;
                     case SHOPPING:
                         Aisle aisle = getFirstItemLocation(staticLocations);
-                        if (location != aisle.getLocation()) {
-                            gotoLocation(aisle.getName(), staticLocations);
-                        }
 
+                        gotoLocation(aisle.getName(), staticLocations);
                         getItemsFromAisle(aisle);
 
                         if (shoppingList.isEmpty()) {
