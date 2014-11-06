@@ -103,7 +103,7 @@ public class Supermarket extends javax.swing.JFrame {
         }
 
         //Create storage and truck
-        storage = new Storage("Storage", new Vector2f(0, 50));
+        storage = new Storage("Storage", new Vector2f(0, 22.5f));
         truck = new Truck("Truck", new Vector2f(0, 0));
         entrance = new ObjectInShop("Entrance/Exit", new Vector2f(25, 100));
 
@@ -493,7 +493,7 @@ public class Supermarket extends javax.swing.JFrame {
         list3.removeAll();
 
         g.setColor(Color.blue);
-        g.drawRect((int) storage.getLocation().x * 4, (int) storage.getLocation().y * 4, 20, 20);
+        g.drawRect((int) storage.getLocation().x * 4, (int) storage.getLocation().y * 4, 50, 50);
 
         g.setColor(Color.green);
         for (Aisle aisle : aisles) {
@@ -512,16 +512,16 @@ public class Supermarket extends javax.swing.JFrame {
         }
         g.setColor(Color.PINK);
         for (Department department : departments) {
-            g.drawRect((int) department.getLocation().x, (int) department.getLocation().y, 15, 15);
+            g.drawRect((int) department.getLocation().x* 4, (int) department.getLocation().y* 4, 15, 15);
         }
 
         g.setColor(Color.orange);
         for (Checkout checkout : checkouts) {
-            g.drawRect((int) checkout.getLocation().x, (int) checkout.getLocation().y, 10, 10);
+            g.drawRect((int) checkout.getLocation().x* 4, (int) checkout.getLocation().y* 4, 10, 10);
         }
 
         g.setColor(Color.DARK_GRAY);
-        g.drawRect((int) truck.getLocation().x, (int) truck.getLocation().y, 20, 40);
+        g.drawRect((int) truck.getLocation().x* 4, (int) truck.getLocation().y* 4, 20, 40);
 
         try {
             list3.clear();
