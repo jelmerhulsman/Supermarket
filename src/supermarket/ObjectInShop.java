@@ -10,7 +10,6 @@ public class ObjectInShop {
 
     protected String name;
     protected Vector2f location;
-    protected float speed;
     protected ObjectInShop curLocObject;
 
     public ObjectInShop() {
@@ -19,13 +18,6 @@ public class ObjectInShop {
     public ObjectInShop(String name, Vector2f location) {
         this.name = name;
         this.location = location;
-        this.speed = 0;
-    }
-
-    public ObjectInShop(String name, Vector2f location, float speed) {
-        this.name = name;
-        this.location = location;
-        this.speed = speed;
     }
 
     public ObjectInShop getCurLocObject() {
@@ -47,11 +39,4 @@ public class ObjectInShop {
             return false;
         }
     }
-    /**
-     * Moves this object to the specified location name
-     *
-     * @param targetName For example: "The liquor Aisle"
-     * @param objects This method needs all the possible location objects in an
-     * arraylist
-     */
 }
