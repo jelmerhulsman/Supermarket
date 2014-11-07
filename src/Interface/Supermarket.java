@@ -20,6 +20,7 @@ import supermarket.Customer;
 import supermarket.Department;
 import supermarket.Item;
 import supermarket.ObjectInShop;
+import supermarket.Person;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
 import supermarket.StaffTypes.Unloader;
@@ -128,11 +129,15 @@ public class Supermarket extends javax.swing.JFrame {
         staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
         staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
 
+        for (Person staff : staffMembers) {
+            String test = staff.getName();
+            jComboBox1.addItem(test);
+        }
+
         //List of customers
         customers = new ArrayList<>();
 
         //Choose debugger
-        //chooseDebugger();
     }
 
     /**
@@ -151,8 +156,8 @@ public class Supermarket extends javax.swing.JFrame {
         menu2 = new java.awt.Menu();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        list3 = new java.awt.List();
         customerSelector = new javax.swing.JComboBox();
+        list3 = new java.awt.List();
         list1 = new java.awt.List();
         label1 = new java.awt.Label();
         list2 = new java.awt.List();
@@ -435,8 +440,6 @@ public class Supermarket extends javax.swing.JFrame {
 
         jLabel1.setText("Staff Name:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -519,6 +522,7 @@ public class Supermarket extends javax.swing.JFrame {
         System.out.println("Supermarket initialized...");
 
         simulation.execStaffUpdate();
+        simulation.redirectSystemStreams();
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.staffLoop();
@@ -621,7 +625,7 @@ public class Supermarket extends javax.swing.JFrame {
             storage.setIsChanged(false);
         }
 
-        redirectSystemStreams();
+
     }
 
     private void updateTextArea(final String text) {
