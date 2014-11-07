@@ -37,6 +37,12 @@ public class Unloader extends Staff{
         this.shopItems = shopItems;
     }
 
+    public ArrayList<Item> getShopItems() {
+        return shopItems;
+    }
+
+    
+    
     /**
      * Gets the maximum # of items this person can carry from the truck and puts
      * it in the Storage

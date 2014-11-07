@@ -682,10 +682,27 @@ public class Supermarket extends javax.swing.JFrame {
             storage.setIsChanged(false);
         }
         try{
-            
+            lstItems.clear();
+            lstOtherStaffInfo.clear();
+            if(staffMembers.get(staffComboBox.getSelectedIndex()).getCashier() != null){
+                lstItems.add("Cashier has no Items");
+                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Function: Cashier");
+            }else if(staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader()!= null){
+                for(Item item :staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader().getShopItems())
+                    lstItems.add(item.getName());
+                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Function: Unloader");
+            }else if(staffMembers.get(staffComboBox.getSelectedIndex()).getStocker()!= null){
+                for(Item item :staffMembers.get(staffComboBox.getSelectedIndex()).getStocker().getItems())
+                    lstItems.add(item.getName());
+                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Function: Stocker");
+            }
         }catch(Exception e){
             
         }
+        
         
     }
 

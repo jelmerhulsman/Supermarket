@@ -38,6 +38,12 @@ public class Stocker extends Staff{
         }
     }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    
+    
     public boolean isWorking() {
         return isWorking;
     }
