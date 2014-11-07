@@ -37,12 +37,18 @@ public class Checkout extends ObjectInShop {
 
     /**
      * Let cashier close the checkout
-     *
-     * @return cashier
      */
     public void close() {
         status = Status.CLOSED;
         customers = new ArrayList<>();
+    }
+    
+    
+    /**
+     * Sets checkout status closing
+     */
+    public void closing() {
+        this.status = Status.CLOSING;
     }
 
     /**
@@ -113,12 +119,6 @@ public class Checkout extends ObjectInShop {
         return status;
     }
 
-    /**
-     * Sets checkout status closing
-     */
-    public void closing() {
-        this.status = Status.CLOSING;
-    }
 
     /**
      * Returns price of all the customer's items

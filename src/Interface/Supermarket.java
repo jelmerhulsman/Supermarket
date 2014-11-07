@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interface;
 
 import com.jme3.math.Vector2f;
@@ -16,12 +12,14 @@ import java.util.Scanner;
 import javax.swing.SwingUtilities;
 import supermarket.Aisle;
 import supermarket.Checkout;
+import supermarket.Checkout.Status;
 import supermarket.Customer;
 import supermarket.Department;
 import supermarket.Item;
 import supermarket.Item.Category;
 import supermarket.ObjectInShop;
 import supermarket.Person;
+import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
 import supermarket.StaffTypes.Unloader;
@@ -89,13 +87,13 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.BREAD);
         aisleCategories.add(Category.SPREAD);
         aisleCategories.add(Category.BREAKFAST);
-        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(80, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(40, 60), aisleCategories, storeItems));
         label6.setText("Lunch & Breakfast");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
         aisleCategories.add(Category.DAIRY);
-        aisles.add(new Aisle("Cooling", new Vector2f(10, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Cooling", new Vector2f(50, 60), aisleCategories, storeItems));
         label7.setText("Cooling");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SNACK);
@@ -107,16 +105,16 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.SPICES);
         aisleCategories.add(Category.FOREIGN);
         aisleCategories.add(Category.PRESERVATION);
-        aisles.add(new Aisle("Durable", new Vector2f(20, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Durable", new Vector2f(70, 60), aisleCategories, storeItems));
         label9.setText("Durable");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.VEGTABLES);
         aisleCategories.add(Category.FRUIT);
-        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(160, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(80, 60), aisleCategories, storeItems));
         label10.setText("Vegtables & Fruit");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.NONFOOD);
-        aisles.add(new Aisle("Nonfood", new Vector2f(60, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Nonfood", new Vector2f(90, 60), aisleCategories, storeItems));
         label11.setText("Nonfood");
 
         //Create checkouts
@@ -682,12 +680,10 @@ public class Supermarket extends javax.swing.JFrame {
             }
             storage.setIsChanged(false);
         }
-        try{
-            
-        }catch(Exception e){
-            
+        try {
+        } catch (Exception e) {
         }
-        
+
     }
 
     private void updateTextArea(final String text) {
@@ -735,6 +731,27 @@ public class Supermarket extends javax.swing.JFrame {
                         }
                     }
                 }
+            }
+        }
+
+        for (int i = 1; i < checkouts.size(); i++) {
+            Checkout currentCheckout = checkouts.get(i);
+            Checkout previousCheckout = checkouts.get(i - 1);
+            if (previousCheckout.getStatus() == Status.CROWDED) {
+                if (currentCheckout.getStatus() == Status.CLOSED || currentCheckout.getStatus() == Status.CLOSING) {
+                    for (Staff staff : staffMembers) {
+                        if (staff.getFunction() == "cashier") {
+                            Cashier cashier = staff.getCashier();
+                            if (cashier.isWaiting()) {
+                                cashier.setCheckOut(currentCheckout);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (previousCheckout.getStatus() == Status.OPEN) {
+                currentCheckout.closing();
             }
         }
     }

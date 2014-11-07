@@ -6,10 +6,6 @@ import supermarket.Checkout.Status;
 import supermarket.Customer;
 import supermarket.ObjectInShop;
 
-/**
- *
- * @author SDJM
- */
 public class Cashier extends Staff {
 
     private enum Action {
@@ -45,14 +41,13 @@ public class Cashier extends Staff {
             }
         }
     }
-
-    /**
-     * Gets the CLASS of the current location. For example "Aisle" or "Storage"
-     *
-     * @return the class of the current location
-     */
-    public Checkout getCheckOut() {
-        return checkout;
+    
+    public void setCheckOut(Checkout checkout) {
+        this.checkout = checkout;
+    }
+    
+    public boolean isWaiting() {
+        return (action == Action.WAITING);
     }
 
     @Override
@@ -69,11 +64,16 @@ public class Cashier extends Staff {
                         case WORKING:
                             processCustsomer();
                             if (checkout.getStatus() == Status.CLOSED) {
+                                gotoLocation("Storage", staticLocations);
                                 action = Action.WAITING;
                             }
                             break;
                         case WAITING:
-                            gotoLocation("Storage", staticLocations);
+                            if (checkout != null)
+                            {
+                                action = Action.GO_TO_CHECKOUT;
+                            }
+                            
                             break;
                     }
                 }

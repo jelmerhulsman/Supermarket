@@ -258,11 +258,9 @@ public class Customer extends Person {
                                 action = Action.LEAVING;
                             } else {
                                 Checkout checkout = chooseCheckout(staticLocations);
-                                if (checkout != null) {
-                                    checkout.addCustomer(me);
-                                    collectedItemsCount = shoppingCart.size();
-                                    action = Action.WAITING;
-                                }
+                                checkout.addCustomer(me);
+                                collectedItemsCount = shoppingCart.size();
+                                action = Action.WAITING;
                             }
                             break;
                         case WAITING:
