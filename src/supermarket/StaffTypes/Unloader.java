@@ -92,7 +92,7 @@ public class Unloader extends Staff {
 
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
-        new Thread(new Runnable() {
+        operation = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -122,6 +122,7 @@ public class Unloader extends Staff {
                     }
                 }
             }
-        }).start();
+        });
+        operation.start();
     }
 }

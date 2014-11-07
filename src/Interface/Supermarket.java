@@ -23,6 +23,7 @@ import supermarket.ObjectInShop;
 import supermarket.Person;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
+import supermarket.StaffTypes.Unloader;
 import supermarket.Storage;
 import supermarket.Truck;
 
@@ -127,18 +128,16 @@ public class Supermarket extends javax.swing.JFrame {
         staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
         staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
         staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
-        
-        for(Person staff : staffMembers){
+
+        for (Person staff : staffMembers) {
             String test = staff.getName();
             jComboBox1.addItem(test);
         }
-        
+
         //List of customers
         customers = new ArrayList<>();
 
         //Choose debugger
-        chooseDebugger();
-        
     }
 
     /**
@@ -543,13 +542,7 @@ public class Supermarket extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Supermarket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -559,23 +552,29 @@ public class Supermarket extends javax.swing.JFrame {
         simulation = new Supermarket();
         simulation.setVisible(true);
         System.out.println("Supermarket initialized...");
+
+        simulation.execStaffUpdate();
         simulation.redirectSystemStreams();
-        simulation.staffUpdate();
         while (true) { //Update loop
             simulation.customersLoop();
-            simulation.aislesLoop();
+            simulation.staffLoop();
             simulation.interfaceUpdate();
             //Sleep at the end of the loop
             simulation.sleep(1000);
         }
     }
 
-    private void staffUpdate() {
+    private void execStaffUpdate() {
         for (Staff staff : staffMembers) {
-            if (staff.getFunction().equals("stocker")) {
-
-                Stocker a = staff.getStocker();
-                a.update(staticLocations);
+            switch (staff.getFunction()) {
+                case "stocker":
+                    Stocker a = staff.getStocker();
+                    a.update(staticLocations);
+                    break;
+                case "unloader":
+                    Unloader unloader = staff.getUnloader();
+                    unloader.update(staticLocations);
+                    break;
             }
         }
     }
@@ -667,6 +666,7 @@ public class Supermarket extends javax.swing.JFrame {
 
     private void updateTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 jTextArea1.append(text);
             }
@@ -695,14 +695,17 @@ public class Supermarket extends javax.swing.JFrame {
         System.setErr(new PrintStream(out, true));
     }
 
-    private void aislesLoop() {
+    private void staffLoop() {
         if (!storage.getItems().isEmpty()) {
-            for (Aisle aisle : aisles) {
-                for (Staff staff : staffMembers) {
-                    if (staff instanceof Stocker) {
-                        Stocker stocker = (Stocker) staff;
-                        if (aisle.getItems().size() < 10 && !stocker.isWorking()) {
-                            stocker.setAisle(aisle);
+            for (Staff staff : staffMembers) {
+                if (staff.getFunction().equals("stocker")) {
+                    Stocker stocker = staff.getStocker();
+                    if (!stocker.isWorking()) {
+                        for (Aisle aisle : aisles) {
+                            if (aisle.getItems().size() < 10 && aisle.getCurrentLoader() == null) {
+                                stocker.setAisle(aisle);
+                                aisle.setCurrentLoader(stocker);
+                            }
                         }
                     }
                 }
