@@ -8,18 +8,20 @@ import com.jme3.math.Vector2f;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.List;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 import supermarket.Aisle;
 import supermarket.Checkout;
 import supermarket.Customer;
 import supermarket.Department;
 import supermarket.Item;
 import supermarket.ObjectInShop;
-import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
-import supermarket.StaffTypes.Unloader;
 import supermarket.Storage;
 import supermarket.Truck;
 
@@ -176,6 +178,9 @@ public class Supermarket extends javax.swing.JFrame {
         label12 = new java.awt.Label();
         jPanel4 = new javax.swing.JPanel();
         list6 = new java.awt.List();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -401,6 +406,29 @@ public class Supermarket extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Storage", jPanel4);
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Console", jPanel5);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -475,18 +503,16 @@ public class Supermarket extends javax.swing.JFrame {
         }
     }
 
-    private void staffUpdate()
-    {
-        for(Staff staff : staffMembers)
-        {
-            if(staff.getFunction().equals("stocker"))
-            {
-                
+    private void staffUpdate() {
+        for (Staff staff : staffMembers) {
+            if (staff.getFunction().equals("stocker")) {
+
                 Stocker a = staff.getStocker();
                 a.update(staticLocations);
             }
         }
     }
+
     private void interfaceUpdate() {
         g.clearRect(0, 0, 5000, 5000);
         list2.removeAll();
@@ -512,24 +538,24 @@ public class Supermarket extends javax.swing.JFrame {
         }
         g.setColor(Color.PINK);
         for (Department department : departments) {
-            g.drawRect((int) department.getLocation().x* 4, (int) department.getLocation().y* 4, 15, 15);
+            g.drawRect((int) department.getLocation().x * 4, (int) department.getLocation().y * 4, 15, 15);
         }
 
         g.setColor(Color.orange);
         for (Checkout checkout : checkouts) {
-            g.drawRect((int) checkout.getLocation().x* 4, (int) checkout.getLocation().y* 4, 10, 10);
+            g.drawRect((int) checkout.getLocation().x * 4, (int) checkout.getLocation().y * 4, 10, 10);
         }
 
         g.setColor(Color.DARK_GRAY);
-        g.drawRect((int) truck.getLocation().x* 4, (int) truck.getLocation().y* 4, 20, 40);
-
+        g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
         try {
             list3.clear();
             list3.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
             list3.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
+            list3.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
+            list3.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
             list3.add("Locatio X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
                     + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
-            list3.add("Current Aisle: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
         } catch (Exception e) {
         }
 
@@ -541,29 +567,62 @@ public class Supermarket extends javax.swing.JFrame {
         lists.add(list8);
         lists.add(list10);
         lists.add(list9);
-        
-        
+
+
         int counter = 0;
-        for(int i = 0;i<lists.size();i++){
+        for (int i = 0; i < lists.size(); i++) {
             lists.get(i).clear();
-            for(Item shopItem: storeItems){
+            for (Item shopItem : storeItems) {
                 counter = aisles.get(i).getItemCount(shopItem);
-                if(counter>0){
+                if (counter > 0) {
                     lists.get(i).add(counter + " " + shopItem.getName());
                 }
             }
         }
-        
-        list6.clear();
-        
-        for(Item item : storeItems){
-            counter = storage.getItemCount(item.getName());
-            if(counter>0){
-                list6.add(counter + " " + item.getName());
+
+        if (storage.isIsChanged()) {
+            list6.clear();
+            for (Item item : storeItems) {
+                counter = storage.getItemCount(item.getName());
+                if (counter > 0) {
+                    list6.add(counter + " " + item.getName());
+                }
             }
+            storage.setIsChanged(false);
         }
+
+        redirectSystemStreams();
     }
-       
+
+    private void updateTextArea(final String text) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                jTextArea1.append(text);
+            }
+        });
+    }
+
+    private void redirectSystemStreams() {
+        OutputStream out = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                updateTextArea(String.valueOf((char) b));
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) throws IOException {
+                updateTextArea(new String(b, off, len));
+            }
+
+            @Override
+            public void write(byte[] b) throws IOException {
+                write(b, 0, b.length);
+            }
+        };
+
+        System.setOut(new PrintStream(out, true));
+        System.setErr(new PrintStream(out, true));
+    }
 
     private void aislesLoop() {
         if (!storage.getItems().isEmpty()) {
@@ -688,7 +747,10 @@ public class Supermarket extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
     private java.awt.Label label1;
     private java.awt.Label label10;
     private java.awt.Label label11;

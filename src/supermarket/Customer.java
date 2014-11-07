@@ -165,13 +165,21 @@ public class Customer extends Person {
                 }
             }
         }
-        
+
         shoppingList.clear();
         return null;
     }
 
     public ArrayList<Item> getShoppingList() {
         return shoppingList;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public Stereotype getStereotype() {
+        return stereotype;
     }
 
     private void getItemsFromAisle(Aisle aisle) {
