@@ -11,7 +11,7 @@ import supermarket.Storage;
 /**
  * @author SDJM
  */
-public class Stocker extends Staff{
+public class Stocker extends Staff {
 
     private enum Action {
 
@@ -33,7 +33,7 @@ public class Stocker extends Staff{
         for (Category category : aisle.getCategories()) {
             if (storage.getItems(storage.getItems().size(), category).size() > 0) {
                 items.addAll(storage.getItems(MAX_ITEMS, category));
-                //sleep(items.size() * ITEM_INTERACTION_TIME);
+                sleep(items.size() * ITEM_INTERACTION_TIME);
             }
         }
     }
@@ -54,6 +54,10 @@ public class Stocker extends Staff{
         }
     }
 
+    public Aisle getAisle() {
+        return aisle;
+    }
+
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {
@@ -65,9 +69,9 @@ public class Stocker extends Staff{
                             if (storage.getItems().isEmpty() || aisle == null) {
                                 action = Action.WAITING;
                             } else {
+                                isWorking = true;
                                 gotoLocation("Storage", staticLocations);
                                 getItemsFromStorage();
-                                isWorking = true;
                                 action = Action.STORE_ITEMS;
                             }
                             break;
@@ -82,8 +86,9 @@ public class Stocker extends Staff{
                             if (!storage.getItems().isEmpty()) {
                                 action = Action.GET_ITEMS;
                             } else {
-                                action = Action.WAITING;
+                                sleep(1000);
                             }
+
                             break;
                     }
                 }

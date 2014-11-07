@@ -28,15 +28,15 @@ public class ObjectInShop {
         return name;
     }
 
-    public Vector2f getLocation() {
-        return new Vector2f(location);
+    public void setLocation(Vector2f location) {
+        this.location = location;
     }
 
-    public boolean seekByName(String name) {
-        if (this.getName().equals(name)) {
-            return true;
-        } else {
-            return false;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Vector2f getLocation() {
+        return new Vector2f(location);
     }
 }

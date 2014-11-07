@@ -726,11 +726,10 @@ public class Supermarket extends javax.swing.JFrame {
             for (Staff staff : staffMembers) {
                 if (staff.getFunction().equals("stocker")) {
                     Stocker stocker = staff.getStocker();
-                    if (!stocker.isWorking()) {
+                    if (!stocker.isWorking() && stocker.getAisle() == null) {
                         for (Aisle aisle : aisles) {
-                            if (aisle.getItems().size() < 10 && aisle.getCurrentLoader() == null) {
+                            if (aisle.getItems().size() < 10) {
                                 stocker.setAisle(aisle);
-                                aisle.setCurrentLoader(stocker);
                             }
                         }
                     }
@@ -746,7 +745,7 @@ public class Supermarket extends javax.swing.JFrame {
         for (int i = 0; i < customers.size(); i++) {
             if (customers.get(i).isLeaving()) {
                 leavingCustomers.add(customers.get(i));
-                customerSelector.remove(i - 1);
+                customerSelector.remove(i);
             }
         }
 

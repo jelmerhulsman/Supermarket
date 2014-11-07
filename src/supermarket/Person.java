@@ -26,7 +26,7 @@ public class Person extends ObjectInShop {
     public void gotoLocation(String targetName, ArrayList<ObjectInShop> objects) {
         ObjectInShop targetObject = null;
         for (ObjectInShop o : objects) {
-            if (o.seekByName(targetName)) {
+            if (o.getName().equals(targetName)) {
                 targetObject = o;
             }
         }
@@ -37,8 +37,8 @@ public class Person extends ObjectInShop {
 
         Vector2f targetLocation = new Vector2f(targetObject.getLocation());
 
-        float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
-        float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
+        float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(getLocation().x);
+        float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(getLocation().y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
 
         moveX = (moveX / moveTotal) * speed;

@@ -113,6 +113,7 @@ public class Unloader extends Staff{
                                 action = Action.UNLOAD_TRUCK;
                             } else {
                                 orderItems();
+                                sleep(5000);
                             }
                             break;
                     }

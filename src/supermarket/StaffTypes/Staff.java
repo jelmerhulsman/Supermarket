@@ -40,6 +40,8 @@ public class Staff extends Person {
     public Staff(String name, Vector2f spawnLocation, Checkout checkout) {
         this(name, spawnLocation);
         cashier = new Cashier(checkout);
+        cashier.setName(name);
+        cashier.setLocation(spawnLocation);
         this.function = "cashier";
     }
 
@@ -52,6 +54,8 @@ public class Staff extends Person {
     public Staff(String name, Vector2f spawnLocation, Storage storage) {
         this(name, spawnLocation);
         stocker = new Stocker(storage);
+        stocker.setName(name);
+        stocker.setLocation(spawnLocation);
         function = "stocker";
     }
 
@@ -64,6 +68,8 @@ public class Staff extends Person {
     public Staff(String name, Vector2f spawnLocation, Storage storage, Truck truck, ArrayList<Item> shopItems) {
         this(name, spawnLocation);
         unloader = new Unloader(storage, truck, shopItems);
+        unloader.setName(name);
+        unloader.setLocation(spawnLocation);
         function = "unloader";
     }
 
