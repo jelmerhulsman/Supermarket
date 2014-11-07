@@ -434,8 +434,6 @@ public class Supermarket extends javax.swing.JFrame {
 
         jLabel1.setText("Staff Name:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -522,7 +520,7 @@ public class Supermarket extends javax.swing.JFrame {
         simulation = new Supermarket();
         simulation.setVisible(true);
         System.out.println("Supermarket initialized...");
-
+        simulation.redirectSystemStreams();
         simulation.staffUpdate();
         while (true) { //Update loop
             simulation.customersLoop();
@@ -621,7 +619,7 @@ public class Supermarket extends javax.swing.JFrame {
             storage.setIsChanged(false);
         }
 
-        redirectSystemStreams();
+        
     }
 
     private void updateTextArea(final String text) {
