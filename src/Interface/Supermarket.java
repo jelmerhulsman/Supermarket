@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Interface;
 
 import com.jme3.math.Vector2f;
@@ -12,14 +16,12 @@ import java.util.Scanner;
 import javax.swing.SwingUtilities;
 import supermarket.Aisle;
 import supermarket.Checkout;
-import supermarket.Checkout.Status;
 import supermarket.Customer;
 import supermarket.Department;
 import supermarket.Item;
 import supermarket.Item.Category;
 import supermarket.ObjectInShop;
 import supermarket.Person;
-import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
 import supermarket.StaffTypes.Unloader;
@@ -60,8 +62,8 @@ public class Supermarket extends javax.swing.JFrame {
         final int MAX_UNIQUE_ITEMS = (MAX_AISLES * MAX_ITEMS_PER_AISLE) + (MAX_DEPARTMENTS * MAX_ITEMS_PER_DEPARTMENT);
 
         //Graphics
-        canvas1.setBackground(Color.white);
-        g = canvas1.getGraphics();
+        mapCanvas.setBackground(Color.white);
+        g = mapCanvas.getGraphics();
 
         //Add all unique items to a list
         storeItems = new ArrayList<>();
@@ -82,40 +84,40 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.LIQUOR);
         aisleCategories.add(Category.WINE);
         aisles.add(new Aisle("Liquor", new Vector2f(40, 60), aisleCategories, storeItems));
-        label5.setText("Liquor");
+        lblLiqour.setText("Liquor");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.BREAD);
         aisleCategories.add(Category.SPREAD);
         aisleCategories.add(Category.BREAKFAST);
-        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(40, 60), aisleCategories, storeItems));
-        label6.setText("Lunch & Breakfast");
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(80, 60), aisleCategories, storeItems));
+        lblLunchAndBreakfast.setText("Lunch & Breakfast");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
         aisleCategories.add(Category.DAIRY);
-        aisles.add(new Aisle("Cooling", new Vector2f(50, 60), aisleCategories, storeItems));
-        label7.setText("Cooling");
+        aisles.add(new Aisle("Cooling", new Vector2f(10, 60), aisleCategories, storeItems));
+        lblCooling.setText("Cooling");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SNACK);
         aisleCategories.add(Category.SODA);
         aisleCategories.add(Category.CAFFEINE);
         aisles.add(new Aisle("Luxury", new Vector2f(60, 60), aisleCategories, storeItems));
-        label8.setText("Luxury");
+        lblLuxury.setText("Luxury");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SPICES);
         aisleCategories.add(Category.FOREIGN);
         aisleCategories.add(Category.PRESERVATION);
-        aisles.add(new Aisle("Durable", new Vector2f(70, 60), aisleCategories, storeItems));
-        label9.setText("Durable");
+        aisles.add(new Aisle("Durable", new Vector2f(20, 60), aisleCategories, storeItems));
+        lblDurable.setText("Durable");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.VEGTABLES);
         aisleCategories.add(Category.FRUIT);
-        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(80, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(160, 60), aisleCategories, storeItems));
         label10.setText("Vegtables & Fruit");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.NONFOOD);
-        aisles.add(new Aisle("Nonfood", new Vector2f(90, 60), aisleCategories, storeItems));
-        label11.setText("Nonfood");
+        aisles.add(new Aisle("Nonfood", new Vector2f(60, 60), aisleCategories, storeItems));
+        lblNonfoon.setText("Nonfood");
 
         //Create checkouts
         checkouts = new ArrayList<>();
@@ -155,7 +157,7 @@ public class Supermarket extends javax.swing.JFrame {
 
         for (Person staff : staffMembers) {
             String test = staff.getName();
-            jComboBox1.addItem(test);
+            staffComboBox.addItem(test);
         }
 
         //List of customers
@@ -178,46 +180,46 @@ public class Supermarket extends javax.swing.JFrame {
         menuBar1 = new java.awt.MenuBar();
         menu1 = new java.awt.Menu();
         menu2 = new java.awt.Menu();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        Panes = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         customerSelector = new javax.swing.JComboBox();
-        list3 = new java.awt.List();
-        list1 = new java.awt.List();
-        label1 = new java.awt.Label();
-        list2 = new java.awt.List();
-        label2 = new java.awt.Label();
-        label3 = new java.awt.Label();
-        label4 = new java.awt.Label();
+        lstOtherCustomerInfo = new java.awt.List();
+        lstShoppingList = new java.awt.List();
+        lblSjoppingList = new java.awt.Label();
+        lstShoppingCart = new java.awt.List();
+        lblShoppingCart = new java.awt.Label();
+        lblOtherCustomerInfo = new java.awt.Label();
+        lblSelectCustomer = new java.awt.Label();
         jPanel2 = new javax.swing.JPanel();
-        canvas1 = new java.awt.Canvas();
+        mapCanvas = new java.awt.Canvas();
         jPanel3 = new javax.swing.JPanel();
-        label5 = new java.awt.Label();
-        list4 = new java.awt.List();
-        list5 = new java.awt.List();
-        list7 = new java.awt.List();
-        list8 = new java.awt.List();
-        list9 = new java.awt.List();
-        list10 = new java.awt.List();
-        label6 = new java.awt.Label();
-        label7 = new java.awt.Label();
-        label8 = new java.awt.Label();
-        label9 = new java.awt.Label();
+        lblLiqour = new java.awt.Label();
+        lstLiqour = new java.awt.List();
+        lstLunchAndBreakfast = new java.awt.List();
+        listLuxury = new java.awt.List();
+        lstDurable = new java.awt.List();
+        lstNonfood = new java.awt.List();
+        lstVegAndFruit = new java.awt.List();
+        lblLunchAndBreakfast = new java.awt.Label();
+        lblCooling = new java.awt.Label();
+        lblLuxury = new java.awt.Label();
+        lblDurable = new java.awt.Label();
         label10 = new java.awt.Label();
-        label11 = new java.awt.Label();
-        list11 = new java.awt.List();
+        lblNonfoon = new java.awt.Label();
+        lstCooling = new java.awt.List();
         label12 = new java.awt.Label();
         jPanel4 = new javax.swing.JPanel();
-        list6 = new java.awt.List();
+        lstStorage = new java.awt.List();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtConsole = new javax.swing.JTextArea();
         jPanel6 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        list12 = new java.awt.List();
-        label13 = new java.awt.Label();
-        list13 = new java.awt.List();
-        label14 = new java.awt.Label();
+        lblStaffName = new javax.swing.JLabel();
+        staffComboBox = new javax.swing.JComboBox();
+        lstItems = new java.awt.List();
+        lblItems = new java.awt.Label();
+        lstOtherStaffInfo = new java.awt.List();
+        lblOtherStaffInfo = new java.awt.Label();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -238,13 +240,13 @@ public class Supermarket extends javax.swing.JFrame {
             }
         });
 
-        label1.setText("Shopping List");
+        lblSjoppingList.setText("Shopping List");
 
-        label2.setText("Shopping Cart");
+        lblShoppingCart.setText("Shopping Cart");
 
-        label3.setText("Other Info");
+        lblOtherCustomerInfo.setText("Other Info");
 
-        label4.setText("Select customer");
+        lblSelectCustomer.setText("Select customer");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -254,24 +256,24 @@ public class Supermarket extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lstShoppingList, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(list2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lstShoppingCart, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSelectCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(customerSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSjoppingList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(103, 103, 103)
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblShoppingCart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(list3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lstOtherCustomerInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblOtherCustomerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 151, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -280,30 +282,30 @@ public class Supermarket extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(customerSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSelectCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblSjoppingList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblShoppingCart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(list1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lstShoppingList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(list3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lstOtherCustomerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 177, Short.MAX_VALUE))
-                                    .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(lstShoppingCart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblOtherCustomerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Customers", jPanel1);
+        Panes.addTab("Customers", jPanel1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -311,32 +313,32 @@ public class Supermarket extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mapCanvas, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mapCanvas, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Map", jPanel2);
+        Panes.addTab("Map", jPanel2);
 
-        label5.setText("label5");
+        lblLiqour.setText("label5");
 
-        label6.setText("label6");
+        lblLunchAndBreakfast.setText("label6");
 
-        label7.setText("label7");
+        lblCooling.setText("label7");
 
-        label8.setText("label8");
+        lblLuxury.setText("label8");
 
-        label9.setText("label9");
+        lblDurable.setText("label9");
 
         label10.setText("label10");
 
-        label11.setText("label11");
+        lblNonfoon.setText("label11");
 
         label12.setText("The Aisles contain:");
 
@@ -350,34 +352,34 @@ public class Supermarket extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(list8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                .addComponent(list4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lstDurable, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                                .addComponent(lstLiqour, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblLiqour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDurable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(list10, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                .addComponent(list5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lstVegAndFruit, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                                .addComponent(lstLunchAndBreakfast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblLunchAndBreakfast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblCooling, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(97, 97, 97))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(list11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lstCooling, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(list7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblLuxury, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listLuxury, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(list9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblNonfoon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lstNonfood, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(44, 44, 44))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -391,38 +393,38 @@ public class Supermarket extends javax.swing.JFrame {
                 .addComponent(label12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblLiqour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLunchAndBreakfast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCooling, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLuxury, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(list7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(list4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(list11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(listLuxury, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lstLiqour, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lstCooling, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(list5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lstLunchAndBreakfast, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDurable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(list8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(list10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lstDurable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lstVegAndFruit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNonfoon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(list9, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lstNonfood, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Aisles", jPanel3);
+        Panes.addTab("Aisles", jPanel3);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -430,22 +432,22 @@ public class Supermarket extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(list6, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lstStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(list6, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addComponent(lstStorage, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Storage", jPanel4);
+        Panes.addTab("Storage", jPanel4);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtConsole.setColumns(20);
+        txtConsole.setRows(5);
+        jScrollPane1.setViewportView(txtConsole);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -464,13 +466,13 @@ public class Supermarket extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Console", jPanel5);
+        Panes.addTab("Console", jPanel5);
 
-        jLabel1.setText("Staff Name:");
+        lblStaffName.setText("Staff Name:");
 
-        label13.setText("Items");
+        lblItems.setText("Items");
 
-        label14.setText("Other Info");
+        lblOtherStaffInfo.setText("Other Info");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -480,15 +482,15 @@ public class Supermarket extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblStaffName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(list12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(staffComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lstItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(list13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lstOtherStaffInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblOtherStaffInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -496,38 +498,37 @@ public class Supermarket extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStaffName)
+                    .addComponent(staffComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(list12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lstItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(list13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lstOtherStaffInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 221, Short.MAX_VALUE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(label14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblOtherStaffInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        label14.getAccessibleContext().setAccessibleName("Other Info");
-        label14.getAccessibleContext().setAccessibleDescription("");
+        lblOtherStaffInfo.getAccessibleContext().setAccessibleDescription("");
 
-        jTabbedPane1.addTab("Staff", jPanel6);
+        Panes.addTab("Staff", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(Panes)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(Panes)
         );
 
         pack();
@@ -535,17 +536,17 @@ public class Supermarket extends javax.swing.JFrame {
 
     private void customerSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerSelectorActionPerformed
 
-        list1.clear();
-        list2.clear();
+        lstShoppingList.clear();
+        lstShoppingCart.clear();
 
 
 
         for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
-            list1.add(item.getName());
+            lstShoppingList.add(item.getName());
         }
 
         for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingCart()) {
-            list2.add(item.getName());
+            lstShoppingCart.add(item.getName());
         }
 
     }//GEN-LAST:event_customerSelectorActionPerformed
@@ -605,8 +606,8 @@ public class Supermarket extends javax.swing.JFrame {
 
     private void interfaceUpdate() {
         g.clearRect(0, 0, 5000, 5000);
-        list2.removeAll();
-        list3.removeAll();
+        lstShoppingCart.removeAll();
+        lstOtherCustomerInfo.removeAll();
 
         g.setColor(Color.blue);
         g.drawRect((int) storage.getLocation().x * 4, (int) storage.getLocation().y * 4, 50, 50);
@@ -639,24 +640,24 @@ public class Supermarket extends javax.swing.JFrame {
         g.setColor(Color.DARK_GRAY);
         g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
         try {
-            list3.clear();
-            list3.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
-            list3.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
-            list3.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
-            list3.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
-            list3.add("Locatio X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
+            lstOtherCustomerInfo.clear();
+            lstOtherCustomerInfo.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
+            lstOtherCustomerInfo.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
+            lstOtherCustomerInfo.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
+            lstOtherCustomerInfo.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
+            lstOtherCustomerInfo.add("Locatio X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
                     + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
         } catch (Exception e) {
         }
 
         ArrayList<List> lists = new ArrayList<>();
-        lists.add(list4);
-        lists.add(list5);
-        lists.add(list11);
-        lists.add(list7);
-        lists.add(list8);
-        lists.add(list10);
-        lists.add(list9);
+        lists.add(lstLiqour);
+        lists.add(lstLunchAndBreakfast);
+        lists.add(lstCooling);
+        lists.add(listLuxury);
+        lists.add(lstDurable);
+        lists.add(lstVegAndFruit);
+        lists.add(lstNonfood);
 
 
         int counter = 0;
@@ -671,18 +672,38 @@ public class Supermarket extends javax.swing.JFrame {
         }
 
         if (storage.isIsChanged()) {
-            list6.clear();
+            lstStorage.clear();
             for (Item item : storeItems) {
                 counter = storage.getItemCount(item.getName());
                 if (counter > 0) {
-                    list6.add(counter + " " + item.getName());
+                    lstStorage.add(counter + " " + item.getName());
                 }
             }
             storage.setIsChanged(false);
         }
         try {
+            lstItems.clear();
+            lstOtherStaffInfo.clear();
+            if (staffMembers.get(staffComboBox.getSelectedIndex()).getCashier() != null) {
+                lstItems.add("Cashier has no Items");
+                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Function: Cashier");
+            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader() != null) {
+                for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader().getShopItems()) {
+                    lstItems.add(item.getName());
+                }
+                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Function: Unloader");
+            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getStocker() != null) {
+                for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getStocker().getItems()) {
+                    lstItems.add(item.getName());
+                }
+                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Function: Stocker");
+            }
         } catch (Exception e) {
         }
+
 
     }
 
@@ -690,7 +711,7 @@ public class Supermarket extends javax.swing.JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                jTextArea1.append(text);
+                txtConsole.append(text);
             }
         });
     }
@@ -722,36 +743,14 @@ public class Supermarket extends javax.swing.JFrame {
             for (Staff staff : staffMembers) {
                 if (staff.getFunction().equals("stocker")) {
                     Stocker stocker = staff.getStocker();
-                    if (!stocker.isWorking()) {
+                    if (!stocker.isWorking() && stocker.getAisle() == null) {
                         for (Aisle aisle : aisles) {
-                            if (aisle.getItems().size() < 10 && aisle.getCurrentLoader() == null) {
+                            if (aisle.getItems().size() < 10) {
                                 stocker.setAisle(aisle);
-                                aisle.setCurrentLoader(stocker);
                             }
                         }
                     }
                 }
-            }
-        }
-
-        for (int i = 1; i < checkouts.size(); i++) {
-            Checkout currentCheckout = checkouts.get(i);
-            Checkout previousCheckout = checkouts.get(i - 1);
-            if (previousCheckout.getStatus() == Status.CROWDED) {
-                if (currentCheckout.getStatus() == Status.CLOSED || currentCheckout.getStatus() == Status.CLOSING) {
-                    for (Staff staff : staffMembers) {
-                        if (staff.getFunction() == "cashier") {
-                            Cashier cashier = staff.getCashier();
-                            if (cashier.isWaiting()) {
-                                cashier.setCheckOut(currentCheckout);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (previousCheckout.getStatus() == Status.OPEN) {
-                currentCheckout.closing();
             }
         }
     }
@@ -858,10 +857,8 @@ public class Supermarket extends javax.swing.JFrame {
     private void Jelmer() { //Jelmer's testing area
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Canvas canvas1;
+    private javax.swing.JTabbedPane Panes;
     private javax.swing.JComboBox customerSelector;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -869,39 +866,41 @@ public class Supermarket extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private java.awt.Label label1;
     private java.awt.Label label10;
-    private java.awt.Label label11;
     private java.awt.Label label12;
-    private java.awt.Label label13;
-    private java.awt.Label label14;
-    private java.awt.Label label2;
-    private java.awt.Label label3;
-    private java.awt.Label label4;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
-    private java.awt.Label label7;
-    private java.awt.Label label8;
-    private java.awt.Label label9;
-    private java.awt.List list1;
-    private java.awt.List list10;
-    private java.awt.List list11;
-    private java.awt.List list12;
-    private java.awt.List list13;
-    private java.awt.List list2;
-    private java.awt.List list3;
-    private java.awt.List list4;
-    private java.awt.List list5;
-    private java.awt.List list6;
-    private java.awt.List list7;
-    private java.awt.List list8;
-    private java.awt.List list9;
+    private java.awt.Label lblCooling;
+    private java.awt.Label lblDurable;
+    private java.awt.Label lblItems;
+    private java.awt.Label lblLiqour;
+    private java.awt.Label lblLunchAndBreakfast;
+    private java.awt.Label lblLuxury;
+    private java.awt.Label lblNonfoon;
+    private java.awt.Label lblOtherCustomerInfo;
+    private java.awt.Label lblOtherStaffInfo;
+    private java.awt.Label lblSelectCustomer;
+    private java.awt.Label lblShoppingCart;
+    private java.awt.Label lblSjoppingList;
+    private javax.swing.JLabel lblStaffName;
+    private java.awt.List listLuxury;
+    private java.awt.List lstCooling;
+    private java.awt.List lstDurable;
+    private java.awt.List lstItems;
+    private java.awt.List lstLiqour;
+    private java.awt.List lstLunchAndBreakfast;
+    private java.awt.List lstNonfood;
+    private java.awt.List lstOtherCustomerInfo;
+    private java.awt.List lstOtherStaffInfo;
+    private java.awt.List lstShoppingCart;
+    private java.awt.List lstShoppingList;
+    private java.awt.List lstStorage;
+    private java.awt.List lstVegAndFruit;
+    private java.awt.Canvas mapCanvas;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
     private java.awt.PopupMenu popupMenu1;
     private java.awt.PopupMenu popupMenu2;
+    private javax.swing.JComboBox staffComboBox;
+    private javax.swing.JTextArea txtConsole;
     // End of variables declaration//GEN-END:variables
 }
