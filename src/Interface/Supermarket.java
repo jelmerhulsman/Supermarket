@@ -16,12 +16,14 @@ import java.util.Scanner;
 import javax.swing.SwingUtilities;
 import supermarket.Aisle;
 import supermarket.Checkout;
+import supermarket.Checkout.Status;
 import supermarket.Customer;
 import supermarket.Department;
 import supermarket.Item;
 import supermarket.Item.Category;
 import supermarket.ObjectInShop;
 import supermarket.Person;
+import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
 import supermarket.StaffTypes.Unloader;
@@ -751,6 +753,27 @@ public class Supermarket extends javax.swing.JFrame {
                         }
                     }
                 }
+            }
+        }
+        
+        for (int i = 1; i < checkouts.size(); i++) {
+            Checkout currentCheckout = checkouts.get(i);
+            Checkout previousCheckout = checkouts.get(i - 1);
+            if (previousCheckout.getStatus() == Status.CROWDED) {
+                if (currentCheckout.getStatus() == Status.CLOSED || currentCheckout.getStatus() == Status.CLOSING) {
+                    for (Staff staff : staffMembers) {
+                        if (staff.getFunction() == "cashier") {
+                            Cashier cashier = staff.getCashier();
+                            if (cashier.isWaiting()) {
+                                cashier.setCheckOut(currentCheckout);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (previousCheckout.getStatus() == Status.OPEN) {
+                currentCheckout.closing();
             }
         }
     }
