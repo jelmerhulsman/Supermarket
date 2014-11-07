@@ -232,7 +232,7 @@ public class Customer extends Person {
 
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
-        new Thread(new Runnable() {
+        operation = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -274,6 +274,7 @@ public class Customer extends Person {
                     }
                 }
             }
-        }).start();
+        });
+        operation.start();
     }
 }

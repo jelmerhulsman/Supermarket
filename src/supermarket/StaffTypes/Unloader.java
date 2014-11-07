@@ -3,7 +3,6 @@ package supermarket.StaffTypes;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item;
-import supermarket.Item.Status;
 import supermarket.ObjectInShop;
 import supermarket.Storage;
 import supermarket.Truck;
@@ -12,7 +11,7 @@ import supermarket.Truck;
  *
  * @author SDJM
  */
-public class Unloader extends Staff {
+public class Unloader extends Staff{
 
     private final int MIN_STASH = 5;
     private final int MAX_STASH = 25;
@@ -32,9 +31,7 @@ public class Unloader extends Staff {
      * @param name Specify the name of this person
      * @param storage Specify the workplace of this person
      */
-    public Unloader(String name, Vector2f spawnLocations, Storage storage, Truck truck, ArrayList<Item> shopItems) {
-        super(name, spawnLocations);
-
+    public Unloader(Storage storage, Truck truck, ArrayList<Item> shopItems) {
         action = Action.WAITING;
         this.storage = storage;
         this.truck = truck;
@@ -51,7 +48,7 @@ public class Unloader extends Staff {
     public void getItemsFromTruck() {
         if (truck.getCurUnloader() == null && !truck.getItems().isEmpty()) {
             System.out.println(name + " is picking up items from truck...");
-            truck.setCurUnloader(this);
+            truck.setUnloader(this);
             items.addAll(truck.unload(MAX_ITEMS));
             sleep(MAX_ITEMS * ITEM_INTERACTION_TIME);
         } else if (truck.getCurUnloader() == this && !truck.getItems().isEmpty()) {
@@ -64,7 +61,6 @@ public class Unloader extends Staff {
     public void storeItemsInStorage() {
         for (Item i : items) {
             System.out.println(name + " is storing item " + i.getName() + " in the storage.");
-            i.setStatus(Status.IN_STORAGE);
             storage.addItem(i);
             sleep(ITEM_INTERACTION_TIME);
         }

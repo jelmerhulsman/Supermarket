@@ -1,6 +1,5 @@
 package supermarket.StaffTypes;
 
-import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Checkout;
 import supermarket.Checkout.Status;
@@ -27,9 +26,7 @@ public class Cashier extends Staff {
      * @param name Specify the name of this person
      * @param workplace Specify the workspace of this person
      */
-    public Cashier(String name, Vector2f spawnLocation, Checkout checkout) {
-        super(name, spawnLocation);
-
+    public Cashier(Checkout checkout) {
         action = Action.GO_TO_CHECKOUT;
         this.checkout = checkout;
         me = this;

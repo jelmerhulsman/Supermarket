@@ -11,7 +11,7 @@ import supermarket.StaffTypes.Unloader;
 public class Truck extends ObjectInShop {
 
     private ArrayList<Item> items;
-    private Unloader curUnloader;
+    private Unloader unloader;
 
     /**
      * creates a truck
@@ -21,7 +21,7 @@ public class Truck extends ObjectInShop {
     public Truck(String name, Vector2f location) {
         super(name, location);
         items = new ArrayList<>();
-        curUnloader = null;
+        unloader = null;
     }
 
     public ArrayList<Item> getItems() {
@@ -34,16 +34,16 @@ public class Truck extends ObjectInShop {
      * @return The current unloader class
      */
     public Unloader getCurUnloader() {
-        return curUnloader;
+        return unloader;
     }
 
     /**
      * Sets the current unloader which is unloading stuff from the truck
      *
-     * @param curUnloader the current unloader class
+     * @param unloader the current unloader class
      */
-    public void setCurUnloader(Unloader curUnloader) {
-        this.curUnloader = curUnloader;
+    public void setUnloader(Unloader unloader) {
+        this.unloader = unloader;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Truck extends ObjectInShop {
     /**
      * orders items (add's items to the truck)
      *     
-* @param items
+     * @param items
      */
     public void order(ArrayList<Item> items) {
         this.items.addAll(items);

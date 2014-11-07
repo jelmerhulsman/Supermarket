@@ -12,7 +12,7 @@ import supermarket.Storage;
  *
  * @author SDJM
  */
-public class Stocker extends Staff {
+public class Stocker extends Staff{
 
     private enum Action {
 
@@ -23,8 +23,7 @@ public class Stocker extends Staff {
     private Aisle aisle;
     private boolean isWorking;
 
-    public Stocker(String name, Vector2f spawnLocation, Storage storage) {
-        super(name, spawnLocation);
+    public Stocker(Storage storage) {
         action = Action.WAITING;
         this.storage = storage;
         aisle = null;

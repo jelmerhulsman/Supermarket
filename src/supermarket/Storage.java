@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import supermarket.Item.Category;
-import supermarket.Item.Status;
 import supermarket.StaffTypes.Unloader;
 
 /**
@@ -159,7 +158,6 @@ public class Storage extends ObjectInShop {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            item.setStatus(Status.IN_STORAGE);
             session.save(item);
             tx.commit();
             isChanged = true;
@@ -228,6 +226,4 @@ public class Storage extends ObjectInShop {
     public void setIsChanged(boolean isChanged) {
         this.isChanged = isChanged;
     }
-    
-    
 }

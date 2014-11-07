@@ -12,54 +12,37 @@ import supermarket.StaffTypes.Stocker;
 public class Aisle extends ObjectInShop {
 
     private final int ITEM_LIMIT_AISLE = 50;
-
-    public enum Status {
-
-        EMPTY, STOCKED, FULL
-    }
-    private Status status;
     private Stocker stocker;
     private ArrayList<Category> categories;
+    private ArrayList<Item> aisleItems;
     private ArrayList<Item> items;
-    private ArrayList<Customer> customers;
 
-    public Aisle(String name, Vector2f location, Category category1) {
+    public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
         super(name, location);
         this.name = name;
-        status = Status.EMPTY;
         stocker = null;
-        categories = new ArrayList<>();
+        
+        this.categories = new ArrayList<>();
+        this.categories.addAll(categories);
+        
+        this.aisleItems = createListOfAisleItems(categories, storeItems);
+        
         items = new ArrayList<>();
-        customers = new ArrayList<>();
-
-        categories.add(category1);
     }
-
-    public Aisle(String name, Vector2f location, Category category1, Category category2) {
-        super(name, location);
-        this.name = name;
-        status = Status.EMPTY;
-        stocker = null;
-        categories = new ArrayList<>();
-        items = new ArrayList<>();
-        customers = new ArrayList<>();
-
-        categories.add(category1);
-        categories.add(category2);
-    }
-
-    public Aisle(String name, Vector2f location, Category category1, Category category2, Category category3) {
-        super(name, location);
-        this.name = name;
-        status = Status.EMPTY;
-        stocker = null;
-        categories = new ArrayList<>();
-        items = new ArrayList<>();
-        customers = new ArrayList<>();
-
-        categories.add(category1);
-        categories.add(category2);
-        categories.add(category3);
+    
+    private ArrayList<Item> createListOfAisleItems(ArrayList<Category> categories, ArrayList<Item> storeItems)
+    {
+        ArrayList<Item> items = new ArrayList<>();
+        
+        for (Item item : storeItems)
+        {
+            if (categories.contains(item.getCategory()))
+            {
+                items.add(item);
+            }
+        }
+        
+        return items;
     }
 
     /**
@@ -92,7 +75,7 @@ public class Aisle extends ObjectInShop {
     public ArrayList<String> getItemNames() {
         ArrayList<String> itemNames = new ArrayList<>();
         
-        for (Item item : items)
+        for (Item item : aisleItems)
         {
             if (!itemNames.contains(item.getName()))
             {
@@ -135,16 +118,6 @@ public class Aisle extends ObjectInShop {
     }
 
     /**
-     * Gets the status of this Aisle.
-     *
-     * @return This Aisle can be FULL, EMPTY or just NORMAL. ( NORMAL meaning
-     * that it just is operating properly )
-     */
-    public Status getStatus() {
-        return status;
-    }
-
-    /**
      * This will fill the Aisle with the specified item and sets the Status of
      * this Aisle to LOADED
      *
@@ -152,20 +125,5 @@ public class Aisle extends ObjectInShop {
      */
     public void loadAisle(Item item) {
         items.add(item);
-        item.setStatus(Item.Status.LOADED);
-    }
-
-    /**
-     * Will check the list of items in this aisle for being at it's limit or
-     * being empty and sets the Status accordingly.
-     */
-    public void checkAisle() {
-        if (items.size() == ITEM_LIMIT_AISLE) {
-            status = Status.FULL;
-        } else if (items.isEmpty()) {
-            status = Status.EMPTY;
-        } else {
-            status = Status.STOCKED;
-        }
     }
 }

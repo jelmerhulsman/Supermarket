@@ -19,47 +19,28 @@ public class Item {
 
         BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICES, NONFOOD, FROZEN, PRESERVATION, BREAD, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT
     }
-
-    public enum Status {
-
-        LOADED, IN_STORAGE, ON_CUSTOMER, ON_STAFF, IN_TRUCK, VIRTUAL
-    }
+    
     @Column(name = "name")
     private String name;
     @Column(name = "price")
     private float price;
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private Status status;
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private Category category;
 
     public Item() {
-        this.status = Status.IN_TRUCK;
     }
 
     public Item(Item item) {
         this.name = item.name;
         this.price = item.price;
-        this.status = Status.IN_TRUCK;
         this.category = item.category;
     }
 
     public Item(String name, float price, Category category) {
         this.name = name;
         this.price = price;
-        this.status = Status.VIRTUAL;
         this.category = category;
-    }
-
-    /**
-     * Gets the Status of the Item
-     *
-     * @return wether the item is loaded, at a customer, purchased and whatever
-     */
-    public Status getStatus() {
-        return status;
     }
 
     /**
@@ -132,15 +113,5 @@ public class Item {
      */
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    /**
-     * Sets the status of this item to something else
-     *
-     * @param status wether the item is loaded, at a customer, purchased and
-     * whatever
-     */
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }

@@ -20,13 +20,12 @@ public class Staff extends Person {
     private String function;
     protected final int MAX_ITEMS = 10;
     protected ArrayList<Item> items;
-
-    /**
-     * Basic staff constructor
-     *
-     * @param name
-     */
-    public Staff(String name, Vector2f spawnLocation) {
+    
+    public Staff() {
+        
+    }
+    
+    private Staff(String name, Vector2f spawnLocation) {
         super(name, spawnLocation);
         speed = 2f;
         items = new ArrayList<>();
@@ -39,7 +38,8 @@ public class Staff extends Person {
      * @param checkout
      */
     public Staff(String name, Vector2f spawnLocation, Checkout checkout) {
-        cashier = new Cashier("CASHIER " + name, spawnLocation, checkout);
+        this(name, spawnLocation);
+        cashier = new Cashier(checkout);
         this.function = "cashier";
     }
 
@@ -50,7 +50,8 @@ public class Staff extends Person {
      * @param storage & aisle
      */
     public Staff(String name, Vector2f spawnLocation, Storage storage) {
-        stocker = new Stocker("STOCKER " + name, spawnLocation, storage);
+        this(name, spawnLocation);
+        stocker = new Stocker(storage);
         function = "stocker";
     }
 
@@ -61,7 +62,8 @@ public class Staff extends Person {
      * @param storage & truck
      */
     public Staff(String name, Vector2f spawnLocation, Storage storage, Truck truck, ArrayList<Item> shopItems) {
-        unloader = new Unloader("UNLOADER " + name, spawnLocation, storage, truck, shopItems);
+        this(name, spawnLocation);
+        unloader = new Unloader(storage, truck, shopItems);
         function = "unloader";
     }
 
