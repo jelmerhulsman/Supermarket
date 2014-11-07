@@ -35,7 +35,7 @@ public class Stocker extends Staff {
         for (Category category : aisle.getCategories()) {
             if (storage.getItems(storage.getItems().size(), category).size() > 0) {
                 items.addAll(storage.getItems(MAX_ITEMS, category));
-                sleep(items.size() * ITEM_INTERACTION_TIME);
+                //sleep(items.size() * ITEM_INTERACTION_TIME);
             }
         }
     }
@@ -58,17 +58,16 @@ public class Stocker extends Staff {
 
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
-        new Thread(new Runnable() {
+        operation = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
-                    try {
                         switch (action) {
                             case GET_ITEMS:
-                                gotoLocation("Storage", staticLocations);
-                                if (storage.getItems().isEmpty()) {
+                                if (storage.getItems().isEmpty() || aisle == null) {
                                     action = Action.WAITING;
                                 } else {
+                                    gotoLocation("Storage", staticLocations);
                                     getItemsFromStorage();
                                     isWorking = true;
                                     action = Action.STORE_ITEMS;
@@ -79,7 +78,6 @@ public class Stocker extends Staff {
                                 storeItemsInAisle();
                                 isWorking = true;
                                 action = Action.GET_ITEMS;
-
                                 break;
                             case WAITING:
                                 isWorking = false;
@@ -90,11 +88,9 @@ public class Stocker extends Staff {
                                 }
                                 break;
                         }
-                    } catch (Throwable e) {
-                        System.out.println(e.getMessage());
-                    }
                 }
             }
-        }).start();
+        });
+        operation.start();
     }
 }
