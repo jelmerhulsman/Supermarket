@@ -61,39 +61,39 @@ public class Stocker extends Staff {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
-                try {
-                    switch (action) {
-                        case GET_ITEMS:
-                            gotoLocation("Storage", staticLocations);
-                            if (storage.getItems().isEmpty()) {
-                                action = Action.WAITING;
-                            } else {
-                                getItemsFromStorage();
+                while (true) {
+                    try {
+                        switch (action) {
+                            case GET_ITEMS:
+                                gotoLocation("Storage", staticLocations);
+                                if (storage.getItems().isEmpty()) {
+                                    action = Action.WAITING;
+                                } else {
+                                    getItemsFromStorage();
+                                    isWorking = true;
+                                    action = Action.STORE_ITEMS;
+                                }
+                                break;
+                            case STORE_ITEMS:
+                                gotoLocation(aisle.getName(), staticLocations);
+                                storeItemsInAisle();
                                 isWorking = true;
-                                action = Action.STORE_ITEMS;
-                            }
-                            break;
-                        case STORE_ITEMS:
-                            gotoLocation(aisle.getName(), staticLocations);
-                            storeItemsInAisle();
-                            isWorking = true;
-                            action = Action.GET_ITEMS;
-
-                            break;
-                        case WAITING:
-                            isWorking = false;
-                            if (!storage.getItems().isEmpty()) {
                                 action = Action.GET_ITEMS;
-                            } else {
-                                action = Action.WAITING;
-                            }
-                            break;
+
+                                break;
+                            case WAITING:
+                                isWorking = false;
+                                if (!storage.getItems().isEmpty()) {
+                                    action = Action.GET_ITEMS;
+                                } else {
+                                    action = Action.WAITING;
+                                }
+                                break;
+                        }
+                    } catch (Throwable e) {
+                        System.out.println(e.getMessage());
                     }
-                } catch (Throwable e) {
-                    System.out.println(e.getMessage());
                 }
-            }
             }
         }).start();
     }

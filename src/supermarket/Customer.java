@@ -165,7 +165,8 @@ public class Customer extends Person {
                 }
             }
         }
-
+        
+        shoppingList.clear();
         return null;
     }
 
@@ -226,44 +227,43 @@ public class Customer extends Person {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true)
-                {
-                switch (action) {
-                    case ENTERING:
-                        String targetName = "Entrance";
-                        gotoCoords(new Vector2f(location.x, location.y - 20), targetName);
-                        action = Action.SHOPPING;
-                        break;
-                    case SHOPPING:
-                        Aisle aisle = getFirstItemLocation(staticLocations);
+                while (true) {
+                    switch (action) {
+                        case ENTERING:
+                            String targetName = "Entrance";
+                            gotoCoords(new Vector2f(location.x, location.y - 20), targetName);
+                            action = Action.SHOPPING;
+                            break;
+                        case SHOPPING:
+                            Aisle aisle = getFirstItemLocation(staticLocations);
 
-                        gotoLocation(aisle.getName(), staticLocations);
-                        getItemsFromAisle(aisle);
+                            gotoLocation(aisle.getName(), staticLocations);
+                            getItemsFromAisle(aisle);
 
-                        if (shoppingList.isEmpty()) {
-                            action = Action.CHOOSING_CHECKOUT;
-                        }
-                        break;
-                    case CHOOSING_CHECKOUT:
-                        if (shoppingCart.isEmpty()) {
-                            gotoLocation("Entrance/Exit", staticLocations);
-                            action = Action.LEAVING;
-                        } else {
-                            Checkout checkout = chooseCheckout(staticLocations);
-                            if (checkout != null) {
-                                checkout.addCustomer(me);
-                                collectedItemsCount = shoppingCart.size();
-                                action = Action.WAITING;
+                            if (shoppingList.isEmpty()) {
+                                action = Action.CHOOSING_CHECKOUT;
                             }
-                        }
-                        break;
-                    case WAITING:
-                        if (saldo < beginWithSaldo && shoppingCart.size() == collectedItemsCount) {
-                            gotoLocation("Entrance/Exit", staticLocations);
-                            action = Action.LEAVING;
-                        }
-                        break;
-                }
+                            break;
+                        case CHOOSING_CHECKOUT:
+                            if (shoppingCart.isEmpty()) {
+                                gotoLocation("Entrance/Exit", staticLocations);
+                                action = Action.LEAVING;
+                            } else {
+                                Checkout checkout = chooseCheckout(staticLocations);
+                                if (checkout != null) {
+                                    checkout.addCustomer(me);
+                                    collectedItemsCount = shoppingCart.size();
+                                    action = Action.WAITING;
+                                }
+                            }
+                            break;
+                        case WAITING:
+                            if (saldo < beginWithSaldo && shoppingCart.size() == collectedItemsCount) {
+                                gotoLocation("Entrance/Exit", staticLocations);
+                                action = Action.LEAVING;
+                            }
+                            break;
+                    }
                 }
             }
         }).start();

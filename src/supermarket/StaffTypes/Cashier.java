@@ -65,20 +65,22 @@ public class Cashier extends Staff {
         operation = new Thread(new Runnable() {
             @Override
             public void run() {
-                switch (action) {
-                    case GO_TO_CHECKOUT:
-                        gotoLocation(checkout.getName(), staticLocations);
-                        checkout.open(me);
-                        action = Action.WORKING;
-                    case WORKING:
-                        processCustsomer();
-                        if (checkout.getStatus() == Status.CLOSED) {
-                            action = Action.WAITING;
-                        }
-                        break;
-                    case WAITING:
-                        gotoLocation("Storage", staticLocations);
-                        break;
+                while (true) {
+                    switch (action) {
+                        case GO_TO_CHECKOUT:
+                            gotoLocation(checkout.getName(), staticLocations);
+                            checkout.open(me);
+                            action = Action.WORKING;
+                        case WORKING:
+                            processCustsomer();
+                            if (checkout.getStatus() == Status.CLOSED) {
+                                action = Action.WAITING;
+                            }
+                            break;
+                        case WAITING:
+                            gotoLocation("Storage", staticLocations);
+                            break;
+                    }
                 }
             }
         });

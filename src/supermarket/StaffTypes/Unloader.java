@@ -95,32 +95,31 @@ public class Unloader extends Staff {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true)
-                {
-                switch (action) {
-                    case UNLOAD_TRUCK:
-                        gotoLocation("Truck", staticLocations);
-                        getItemsFromTruck();
-                        action = Action.STORE_ITEMS;
-                        break;
-                    case STORE_ITEMS:
-                        gotoLocation("Storage", staticLocations);
-                        storeItemsInStorage();
+                while (true) {
+                    switch (action) {
+                        case UNLOAD_TRUCK:
+                            gotoLocation("Truck", staticLocations);
+                            getItemsFromTruck();
+                            action = Action.STORE_ITEMS;
+                            break;
+                        case STORE_ITEMS:
+                            gotoLocation("Storage", staticLocations);
+                            storeItemsInStorage();
 
-                        if (truck.getItems().isEmpty()) {
-                            action = Action.WAITING;
-                        } else {
-                            action = Action.UNLOAD_TRUCK;
-                        }
-                        break;
-                    case WAITING:
-                        if (!truck.getItems().isEmpty()) {
-                            action = Action.UNLOAD_TRUCK;
-                        } else {
-                            orderItems();
-                        }
-                        break;
-                }
+                            if (truck.getItems().isEmpty()) {
+                                action = Action.WAITING;
+                            } else {
+                                action = Action.UNLOAD_TRUCK;
+                            }
+                            break;
+                        case WAITING:
+                            if (!truck.getItems().isEmpty()) {
+                                action = Action.UNLOAD_TRUCK;
+                            } else {
+                                orderItems();
+                            }
+                            break;
+                    }
                 }
             }
         }).start();
