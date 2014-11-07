@@ -223,14 +223,17 @@ public class Customer extends Person {
 
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
-        operation = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                while(true)
+                {
                 switch (action) {
                     case ENTERING:
                         String targetName = "Entrance";
                         gotoCoords(new Vector2f(location.x, location.y - 20), targetName);
                         action = Action.SHOPPING;
+                        break;
                     case SHOPPING:
                         Aisle aisle = getFirstItemLocation(staticLocations);
 
@@ -261,8 +264,8 @@ public class Customer extends Person {
                         }
                         break;
                 }
+                }
             }
-        });
-        operation.start();
+        }).start();
     }
 }

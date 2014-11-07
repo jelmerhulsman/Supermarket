@@ -92,9 +92,11 @@ public class Unloader extends Staff {
 
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
-        operation = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                while(true)
+                {
                 switch (action) {
                     case UNLOAD_TRUCK:
                         gotoLocation("Truck", staticLocations);
@@ -119,8 +121,8 @@ public class Unloader extends Staff {
                         }
                         break;
                 }
+                }
             }
-        });
-        operation.start();
+        }).start();
     }
 }
