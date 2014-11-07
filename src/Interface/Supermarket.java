@@ -746,7 +746,7 @@ public class Supermarket extends javax.swing.JFrame {
         for (int i = 0; i < customers.size(); i++) {
             if (customers.get(i).isLeaving()) {
                 leavingCustomers.add(customers.get(i));
-                customerSelector.remove(i - 1);
+                customerSelector.removeItemAt(i);
             }
         }
 
