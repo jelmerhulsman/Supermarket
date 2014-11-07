@@ -58,9 +58,10 @@ public class Stocker extends Staff {
 
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
-        operation = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                while(true){
                 try {
                     switch (action) {
                         case GET_ITEMS:
@@ -93,8 +94,7 @@ public class Stocker extends Staff {
                     System.out.println(e.getMessage());
                 }
             }
-        });
-        operation.setName(this.getName() + " Thread");
-        operation.start();
+            }
+        }).start();
     }
 }
