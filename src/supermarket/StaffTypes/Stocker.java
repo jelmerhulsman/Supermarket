@@ -1,6 +1,5 @@
 package supermarket.StaffTypes;
 
-import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Aisle;
 import supermarket.Item;
@@ -36,6 +35,10 @@ public class Stocker extends Staff {
                 sleep(items.size() * ITEM_INTERACTION_TIME);
             }
         }
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
     }
 
     public boolean isWorking() {

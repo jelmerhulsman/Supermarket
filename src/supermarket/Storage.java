@@ -16,7 +16,6 @@ import supermarket.StaffTypes.Unloader;
 public class Storage extends ObjectInShop {
 
     private ArrayList<Item> items;
-    private Unloader currentUnloader;
     private static SessionFactory factory;
     boolean isChanged = true;
     /**
@@ -35,24 +34,6 @@ public class Storage extends ObjectInShop {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
         }
-    }
-
-    /**
-     * returs the current unloader
-     *
-     * @return unloader
-     */
-    public Unloader getCurrentUnloader() {
-        return currentUnloader;
-    }
-
-    /**
-     * assigns an unloader to the storage
-     *
-     * @param currentUnloader
-     */
-    public void setCurrentUnloader(Unloader currentUnloader) {
-        this.currentUnloader = currentUnloader;
     }
 
     /**

@@ -20,11 +20,10 @@ public class Staff extends Person {
     private String function;
     protected final int MAX_ITEMS = 10;
     protected ArrayList<Item> items;
-    
+
     public Staff() {
-        
     }
-    
+
     private Staff(String name, Vector2f spawnLocation) {
         super(name, spawnLocation);
         speed = 2f;
