@@ -1,6 +1,5 @@
 package supermarket.StaffTypes;
 
-import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item;
 import supermarket.ObjectInShop;
@@ -46,15 +45,10 @@ public class Unloader extends Staff{
      * objects in an arraylist
      */
     public void getItemsFromTruck() {
-        if (truck.getCurUnloader() == null && !truck.getItems().isEmpty()) {
+        if (!truck.getItems().isEmpty()) {
             System.out.println(name + " is picking up items from truck...");
-            truck.setUnloader(this);
             items.addAll(truck.unload(MAX_ITEMS));
             sleep(MAX_ITEMS * ITEM_INTERACTION_TIME);
-        } else if (truck.getCurUnloader() == this && !truck.getItems().isEmpty()) {
-            System.out.println(name + " is picking up items from truck...");
-            items.addAll(truck.unload(MAX_ITEMS));
-            sleep(items.size() * ITEM_INTERACTION_TIME);
         }
     }
 

@@ -18,7 +18,6 @@ public class Cashier extends Staff {
     }
     private Action action;
     private Checkout checkout;
-    private Cashier me;
 
     /**
      * Constructor for the Cashier staff member
@@ -29,7 +28,6 @@ public class Cashier extends Staff {
     public Cashier(Checkout checkout) {
         action = Action.GO_TO_CHECKOUT;
         this.checkout = checkout;
-        me = this;
     }
 
     /**
@@ -66,7 +64,7 @@ public class Cashier extends Staff {
                     switch (action) {
                         case GO_TO_CHECKOUT:
                             gotoLocation(checkout.getName(), staticLocations);
-                            checkout.open(me);
+                            checkout.open();
                             action = Action.WORKING;
                         case WORKING:
                             processCustsomer();

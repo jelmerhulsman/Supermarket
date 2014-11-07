@@ -16,14 +16,12 @@ public class Checkout extends ObjectInShop {
     };
     private int number;
     private Status status;
-    private Cashier cashier;
     private ArrayList<Customer> customers;
 
     public Checkout(int number, Vector2f location) {
         super("Checkout " + number, location);
         this.number = number;
         status = Status.CLOSED;
-        cashier = null;
         customers = new ArrayList<>();
     }
 
@@ -32,9 +30,8 @@ public class Checkout extends ObjectInShop {
      *
      * @param cashier
      */
-    public void open(Cashier cashier) {
+    public void open() {
         status = Status.OPEN;
-        this.cashier = cashier;
         customers = new ArrayList<>();
     }
 
@@ -43,14 +40,9 @@ public class Checkout extends ObjectInShop {
      *
      * @return cashier
      */
-    public Cashier close() {
-        Cashier c = cashier;
-
+    public void close() {
         status = Status.CLOSED;
-        cashier = null;
         customers = new ArrayList<>();
-
-        return c;
     }
 
     /**
