@@ -2,7 +2,6 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
-import supermarket.StaffTypes.Cashier;
 
 /**
  *

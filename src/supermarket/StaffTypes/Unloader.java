@@ -10,7 +10,7 @@ import supermarket.Truck;
  *
  * @author SDJM
  */
-public class Unloader extends Staff{
+public class Unloader extends Staff {
 
     private final int MIN_STASH = 5;
     private final int MAX_STASH = 25;
@@ -35,6 +35,10 @@ public class Unloader extends Staff{
         this.storage = storage;
         this.truck = truck;
         this.shopItems = shopItems;
+    }
+
+    public ArrayList<Item> getShopItems() {
+        return shopItems;
     }
 
     /**
@@ -107,6 +111,7 @@ public class Unloader extends Staff{
                                 action = Action.UNLOAD_TRUCK;
                             } else {
                                 orderItems();
+                                sleep(5000);
                             }
                             break;
                     }
