@@ -522,14 +522,16 @@ public class Supermarket extends javax.swing.JFrame {
 
         g.setColor(Color.DARK_GRAY);
         g.drawRect((int) truck.getLocation().x* 4, (int) truck.getLocation().y* 4, 20, 40);
-
         try {
-            list3.clear();
-            list3.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
-            list3.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
-            list3.add("Locatio X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
-                    + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
-            list3.add("Current Aisle: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
+            if(customers.get(customerSelector.getSelectedIndex()).isIsChanged()){
+                list3.clear();
+                list3.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
+                list3.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
+                list3.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
+                list3.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
+                list3.add("Locatio X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
+                + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
+            }
         } catch (Exception e) {
         }
 
@@ -554,13 +556,15 @@ public class Supermarket extends javax.swing.JFrame {
             }
         }
         
-        list6.clear();
-        
-        for(Item item : storeItems){
-            counter = storage.getItemCount(item.getName());
-            if(counter>0){
-                list6.add(counter + " " + item.getName());
+        if(storage.isIsChanged()){
+            list6.clear();
+            for(Item item : storeItems){
+                counter = storage.getItemCount(item.getName());
+                if(counter>0){
+                    list6.add(counter + " " + item.getName());
+                }
             }
+            storage.setIsChanged(false);
         }
     }
        

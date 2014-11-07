@@ -27,6 +27,7 @@ public class Customer extends Person {
     private ArrayList<Item> shoppingList, shoppingCart;
     private int collectedItemsCount;
     private Customer me;
+    private boolean isChanged = true;
 
     public Customer(String name, Vector2f spawnLocation, Stereotype stereotype, ArrayList<Item> uniqueItems) {
         super(name, spawnLocation);
@@ -60,13 +61,23 @@ public class Customer extends Person {
         me = this;
     }
 
+    public boolean isIsChanged() {
+        return isChanged;
+    }
+
+    public void setIsChanged(boolean isChanged) {
+        this.isChanged = isChanged;
+    }
+
+    
+    
     private float giveSaldo(int min, int max) {
         float amount = (int) (Math.random() * (max - min)) + min;
         amount += (int) (Math.random() * 10) / 10;
         if (chanceOf(50)) {
             amount += 0.05f;
         }
-
+        
         return amount;
     }
 
@@ -173,6 +184,16 @@ public class Customer extends Person {
         return shoppingList;
     }
 
+    public Action getAction() {
+        return action;
+    }
+
+    public Stereotype getStereotype() {
+        return stereotype;
+    }
+    
+    
+
     private void getItemsFromAisle(Aisle aisle) {
         ArrayList<String> aisleItemNames = aisle.getItemNames();
         ArrayList<Item> checkedItems = new ArrayList<>();
@@ -181,10 +202,12 @@ public class Customer extends Person {
             if (aisleItemNames.contains(item.getName())) {
                 if (aisle.getItemCount(item) > 0) {
                     shoppingCart.add(aisle.pickFromShelve(item));
+                    
                 }
 
                 sleep(ITEM_INTERACTION_TIME);
                 checkedItems.add(item);
+                isChanged = true;
             }
         }
 
@@ -214,6 +237,7 @@ public class Customer extends Person {
     }
 
     public void setSaldo(float saldo) {
+        isChanged = true;
         this.saldo = saldo;
     }
 
@@ -231,6 +255,7 @@ public class Customer extends Person {
                         String targetName = "Entrance";
                         gotoCoords(new Vector2f(location.x, location.y - 20), targetName);
                         action = Action.SHOPPING;
+                        isChanged = true;
                     case SHOPPING:
                         Aisle aisle = getFirstItemLocation(staticLocations);
 
@@ -239,18 +264,21 @@ public class Customer extends Person {
 
                         if (shoppingList.isEmpty()) {
                             action = Action.CHOOSING_CHECKOUT;
+                            isChanged = true;
                         }
                         break;
                     case CHOOSING_CHECKOUT:
                         if (shoppingCart.isEmpty()) {
                             gotoLocation("Entrance/Exit", staticLocations);
                             action = Action.LEAVING;
+                            isChanged = true;
                         } else {
                             Checkout checkout = chooseCheckout(staticLocations);
                             if (checkout != null) {
                                 checkout.addCustomer(me);
                                 collectedItemsCount = shoppingCart.size();
                                 action = Action.WAITING;
+                                isChanged = true;
                             }
                         }
                         break;
@@ -258,6 +286,7 @@ public class Customer extends Person {
                         if (saldo < beginWithSaldo && shoppingCart.size() == collectedItemsCount) {
                             gotoLocation("Entrance/Exit", staticLocations);
                             action = Action.LEAVING;
+                            isChanged = true;
                         }
                         break;
                 }
