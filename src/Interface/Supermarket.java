@@ -20,6 +20,7 @@ import supermarket.Customer;
 import supermarket.Department;
 import supermarket.Item;
 import supermarket.ObjectInShop;
+import supermarket.Person;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
 import supermarket.Storage;
@@ -126,12 +127,18 @@ public class Supermarket extends javax.swing.JFrame {
         staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
         staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
         staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
-
+        
+        for(Person staff : staffMembers){
+            String test = staff.getName();
+            jComboBox1.addItem(test);
+        }
+        
         //List of customers
         customers = new ArrayList<>();
 
         //Choose debugger
         chooseDebugger();
+        
     }
 
     /**
@@ -150,8 +157,8 @@ public class Supermarket extends javax.swing.JFrame {
         menu2 = new java.awt.Menu();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        list3 = new java.awt.List();
         customerSelector = new javax.swing.JComboBox();
+        list3 = new java.awt.List();
         list1 = new java.awt.List();
         label1 = new java.awt.Label();
         list2 = new java.awt.List();
