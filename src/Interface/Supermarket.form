@@ -49,17 +49,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="Panes" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="Panes" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="Panes">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -79,29 +79,29 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="list1" min="-2" pref="173" max="-2" attributes="0"/>
+                              <Component id="lstShoppingList" min="-2" pref="173" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="list2" min="-2" pref="173" max="-2" attributes="0"/>
+                              <Component id="lstShoppingCart" min="-2" pref="173" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="label4" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblSelectCustomer" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="customerSelector" min="-2" pref="206" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="label1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblSjoppingList" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
-                              <Component id="label2" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblShoppingCart" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="list3" max="32767" attributes="0"/>
+                              <Component id="lstOtherCustomerInfo" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="label3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblOtherCustomerInfo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="151" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -114,32 +114,32 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="customerSelector" min="-2" max="-2" attributes="0"/>
-                          <Component id="label4" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSelectCustomer" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="label1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSjoppingList" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblShoppingCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="list1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="lstShoppingList" alignment="1" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="list3" min="-2" pref="231" max="-2" attributes="0"/>
+                                              <Component id="lstOtherCustomerInfo" min="-2" pref="231" max="-2" attributes="0"/>
                                               <EmptySpace min="0" pref="177" max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="list2" max="32767" attributes="0"/>
+                                          <Component id="lstShoppingCart" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="label3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblOtherCustomerInfo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -160,28 +160,28 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customerSelectorActionPerformed"/>
               </Events>
             </Component>
-            <Component class="java.awt.List" name="list3">
+            <Component class="java.awt.List" name="lstOtherCustomerInfo">
             </Component>
-            <Component class="java.awt.List" name="list1">
+            <Component class="java.awt.List" name="lstShoppingList">
             </Component>
-            <Component class="java.awt.Label" name="label1">
+            <Component class="java.awt.Label" name="lblSjoppingList">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Shopping List"/>
               </Properties>
             </Component>
-            <Component class="java.awt.List" name="list2">
+            <Component class="java.awt.List" name="lstShoppingCart">
             </Component>
-            <Component class="java.awt.Label" name="label2">
+            <Component class="java.awt.Label" name="lblShoppingCart">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Shopping Cart"/>
               </Properties>
             </Component>
-            <Component class="java.awt.Label" name="label3">
+            <Component class="java.awt.Label" name="lblOtherCustomerInfo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Other Info"/>
               </Properties>
             </Component>
-            <Component class="java.awt.Label" name="label4">
+            <Component class="java.awt.Label" name="lblSelectCustomer">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Select customer"/>
               </Properties>
@@ -202,7 +202,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-                      <Component id="canvas1" min="-2" pref="400" max="-2" attributes="0"/>
+                      <Component id="mapCanvas" min="-2" pref="400" max="-2" attributes="0"/>
                       <EmptySpace pref="100" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -211,14 +211,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="canvas1" min="-2" pref="400" max="-2" attributes="0"/>
+                      <Component id="mapCanvas" min="-2" pref="400" max="-2" attributes="0"/>
                       <EmptySpace pref="67" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="java.awt.Canvas" name="canvas1">
+            <Component class="java.awt.Canvas" name="mapCanvas">
             </Component>
           </SubComponents>
         </Container>
@@ -240,19 +240,19 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="list8" alignment="0" pref="125" max="32767" attributes="0"/>
-                                      <Component id="list4" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lstDurable" alignment="0" pref="125" max="32767" attributes="0"/>
+                                      <Component id="lstLiqour" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="label5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label9" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblLiqour" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDurable" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="list10" pref="125" max="32767" attributes="0"/>
-                                      <Component id="list5" max="32767" attributes="0"/>
+                                      <Component id="lstVegAndFruit" pref="125" max="32767" attributes="0"/>
+                                      <Component id="lstLunchAndBreakfast" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="label6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblLunchAndBreakfast" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="label10" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -260,23 +260,23 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
-                                              <Component id="label7" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblCooling" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <Component id="list11" max="32767" attributes="0"/>
+                                              <Component id="lstCooling" max="32767" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="label8" min="-2" max="-2" attributes="0"/>
-                                          <Component id="list7" min="-2" pref="125" max="-2" attributes="0"/>
+                                          <Component id="lblLuxury" min="-2" max="-2" attributes="0"/>
+                                          <Component id="listLuxury" min="-2" pref="125" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="label11" min="-2" max="-2" attributes="0"/>
-                                          <Component id="list9" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                                          <Component id="lblNonfoon" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lstNonfood" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -298,41 +298,41 @@
                       <Component id="label12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="label5" min="-2" max="-2" attributes="0"/>
-                          <Component id="label6" min="-2" max="-2" attributes="0"/>
-                          <Component id="label7" min="-2" max="-2" attributes="0"/>
-                          <Component id="label8" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLiqour" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLunchAndBreakfast" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCooling" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLuxury" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="list7" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="list4" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="listLuxury" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="lstLiqour" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="list11" max="32767" attributes="0"/>
+                          <Component id="lstCooling" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="list5" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="lstLunchAndBreakfast" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="label9" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDurable" min="-2" max="-2" attributes="0"/>
                                   <Component id="label10" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="list8" alignment="1" min="-2" pref="174" max="-2" attributes="0"/>
-                                  <Component id="list10" alignment="1" min="-2" pref="174" max="-2" attributes="0"/>
+                                  <Component id="lstDurable" alignment="1" min="-2" pref="174" max="-2" attributes="0"/>
+                                  <Component id="lstVegAndFruit" alignment="1" min="-2" pref="174" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="label11" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNonfoon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="list9" min="-2" pref="174" max="-2" attributes="0"/>
+                              <Component id="lstNonfood" min="-2" pref="174" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -341,39 +341,39 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="java.awt.Label" name="label5">
+            <Component class="java.awt.Label" name="lblLiqour">
               <Properties>
                 <Property name="text" type="java.lang.String" value="label5"/>
               </Properties>
             </Component>
-            <Component class="java.awt.List" name="list4">
+            <Component class="java.awt.List" name="lstLiqour">
             </Component>
-            <Component class="java.awt.List" name="list5">
+            <Component class="java.awt.List" name="lstLunchAndBreakfast">
             </Component>
-            <Component class="java.awt.List" name="list7">
+            <Component class="java.awt.List" name="listLuxury">
             </Component>
-            <Component class="java.awt.List" name="list8">
+            <Component class="java.awt.List" name="lstDurable">
             </Component>
-            <Component class="java.awt.List" name="list9">
+            <Component class="java.awt.List" name="lstNonfood">
             </Component>
-            <Component class="java.awt.List" name="list10">
+            <Component class="java.awt.List" name="lstVegAndFruit">
             </Component>
-            <Component class="java.awt.Label" name="label6">
+            <Component class="java.awt.Label" name="lblLunchAndBreakfast">
               <Properties>
                 <Property name="text" type="java.lang.String" value="label6"/>
               </Properties>
             </Component>
-            <Component class="java.awt.Label" name="label7">
+            <Component class="java.awt.Label" name="lblCooling">
               <Properties>
                 <Property name="text" type="java.lang.String" value="label7"/>
               </Properties>
             </Component>
-            <Component class="java.awt.Label" name="label8">
+            <Component class="java.awt.Label" name="lblLuxury">
               <Properties>
                 <Property name="text" type="java.lang.String" value="label8"/>
               </Properties>
             </Component>
-            <Component class="java.awt.Label" name="label9">
+            <Component class="java.awt.Label" name="lblDurable">
               <Properties>
                 <Property name="text" type="java.lang.String" value="label9"/>
               </Properties>
@@ -383,12 +383,12 @@
                 <Property name="text" type="java.lang.String" value="label10"/>
               </Properties>
             </Component>
-            <Component class="java.awt.Label" name="label11">
+            <Component class="java.awt.Label" name="lblNonfoon">
               <Properties>
                 <Property name="text" type="java.lang.String" value="label11"/>
               </Properties>
             </Component>
-            <Component class="java.awt.List" name="list11">
+            <Component class="java.awt.List" name="lstCooling">
             </Component>
             <Component class="java.awt.Label" name="label12">
               <Properties>
@@ -411,7 +411,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                      <Component id="list6" min="-2" pref="509" max="-2" attributes="0"/>
+                      <Component id="lstStorage" min="-2" pref="509" max="-2" attributes="0"/>
                       <EmptySpace pref="32" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -420,14 +420,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="list6" pref="470" max="32767" attributes="0"/>
+                      <Component id="lstStorage" pref="470" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="java.awt.List" name="list6">
+            <Component class="java.awt.List" name="lstStorage">
             </Component>
           </SubComponents>
         </Container>
@@ -468,7 +468,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextArea1">
+                <Component class="javax.swing.JTextArea" name="txtConsole">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
@@ -494,17 +494,17 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStaffName" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jComboBox1" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="staffComboBox" min="-2" pref="158" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="label13" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="list12" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblItems" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lstItems" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="list13" min="-2" pref="251" max="-2" attributes="0"/>
-                          <Component id="label14" min="-2" max="-2" attributes="0"/>
+                          <Component id="lstOtherStaffInfo" min="-2" pref="251" max="-2" attributes="0"/>
+                          <Component id="lblOtherStaffInfo" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="93" max="32767" attributes="0"/>
                   </Group>
@@ -515,24 +515,24 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStaffName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="staffComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="label13" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblItems" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="list12" max="32767" attributes="0"/>
+                                  <Component id="lstItems" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="list13" min="-2" pref="189" max="-2" attributes="0"/>
+                                      <Component id="lstOtherStaffInfo" min="-2" pref="189" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="221" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="label14" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblOtherStaffInfo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -542,28 +542,28 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="lblStaffName">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Staff Name:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
+            <Component class="javax.swing.JComboBox" name="staffComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="java.awt.List" name="list12">
+            <Component class="java.awt.List" name="lstItems">
             </Component>
-            <Component class="java.awt.Label" name="label13">
+            <Component class="java.awt.Label" name="lblItems">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Items"/>
               </Properties>
             </Component>
-            <Component class="java.awt.List" name="list13">
+            <Component class="java.awt.List" name="lstOtherStaffInfo">
             </Component>
-            <Component class="java.awt.Label" name="label14">
+            <Component class="java.awt.Label" name="lblOtherStaffInfo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Other Info"/>
               </Properties>
