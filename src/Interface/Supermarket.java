@@ -609,7 +609,7 @@ public class Supermarket extends javax.swing.JFrame {
     }
 
     private void interfaceUpdate() {
-        g.clearRect(0, 0, 5000, 5000);
+        g.clearRect(0, 0, 400, 400);
         lstShoppingCart.removeAll();
         lstOtherCustomerInfo.removeAll();
 
@@ -624,13 +624,19 @@ public class Supermarket extends javax.swing.JFrame {
         g.setColor(Color.red);
         for (Customer customer : customers) {
             g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
-            g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
+            try{
+                g.drawString(customer.getName().substring(13, 15), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
+            }catch(Exception e){
+                g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
+            }
+        }
+        
+        g.setColor(Color.BLUE);
+        for(Staff staff : staffMembers){
+            g.drawRect((int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4, 10, 10);
+            g.drawString(staff.getName(), (int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4);
         }
 
-
-        for (Customer customer : customers) {
-            g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
-        }
         g.setColor(Color.PINK);
         for (Department department : departments) {
             g.drawRect((int) department.getLocation().x * 4, (int) department.getLocation().y * 4, 15, 15);
@@ -689,21 +695,27 @@ public class Supermarket extends javax.swing.JFrame {
         try {
             lstItems.clear();
             lstOtherStaffInfo.clear();
-            if (staffMembers.get(staffComboBox.getSelectedIndex()).getCashier() != null) {
-                lstItems.add("Cashier has no Items");
-                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
-                lstOtherStaffInfo.add("Function: Cashier");
-            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader() != null) {
-                for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader().getShopItems()) {
-                    lstItems.add(item.getName());
-                }
-                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
-                lstOtherStaffInfo.add("Function: Unloader");
-            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getStocker() != null) {
+            try{
                 for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getStocker().getItems()) {
                     lstItems.add(item.getName());
                 }
-                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+            }catch(Exception e){
+                    lstItems.add("currently holds nothing");
+            }
+            lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+            lstOtherStaffInfo.add("Location X:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().x + 
+                        " Y:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().y);
+            try{
+                lstOtherStaffInfo.add("Current Object: " + staffMembers.get(staffComboBox.getSelectedIndex()).getCurLocObject().getName());
+            }catch(Exception e){
+                lstOtherStaffInfo.add("Current Object: Nothing");
+            }
+            
+            if (staffMembers.get(staffComboBox.getSelectedIndex()).getCashier() != null) {
+                lstOtherStaffInfo.add("Function: Cashier");
+            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader() != null) {
+                lstOtherStaffInfo.add("Function: Unloader");
+            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getStocker() != null) {
                 lstOtherStaffInfo.add("Function: Stocker");
             }
         } catch (Exception e) {
