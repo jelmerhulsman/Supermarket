@@ -236,6 +236,8 @@ public class Supermarket extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         customerSelector.setMaximumRowCount(100);
+        customerSelector.setBorder(new javax.swing.border.MatteBorder(null));
+        customerSelector.setCursor(new java.awt.Cursor(java.awt.Cursor.W_RESIZE_CURSOR));
         customerSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerSelectorActionPerformed(evt);
@@ -647,8 +649,9 @@ public class Supermarket extends javax.swing.JFrame {
             lstOtherCustomerInfo.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
             lstOtherCustomerInfo.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
             lstOtherCustomerInfo.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
-            lstOtherCustomerInfo.add("Locatio X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
+            lstOtherCustomerInfo.add("Location X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
                     + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
+            lstOtherCustomerInfo.add("Shop Location: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
         } catch (Exception e) {
         }
 
