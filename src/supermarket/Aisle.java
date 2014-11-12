@@ -32,17 +32,17 @@ public class Aisle extends ObjectInShop {
     
     private ArrayList<Item> createListOfAisleItems(ArrayList<Category> categories, ArrayList<Item> storeItems)
     {
-        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Item> tempArrayList = new ArrayList<>();
         
         for (Item item : storeItems)
         {
             if (categories.contains(item.getCategory()))
             {
-                items.add(item);
+                tempArrayList.add(item);
             }
         }
         
-        return items;
+        return tempArrayList;
     }
 
     /**
@@ -99,9 +99,10 @@ public class Aisle extends ObjectInShop {
 
     public Item pickFromShelve(Item item) {
         for (Item i : items) {
-            if (i == item) {
+            if (i.getName().equals(item.getName())) {
+                Item temp = i;
                 items.remove(i);
-                return (i);
+                return temp;
             }
         }
 

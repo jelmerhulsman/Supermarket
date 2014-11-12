@@ -50,11 +50,16 @@ public class Stocker extends Staff {
     }
 
     public void storeItemsInAisle() {
+        ArrayList<Item> storedItems = new ArrayList<>();
+        
         for (Item i : items) {
             System.out.println("Stocker " + name + " is storing item" + i.getName() + " in aisle " + aisle.getName());
             aisle.loadAisle(i);
+            storedItems.add(i);
             sleep(ITEM_INTERACTION_TIME);
         }
+        
+        items.removeAll(storedItems);
     }
 
     public Aisle getAisle() {
