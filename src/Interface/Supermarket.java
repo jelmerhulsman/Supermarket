@@ -794,7 +794,7 @@ public class Supermarket extends javax.swing.JFrame {
             for (Staff staff : staffMembers) {
                 if (staff.getFunction().equals("stocker")) {
                     Stocker stocker = staff.getStocker();
-                    if (!stocker.isWorking() && stocker.getAisle() == null) {
+                    if (!stocker.getIsWorking() && stocker.getAisle() == null) {
                         for (Aisle aisle : aisles) {
                             if (aisle.getItems().size() < 10) {
                                 stocker.setAisle(aisle);

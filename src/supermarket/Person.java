@@ -23,6 +23,11 @@ public class Person extends ObjectInShop {
         operation = new Thread();
     }
 
+    /**
+     * Move this person to location x in an arraylist of locations
+     * @param targetName The string of the location we are looking for
+     * @param objects The collection of locations where we will be searching in
+     */
     public void gotoLocation(String targetName, ArrayList<ObjectInShop> objects) {
         ObjectInShop targetObject = null;
         for (ObjectInShop o : objects) {
@@ -63,6 +68,11 @@ public class Person extends ObjectInShop {
 
     }
 
+    /**
+     * Move this person to the specified coordinates and give that coordinate a name
+     * @param targetLocation the coordinates where this person will be going to
+     * @param targetName the name of the targetlocation
+     */
     public void gotoCoords(Vector2f targetLocation, String targetName) {
 
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
@@ -89,6 +99,10 @@ public class Person extends ObjectInShop {
         System.out.println(name + " has reached " + targetName);
     }
 
+    /**
+     * Sleep this thread we are working with for x milliseconds
+     * @param milliseconds How long are we waiting in milliseconds?
+     */
     public void sleep(int milliseconds) {
         try {
             operation.currentThread().sleep(milliseconds); //1000 milliseconds is one second.
@@ -97,6 +111,10 @@ public class Person extends ObjectInShop {
         }
     }
 
+    /**
+     * This function will be called over and over again
+     * @param staticLocations Collecion of all the locations
+     */
     public void update(final ArrayList<ObjectInShop> staticLocations) {
     }
 }

@@ -30,6 +30,12 @@ public class Aisle extends ObjectInShop {
         items = new ArrayList<>();
     }
     
+    /**
+     * Creates a list of items for this aisle
+     * @param categories the category
+     * @param storeItems the collection of items
+     * @return 
+     */
     private ArrayList<Item> createListOfAisleItems(ArrayList<Category> categories, ArrayList<Item> storeItems)
     {
         ArrayList<Item> tempArrayList = new ArrayList<>();
@@ -72,6 +78,10 @@ public class Aisle extends ObjectInShop {
         return items;
     }
     
+    /**
+     * returns all the item names in this aisle
+     * @return 
+     */
     public ArrayList<String> getItemNames() {
         ArrayList<String> itemNames = new ArrayList<>();
         
@@ -86,6 +96,11 @@ public class Aisle extends ObjectInShop {
         return itemNames;
     }
 
+    /**
+     * returns the total amount of items
+     * @param item
+     * @return 
+     */
     public int getItemCount(Item item) {
         int counter = 0;
         for (Item i : items) {
@@ -97,6 +112,11 @@ public class Aisle extends ObjectInShop {
         return counter;
     }
 
+    /**
+     * picks an item from this aisle
+     * @param item the item you are going to pick
+     * @return 
+     */
     public Item pickFromShelve(Item item) {
         for (Item i : items) {
             if (i.getName().equals(item.getName())) {

@@ -56,6 +56,9 @@ public class Unloader extends Staff {
         }
     }
 
+    /**
+     * Stores the items from the inventory of this unloader in the Storage
+     */
     public void storeItemsInStorage() {
         for (Item i : items) {
             System.out.println(name + " is storing item " + i.getName() + " in the storage.");
@@ -64,6 +67,9 @@ public class Unloader extends Staff {
         }
     }
 
+    /**
+     * Order new items for the Supermarket which will be put in the truck
+     */
     public void orderItems() {
         ArrayList<Item> orderItems = new ArrayList<>();
         for (Item shopItem : shopItems) {
@@ -79,11 +85,15 @@ public class Unloader extends Staff {
         if (!orderItems.isEmpty()) {
             System.out.println(name + " is ordering items.");
             sleep(15000);
-            truck.order(orderItems);
+            truck.putItemsInTruck(orderItems);
             System.out.println(name + " has ordered the items.");
         }
     }
 
+    /**
+     * This function will be called over and over again
+     * @param staticLocations The collection of all the locations
+     */
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {

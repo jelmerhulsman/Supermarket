@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import supermarket.Item.Category;
-import supermarket.StaffTypes.Unloader;
 
 /**
  *

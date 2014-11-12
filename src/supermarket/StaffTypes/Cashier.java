@@ -41,15 +41,20 @@ public class Cashier extends Staff {
             }
         }
     }
-    
+
     public void setCheckOut(Checkout checkout) {
         this.checkout = checkout;
     }
-    
+
     public boolean isWaiting() {
         return (action == Action.WAITING);
     }
 
+    /**
+     * This method will be looped over and over
+     *
+     * @param staticLocations the collection of all the locations
+     */
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {
@@ -69,11 +74,10 @@ public class Cashier extends Staff {
                             }
                             break;
                         case WAITING:
-                            if (checkout != null)
-                            {
+                            if (checkout != null) {
                                 action = Action.GO_TO_CHECKOUT;
                             }
-                            
+
                             break;
                     }
                 }

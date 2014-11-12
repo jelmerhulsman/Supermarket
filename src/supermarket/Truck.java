@@ -2,7 +2,6 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
-import supermarket.StaffTypes.Unloader;
 
 /**
  *
@@ -51,11 +50,11 @@ public class Truck extends ObjectInShop {
     }
 
     /**
-     * orders items (add's items to the truck)
+     * add's items to the truck
      *     
-     * @param items
+     * @param items the collection of items to put in the truck
      */
-    public void order(ArrayList<Item> items) {
+    public void putItemsInTruck(ArrayList<Item> items) {
         this.items.addAll(items);
         items.clear();
     }

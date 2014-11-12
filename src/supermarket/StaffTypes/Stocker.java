@@ -28,6 +28,9 @@ public class Stocker extends Staff {
         aisle = null;
     }
 
+    /**
+     * Retrieves items from the storage and puts it in the Stocker' inventory
+     */
     public void getItemsFromStorage() {
         System.out.println(name + " is picking up items from storage...");
         for (Category category : aisle.getCategories()) {
@@ -42,7 +45,7 @@ public class Stocker extends Staff {
         return items;
     }
 
-    public boolean isWorking() {
+    public boolean getIsWorking() {
         return isWorking;
     }
 
@@ -50,6 +53,9 @@ public class Stocker extends Staff {
         this.aisle = aisle;
     }
 
+    /**
+     * Stores all the items from the inventory to their own aisles according to the category
+     */
     public void storeItemsInAisle() {
         ArrayList<Item> storedItems = new ArrayList<>();
 
@@ -69,6 +75,10 @@ public class Stocker extends Staff {
         return aisle;
     }
 
+    /**
+     * this function will be looped over and over
+     * @param staticLocations the collection of locations
+     */
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {

@@ -60,6 +60,13 @@ public class Customer extends Person {
         me = this;
     }
 
+    /**
+     * Give this customer some random $$$ cash
+     *
+     * @param min the minimum amount of cash to be expected
+     * @param max the maximum amount of cash to be expected
+     * @return a random amount of $$$ between the min and max
+     */
     private float giveSaldo(int min, int max) {
         float amount = (int) (Math.random() * (max - min)) + min;
         amount += (int) (Math.random() * 10) / 10;
@@ -70,6 +77,12 @@ public class Customer extends Person {
         return amount;
     }
 
+    /**
+     * Gives this customer either a normal walking speed or a slow walking speed
+     *
+     * @param slow is this person an old fart?
+     * @return the speed
+     */
     private float giveSpeed(boolean slow) {
         if (slow) {
             return 0.5f;
@@ -78,10 +91,21 @@ public class Customer extends Person {
         }
     }
 
+    /**
+     * Used to give something an appropriate chance to occurfawegae
+     *
+     * @param percent the chance
+     * @return either true or false in correllation with the chance
+     */
     private boolean chanceOf(int percent) {
         return (int) (Math.random() * 101) <= percent;
     }
 
+    /**
+     * Used to check wether this customer is leaving or not
+     *
+     * @return true/false
+     */
     public boolean isLeaving() {
         if (action == Action.LEAVING) {
             operation.stop();
@@ -91,6 +115,14 @@ public class Customer extends Person {
         }
     }
 
+    /**
+     * Gives the corresponding shopping list to a specified customer type
+     *
+     * @param stereotype which customer type are we dealing with?
+     * @param availableItems which total collection of items are we dealing
+     * with?
+     * @return
+     */
     private ArrayList<Item> generateShoppingList(Stereotype stereotype, ArrayList<Item> availableItems) {
         ArrayList<Category> blackList = new ArrayList<>();
         ArrayList<Category> likingList = new ArrayList<>();
@@ -155,13 +187,19 @@ public class Customer extends Person {
         return items;
     }
 
+    /**
+     * Gets the first item from the aisle
+     *
+     * @param staticLocations a collection of all possible locations
+     * @return
+     */
     private Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
-                Aisle temp = (Aisle) o;
-                ArrayList<String> aisleItemNames = temp.getItemNames();
+                Aisle tempAisle = (Aisle) o;
+                ArrayList<String> aisleItemNames = tempAisle.getItemNames();
                 if (aisleItemNames.contains(shoppingList.get(0).getName())) {
-                    return temp;
+                    return tempAisle;
                 }
             }
         }
@@ -182,6 +220,11 @@ public class Customer extends Person {
         return stereotype;
     }
 
+    /**
+     * Gets items which are listed on the shopping list from the aisle
+     *
+     * @param aisle the aisle we are picking items from
+     */
     private void getItemsFromAisle(Aisle aisle) {
         ArrayList<String> aisleItemNames = aisle.getItemNames();
         ArrayList<Item> checkedItems = new ArrayList<>();
@@ -200,17 +243,23 @@ public class Customer extends Person {
         shoppingList.removeAll(checkedItems);
     }
 
+    /**
+     * Used for the customer to choose an open checkout
+     *
+     * @param staticLocations a collection of all the checkouts
+     * @return
+     */
     public Checkout chooseCheckout(ArrayList<ObjectInShop> staticLocations) {
         Checkout c = null;
         int size = 1000;
 
-        for (Object o : staticLocations) { //Check all open checkouts
+        for (ObjectInShop o : staticLocations) { //Check all open checkouts
             if (o instanceof Checkout) {
-                Checkout temp = (Checkout) o;
-                Status status = temp.getStatus();
-                if ((status == Status.OPEN || status == Status.CROWDED) && temp.getCustomersCount() < size) {
-                    c = temp;
-                    size = temp.getCustomersCount();
+                Checkout tempCheckout = (Checkout) o;
+                Status status = tempCheckout.getStatus();
+                if ((status == Status.OPEN || status == Status.CROWDED) && tempCheckout.getCustomersCount() < size) {
+                    c = tempCheckout;
+                    size = tempCheckout.getCustomersCount();
                 }
             }
         }
@@ -230,6 +279,10 @@ public class Customer extends Person {
         return saldo;
     }
 
+    /**
+     * this method will loop over and over
+     * @param staticLocations the collection of all the possible locations
+     */
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
         operation = new Thread(new Runnable() {
