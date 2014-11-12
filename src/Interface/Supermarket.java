@@ -553,18 +553,7 @@ public class Supermarket extends javax.swing.JFrame {
 
     private void customerSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerSelectorActionPerformed
 
-        lstShoppingList.clear();
-        lstShoppingCart.clear();
-
-
-
-        for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
-            lstShoppingList.add(item.getName());
-        }
-
-        for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingCart()) {
-            lstShoppingCart.add(item.getName());
-        }
+        
 
     }//GEN-LAST:event_customerSelectorActionPerformed
 
@@ -699,6 +688,17 @@ public class Supermarket extends javax.swing.JFrame {
             lstOtherCustomerInfo.add("Shop Location: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
         } catch (Exception e) {
         }
+        
+        try{
+            lstShoppingList.removeAll();
+            lstShoppingCart.removeAll();
+            for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
+                lstShoppingList.add(item.getName());
+            }
+            for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingCart()) {
+                lstShoppingCart.add(item.getName());
+            }
+        }catch(Exception e){}
 
         
 
@@ -755,7 +755,7 @@ public class Supermarket extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-
+        
 
     }
     
