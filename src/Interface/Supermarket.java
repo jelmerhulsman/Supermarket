@@ -67,6 +67,8 @@ public class Supermarket extends javax.swing.JFrame {
         //Graphics
         mapCanvas.setBackground(Color.white);
         g = mapCanvas.getGraphics();
+        customerSelector.setLightWeightPopupEnabled(false);
+        staffComboBox.setLightWeightPopupEnabled(false);
 
         //Add all unique items to a list
         storeItems = new ArrayList<>();
