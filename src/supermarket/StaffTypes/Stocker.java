@@ -48,6 +48,8 @@ public class Stocker extends Staff {
             storage.addItem(i);
             sleep(ITEM_INTERACTION_TIME);
         }
+        
+        items = new ArrayList<>();
     }
 
     public ArrayList<Item> getItems() {
