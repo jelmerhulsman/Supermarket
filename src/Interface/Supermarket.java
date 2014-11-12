@@ -654,14 +654,21 @@ public class Supermarket extends javax.swing.JFrame {
                 g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
             }
         }
-        
+        Unloader tempUnl = null;
         g.setColor(Color.BLUE);// sets the colour for the Staffmembers on the map
         for(Staff staff : staffMembers){
+            if(staff instanceof Unloader)
+            {
+                tempUnl = staff.getUnloader();
+                g.drawRect((int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4, 10, 10);
+                g.drawString(tempUnl.getName(), (int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4);
+            }
             //draws the rectangle for the staff
             g.drawRect((int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4, 10, 10);
             //adds the name of the staff to the map
             g.drawString(staff.getName(), (int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4);
         }
+        
 
         g.setColor(Color.PINK);// sets the colour for the Departments on the map
         for (Department department : departments) {
@@ -792,7 +799,7 @@ public class Supermarket extends javax.swing.JFrame {
     }
 
     private void staffLoop() {
-        if (!storage.getItems().isEmpty()) {
+        if (!storage.getAllItems().isEmpty()) {
             for (Staff staff : staffMembers) {
                 if (staff.getFunction().equals("stocker")) {
                     Stocker stocker = staff.getStocker();
@@ -813,7 +820,7 @@ public class Supermarket extends javax.swing.JFrame {
             if (previousCheckout.getStatus() == Status.CROWDED) {
                 if (currentCheckout.getStatus() == Status.CLOSED || currentCheckout.getStatus() == Status.CLOSING) {
                     for (Staff staff : staffMembers) {
-                        if (staff.getFunction() == "cashier") {
+                        if ("cashier".equals(staff.getFunction())) {
                             Cashier cashier = staff.getCashier();
                             if (cashier.isWaiting()) {
                                 cashier.setCheckOut(currentCheckout);

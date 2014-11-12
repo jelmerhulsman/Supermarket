@@ -1,5 +1,6 @@
 package supermarket.StaffTypes;
 
+import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item;
 import supermarket.ObjectInShop;
@@ -35,6 +36,7 @@ public class Unloader extends Staff {
         this.storage = storage;
         this.truck = truck;
         this.shopItems = shopItems;
+        speed = 1;
     }
 
     public ArrayList<Item> getShopItems() {
@@ -88,6 +90,11 @@ public class Unloader extends Staff {
             truck.putItemsInTruck(orderItems);
             System.out.println(name + " has ordered the items.");
         }
+    }
+    
+    public Vector2f getLocation()
+    {
+        return location;
     }
 
     /**

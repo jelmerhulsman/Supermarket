@@ -17,6 +17,7 @@ public class Storage extends ObjectInShop {
     private ArrayList<Item> items;
     private static SessionFactory factory;
     boolean isChanged = true;
+
     /**
      * creates the storage
      */
@@ -40,7 +41,7 @@ public class Storage extends ObjectInShop {
      *
      * @return items
      */
-    public ArrayList<Item> getItems() {
+    public ArrayList<Item> getAllItems() {
 
         Session session = factory.openSession();
         Transaction tx = null;
@@ -84,8 +85,13 @@ public class Storage extends ObjectInShop {
                 Iterator iterator = itemsList.iterator();
                 Item item = (Item) iterator.next();
                 items.add(item);
+
                 session.delete(item);
                 itemsList.remove(item);
+
+                hql = "DELETE FROM supermarket.Item WHERE id = '" + item.getId() + "'";
+                Query delete = session.createQuery(hql);
+                delete.executeUpdate();
             }
         } catch (HibernateException e) {
             if (tx != null) {
@@ -149,7 +155,7 @@ public class Storage extends ObjectInShop {
         } finally {
             session.close();
         }
-        
+
     }
 
     /**
@@ -162,7 +168,7 @@ public class Storage extends ObjectInShop {
      */
     public ArrayList<Item> moveItem(Item.Category cat, int amount) {
         items.clear();
-        ArrayList<Item> allItems = getItems();
+        ArrayList<Item> allItems = getAllItems();
         int counter = 0;
         for (int i = 0; i < allItems.size(); i++) {
             if (counter < amount && allItems.get(i).getCategory() == cat) {

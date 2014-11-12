@@ -44,13 +44,13 @@ public class StorageTest {
     //setCurrentUnloader is not tested, is already tested in the 
     //getCurrentunloader test
     /**
-     * Test of getItems method, of class Storage.
+     * Test of getAllItems method, of class Storage.
      */
     @Test
     public void testGetItems() {
         System.out.println("getItems");
         Storage instance = new Storage("storage", Vector2f.ZERO);
-        ArrayList<Item> result = instance.getItems();
+        ArrayList<Item> result = instance.getAllItems();
         if (result.size() > 0) {
         } else {
             fail("Nothing returned (is database empty?)");
@@ -95,21 +95,21 @@ public class StorageTest {
     }
 
     /**
-     * Test of getItems method, of class Storage.
+     * Test of getAllItems method, of class Storage.
      */
     @Test
     public void testGetItems_0args() {
         System.out.println("getItems");
         Storage instance = null;
         ArrayList expResult = null;
-        ArrayList result = instance.getItems();
+        ArrayList result = instance.getAllItems();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getItems method, of class Storage.
+     * Test of getAllItems method, of class Storage.
      */
     @Test
     public void testGetItems_int_ItemCategory() {

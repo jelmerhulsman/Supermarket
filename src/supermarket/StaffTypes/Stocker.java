@@ -26,6 +26,7 @@ public class Stocker extends Staff {
         action = Action.WAITING;
         this.storage = storage;
         aisle = null;
+        speed = 1;
     }
 
     /**
@@ -34,10 +35,10 @@ public class Stocker extends Staff {
     public void getItemsFromStorage() {
         System.out.println(name + " is picking up items from storage...");
         for (Category category : aisle.getCategories()) {
-            if (storage.getItems(storage.getItems().size(), category).size() > 0) {
+            
                 items.addAll(storage.getItems(MAX_ITEMS, category));
                 sleep(items.size() * ITEM_INTERACTION_TIME);
-            }
+            
         }
     }
 
@@ -87,7 +88,7 @@ public class Stocker extends Staff {
                 while (true) {
                     switch (action) {
                         case GET_ITEMS:
-                            if (storage.getItems().isEmpty() || aisle == null) {
+                            if (storage.getAllItems().isEmpty() || aisle == null) {
                                 action = Action.WAITING;
                             } else {
                                 isWorking = true;
@@ -104,7 +105,7 @@ public class Stocker extends Staff {
                             break;
                         case WAITING:
                             isWorking = false;
-                            if (!storage.getItems().isEmpty()) {
+                            if (!storage.getAllItems().isEmpty()) {
                                 action = Action.GET_ITEMS;
                             } else {
                                 sleep(1000);
