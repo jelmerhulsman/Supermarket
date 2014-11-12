@@ -131,7 +131,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lstOtherCustomerInfo" min="-2" pref="231" max="-2" attributes="0"/>
-                                              <EmptySpace min="0" pref="177" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="182" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="lstShoppingCart" max="32767" attributes="0"/>
                                       </Group>
@@ -220,7 +220,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="mapCanvas" min="-2" pref="400" max="-2" attributes="0"/>
-                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                      <EmptySpace pref="72" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -284,7 +284,11 @@
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblNonfoon" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lstNonfood" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lstNonfood" min="-2" pref="125" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="methodComboBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -302,7 +306,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="label12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -319,7 +323,7 @@
                           </Group>
                           <Component id="lstCooling" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
                               <Component id="lstLunchAndBreakfast" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -340,7 +344,10 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="lblNonfoon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lstNonfood" min="-2" pref="174" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lstNonfood" min="-2" pref="174" max="-2" attributes="0"/>
+                                  <Component id="methodComboBox" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -403,6 +410,16 @@
                 <Property name="text" type="java.lang.String" value="The Aisles contain:"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JComboBox" name="methodComboBox">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="method1"/>
+                    <StringItem index="1" value="method2"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel4">
@@ -428,7 +445,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lstStorage" pref="470" max="32767" attributes="0"/>
+                      <Component id="lstStorage" pref="475" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -462,7 +479,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="468" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="473" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -535,7 +552,7 @@
                                   <Component id="lstItems" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="lstOtherStaffInfo" min="-2" pref="189" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="221" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="226" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
