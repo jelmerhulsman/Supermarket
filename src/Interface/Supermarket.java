@@ -612,6 +612,10 @@ public class Supermarket extends javax.swing.JFrame {
                     Unloader unloader = staff.getUnloader();
                     unloader.update(staticLocations);
                     break;
+                case "cashier":
+                    Cashier cashier = staff.getCashier();
+                    cashier.update(staticLocations);
+                    break;
             }
         }
     }
@@ -620,6 +624,9 @@ public class Supermarket extends javax.swing.JFrame {
      * Update for the interface with the latest simulation data
      */
     private void interfaceUpdate() {
+        Unloader tempUnl = null;
+        Cashier tempCash = null;
+        Stocker tempSto = null;
         //cleans the map
         g.clearRect(0, 0, 400, 400);
         //cleans the shoppingcart list from the customers
@@ -648,9 +655,7 @@ public class Supermarket extends javax.swing.JFrame {
                 g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
             }
         }
-        Unloader tempUnl = null;
-        Cashier tempCash = null;
-        Stocker tempSto = null;
+
         g.setColor(Color.BLUE);// sets the colour for the Staffmembers on the map
         for (Staff staff : staffMembers) {
             if (staff.getFunction().equals("unloader")) {
@@ -721,25 +726,25 @@ public class Supermarket extends javax.swing.JFrame {
 
         //update fot the listboxen to display what's in the aisles
         int counter = 0;
-        if(methodComboBox.getSelectedIndex() == 0){
-        //update fot the listboxen to display what's in the aisles
-        
-        for (int i = 0; i < aislesListboxList.size(); i++) {
-            aislesListboxList.get(i).removeAll();
-            for (Item shopItem : storeItems) {
-                counter = aisles.get(i).getItemCount(shopItem);
-                if (counter > 0) {
-                    aislesListboxList.get(i).add(counter + " " + shopItem.getName());
-                }
-            }
-        }
-        }else if(methodComboBox.getSelectedIndex() == 1){
+        if (methodComboBox.getSelectedIndex() == 0) {
+            //update fot the listboxen to display what's in the aisles
+
             for (int i = 0; i < aislesListboxList.size(); i++) {
                 aislesListboxList.get(i).removeAll();
-                for(Item item:aisles.get(i).getItems()){
+                for (Item shopItem : storeItems) {
+                    counter = aisles.get(i).getItemCount(shopItem);
+                    if (counter > 0) {
+                        aislesListboxList.get(i).add(counter + " " + shopItem.getName());
+                    }
+                }
+            }
+        } else if (methodComboBox.getSelectedIndex() == 1) {
+            for (int i = 0; i < aislesListboxList.size(); i++) {
+                aislesListboxList.get(i).removeAll();
+                for (Item item : aisles.get(i).getItems()) {
                     aislesListboxList.get(i).add(item.getName());
                 }
-                
+
             }
         }
         //update for the storage items list
