@@ -22,6 +22,7 @@ public class Stocker extends Staff {
     private boolean isWorking;
 
     public Stocker(Storage storage) {
+        super();
         action = Action.WAITING;
         this.storage = storage;
         aisle = null;

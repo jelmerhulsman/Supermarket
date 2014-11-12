@@ -22,6 +22,7 @@ public class Staff extends Person {
     protected ArrayList<Item> items;
 
     public Staff() {
+        items = new ArrayList<>();
     }
 
     private Staff(String name, Vector2f spawnLocation) {
