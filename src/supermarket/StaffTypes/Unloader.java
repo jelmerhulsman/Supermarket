@@ -36,7 +36,6 @@ public class Unloader extends Staff {
         this.storage = storage;
         this.truck = truck;
         this.shopItems = shopItems;
-        speed = 1;
     }
 
     public ArrayList<Item> getShopItems() {
@@ -52,7 +51,7 @@ public class Unloader extends Staff {
      */
     public void getItemsFromTruck() {
         if (!truck.getItems().isEmpty()) {
-            System.out.println(name + " is picking up items from truck...");
+            System.out.println("Unloader " + name + " is picking up items from truck...");
             items.addAll(truck.unload(MAX_ITEMS));
             sleep(MAX_ITEMS * ITEM_INTERACTION_TIME);
         }
@@ -63,10 +62,12 @@ public class Unloader extends Staff {
      */
     public void storeItemsInStorage() {
         for (Item i : items) {
-            System.out.println(name + " is storing item " + i.getName() + " in the storage.");
+            System.out.println("Unloader " + name + " is storing item " + i.getName() + " in the storage.");
             storage.addItem(i);
             sleep(ITEM_INTERACTION_TIME);
         }
+        
+        items = new ArrayList<>();
     }
 
     /**
@@ -85,10 +86,10 @@ public class Unloader extends Staff {
         }
 
         if (!orderItems.isEmpty()) {
-            System.out.println(name + " is ordering items.");
+            System.out.println("Unloader " + name + " is ordering items.");
             sleep(15000);
             truck.putItemsInTruck(orderItems);
-            System.out.println(name + " has ordered the items.");
+            System.out.println("Unloader " + name + " has ordered the items.");
         }
     }
     

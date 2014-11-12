@@ -140,14 +140,14 @@ public class StorageTest {
     }
 
     /**
-     * Test of isIsChanged method, of class Storage.
+     * Test of isChanged method, of class Storage.
      */
     @Test
     public void testIsIsChanged() {
         System.out.println("isIsChanged");
         Storage instance = null;
         boolean expResult = false;
-        boolean result = instance.isIsChanged();
+        boolean result = instance.isChanged();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

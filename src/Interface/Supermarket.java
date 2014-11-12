@@ -743,7 +743,7 @@ public class Supermarket extends javax.swing.JFrame {
             }
         }
         //update for the storage items list
-        if (storage.isIsChanged()) {
+        if (storage.isChanged()) {
             lstStorage.clear();
             for (Item item : storeItems) {
                 counter = storage.getItemCount(item.getName());
@@ -831,7 +831,7 @@ public class Supermarket extends javax.swing.JFrame {
             for (Staff staff : staffMembers) {
                 if (staff.getFunction().equals("stocker")) {
                     Stocker stocker = staff.getStocker();
-                    if (!stocker.getIsWorking() && stocker.getAisle() == null) {
+                    if (!stocker.isWorking() && stocker.getAisle() == null) {
                         for (Aisle aisle : aisles) {
                             if (aisle.getItems().size() < 10) {
                                 stocker.setAisle(aisle);
@@ -902,7 +902,7 @@ public class Supermarket extends javax.swing.JFrame {
 
 
                 String name = "Nr. " + ((int) customers.size() + 1);
-                customers.add(new Customer("CUSTOMER " + name, entrance.getLocation(), stereotype.get(0), storeItems));
+                customers.add(new Customer("Customer " + name, entrance.getLocation(), stereotype.get(0), storeItems));
                 customerSelector.addItem(customers.get(customers.size() - 1).getName());
                 customers.get(customers.size() - 1).update(staticLocations);
             }

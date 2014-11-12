@@ -16,11 +16,8 @@ public class Storage extends ObjectInShop {
 
     private ArrayList<Item> items;
     private static SessionFactory factory;
-    boolean isChanged = true;
-
-    /**
-     * creates the storage
-     */
+    boolean changed = true;
+    
     public Storage(String name, Vector2f location) {
         super(name, location);
         items = new ArrayList<>();
@@ -105,7 +102,7 @@ public class Storage extends ObjectInShop {
         } finally {
             session.close();
         }
-        isChanged = true;
+        changed = true;
         return items;
     }
 
@@ -150,7 +147,7 @@ public class Storage extends ObjectInShop {
             tx = session.beginTransaction();
             session.save(item);
             tx.commit();
-            isChanged = true;
+            changed = true;
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -180,7 +177,7 @@ public class Storage extends ObjectInShop {
                 counter++;
             }
         }
-        isChanged = true;
+        changed = true;
         return items;
     }
 
@@ -209,11 +206,11 @@ public class Storage extends ObjectInShop {
         return item;
     }
 
-    public boolean isIsChanged() {
-        return isChanged;
+    public boolean isChanged() {
+        return changed;
     }
 
     public void setIsChanged(boolean isChanged) {
-        this.isChanged = isChanged;
+        this.changed = isChanged;
     }
 }
