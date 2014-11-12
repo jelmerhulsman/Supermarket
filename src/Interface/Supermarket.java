@@ -591,10 +591,11 @@ public class Supermarket extends javax.swing.JFrame {
         Supermarket simulation;
         simulation = new Supermarket();
         simulation.setVisible(true);
+        simulation.redirectSystemStreams();
         System.out.println("Supermarket initialized...");
 
         simulation.execStaffUpdate();
-        simulation.redirectSystemStreams();
+        
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.staffLoop();
@@ -748,7 +749,11 @@ public class Supermarket extends javax.swing.JFrame {
 
 
     }
-
+    
+    /**
+     * needed for the redirectSystemStreams
+     * @param text 
+     */
     private void updateTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -758,6 +763,10 @@ public class Supermarket extends javax.swing.JFrame {
         });
     }
 
+    
+    /**
+     * redirects the console output to a textbox
+     */
     private void redirectSystemStreams() {
         OutputStream out = new OutputStream() {
             @Override
