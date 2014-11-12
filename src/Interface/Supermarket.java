@@ -613,42 +613,53 @@ public class Supermarket extends javax.swing.JFrame {
         lstShoppingCart.removeAll();
         lstOtherCustomerInfo.removeAll();
 
-        g.setColor(Color.blue);
+        g.setColor(Color.blue);// sets the colour for the storages on the map
+        //draws the rectangle for the storage
         g.drawRect((int) storage.getLocation().x * 4, (int) storage.getLocation().y * 4, 50, 50);
 
-        g.setColor(Color.green);
+        g.setColor(Color.green);// sets the colour for the ailsel on the map
         for (Aisle aisle : aisles) {
+            //draws the rectangle for the ailse
             g.drawRect((int) aisle.getLocation().x * 4, (int) aisle.getLocation().y * 4, 15, 30);
         }
 
-        g.setColor(Color.red);
+        g.setColor(Color.red);// sets the colour for the Customers on the map
         for (Customer customer : customers) {
+            //draws the rectangle for the customer
             g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
             try{
+                //tries to add the name from the customers (if the number < 10)
                 g.drawString(customer.getName().substring(13, 15), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
             }catch(Exception e){
+                //tries to add the name from the customers (if the number >= 10)
                 g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
             }
         }
         
-        g.setColor(Color.BLUE);
+        g.setColor(Color.BLUE);// sets the colour for the Staffmembers on the map
         for(Staff staff : staffMembers){
+            //draws the rectangle for the staff
             g.drawRect((int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4, 10, 10);
+            //adds the name of the staff to the map
             g.drawString(staff.getName(), (int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4);
         }
 
-        g.setColor(Color.PINK);
+        g.setColor(Color.PINK);// sets the colour for the Departments on the map
         for (Department department : departments) {
+            //draws the rectangle for the department
             g.drawRect((int) department.getLocation().x * 4, (int) department.getLocation().y * 4, 15, 15);
         }
 
-        g.setColor(Color.orange);
+        g.setColor(Color.orange);// sets the colour for the checkouts on the map
         for (Checkout checkout : checkouts) {
+            //draws the rectangle for the checkout
             g.drawRect((int) checkout.getLocation().x * 4, (int) checkout.getLocation().y * 4, 10, 10);
         }
 
-        g.setColor(Color.DARK_GRAY);
+        g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
+        //draws the rectangle for the truck
         g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
+        
         try {
             lstOtherCustomerInfo.clear();
             lstOtherCustomerInfo.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
