@@ -19,14 +19,13 @@ public class Stocker extends Staff {
     private Action action;
     private Storage storage;
     private Aisle aisle;
-    private boolean isWorking;
+    private boolean working;
 
     public Stocker(Storage storage) {
         super();
         action = Action.WAITING;
         this.storage = storage;
         aisle = null;
-        speed = 1;
     }
 
     /**
@@ -35,19 +34,30 @@ public class Stocker extends Staff {
     public void getItemsFromStorage() {
         System.out.println(name + " is picking up items from storage...");
         for (Category category : aisle.getCategories()) {
-            
-                items.addAll(storage.getItems(MAX_ITEMS, category));
-                sleep(items.size() * ITEM_INTERACTION_TIME);
-            
+            items.addAll(storage.getItems(MAX_ITEMS, category));
+            sleep(items.size() * ITEM_INTERACTION_TIME);
         }
+    }
+
+    /**
+     * Stores the items from the inventory of this unloader in the Storage
+     */
+    public void storeItemsInStorage() {
+        for (Item i : items) {
+            System.out.println("Stocker " + name + " is storing item " + i.getName() + " in the storage.");
+            storage.addItem(i);
+            sleep(ITEM_INTERACTION_TIME);
+        }
+        
+        items = new ArrayList<>();
     }
 
     public ArrayList<Item> getItems() {
         return items;
     }
 
-    public boolean getIsWorking() {
-        return isWorking;
+    public boolean isWorking() {
+        return working;
     }
 
     public void setAisle(Aisle aisle) {
@@ -55,7 +65,8 @@ public class Stocker extends Staff {
     }
 
     /**
-     * Stores all the items from the inventory to their own aisles according to the category
+     * Stores all the items from the inventory to their own aisles according to
+     * the category
      */
     public void storeItemsInAisle() {
         ArrayList<Item> storedItems = new ArrayList<>();
@@ -78,6 +89,7 @@ public class Stocker extends Staff {
 
     /**
      * this function will be looped over and over
+     *
      * @param staticLocations the collection of locations
      */
     @Override
@@ -91,8 +103,9 @@ public class Stocker extends Staff {
                             if (storage.getAllItems().isEmpty() || aisle == null) {
                                 action = Action.WAITING;
                             } else {
-                                isWorking = true;
+                                working = true;
                                 gotoLocation("Storage", staticLocations);
+                                storeItemsInStorage();
                                 getItemsFromStorage();
                                 action = Action.STORE_ITEMS;
                             }
@@ -100,11 +113,11 @@ public class Stocker extends Staff {
                         case STORE_ITEMS:
                             gotoLocation(aisle.getName(), staticLocations);
                             storeItemsInAisle();
-                            isWorking = true;
+                            working = true;
                             action = Action.GET_ITEMS;
                             break;
                         case WAITING:
-                            isWorking = false;
+                            working = false;
                             if (!storage.getAllItems().isEmpty()) {
                                 action = Action.GET_ITEMS;
                             } else {

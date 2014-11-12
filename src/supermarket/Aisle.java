@@ -11,7 +11,7 @@ import supermarket.StaffTypes.Stocker;
  */
 public class Aisle extends ObjectInShop {
 
-    private final int ITEM_LIMIT_AISLE = 50;
+    private final int ITEM_LIMIT_PER_SHELVE = 25;
     private Stocker stocker;
     private ArrayList<Category> categories;
     private ArrayList<Item> aisleItems;
@@ -162,5 +162,18 @@ public class Aisle extends ObjectInShop {
      */
     public void loadAisle(Item item) {
         items.add(item);
+    }
+    
+    public boolean fullShelve(Item item) {
+        int counter = 0;
+        for (Item i : items)
+        {
+            if (item.getName().equals(i.getName()))
+            {
+                counter++;
+            }
+        }
+        
+        return (counter == ITEM_LIMIT_PER_SHELVE);
     }
 }
