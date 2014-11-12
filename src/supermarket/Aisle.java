@@ -111,6 +111,22 @@ public class Aisle extends ObjectInShop {
 
         return counter;
     }
+    
+    /**
+     * get the item count by checking the itemname
+     * @param itemname
+     * @return 
+     */
+    public int getItemCount(String itemname){
+        int counter = 0;
+        for (Item i : items) {
+            if (i.getName() == itemname) {
+                counter++;
+            }
+        }
+
+        return counter;
+    }
 
     /**
      * picks an item from this aisle

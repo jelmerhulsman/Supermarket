@@ -715,10 +715,11 @@ public class Supermarket extends javax.swing.JFrame {
         for (int i = 0; i < aislesListboxList.size(); i++) {
             aislesListboxList.get(i).removeAll();
             for (Item shopItem : storeItems) {
-                counter = aisles.get(i).getItemCount(shopItem);
-                if (counter > 0) {
+                counter = 0;
+                counter = aisles.get(i).getItemCount(shopItem.getName());
+//                if (counter > 0) {
                     aislesListboxList.get(i).add(counter + " " + shopItem.getName());
-                }
+//                }
             }
         }
         }else if(methodComboBox.getSelectedIndex() == 1){
