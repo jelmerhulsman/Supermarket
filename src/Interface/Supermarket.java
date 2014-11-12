@@ -726,28 +726,9 @@ public class Supermarket extends javax.swing.JFrame {
 
         //update fot the listboxen to display what's in the aisles
         
-        for (int i = 0; i < aislesListboxList.size(); i++) {
-            aislesListboxList.get(i).removeAll();
-            for (Item shopItem : storeItems) {
-                counter = 0;
-                counter = aisles.get(i).getItemCount(shopItem.getName());
-//                if (counter > 0) {
-                    aislesListboxList.get(i).add(counter + " " + shopItem.getName());
-//                }
+        
         int counter = 0;
-        if (methodComboBox.getSelectedIndex() == 0) {
-            //update fot the listboxen to display what's in the aisles
-
-            for (int i = 0; i < aislesListboxList.size(); i++) {
-                aislesListboxList.get(i).removeAll();
-                for (Item shopItem : storeItems) {
-                    counter = aisles.get(i).getItemCount(shopItem);
-                    if (counter > 0) {
-                        aislesListboxList.get(i).add(counter + " " + shopItem.getName());
-                    }
-                }
-            }
-        } else if (methodComboBox.getSelectedIndex() == 1) {
+        
             for (int i = 0; i < aislesListboxList.size(); i++) {
                 aislesListboxList.get(i).removeAll();
                 for (Item item : aisles.get(i).getItems()) {
@@ -755,7 +736,6 @@ public class Supermarket extends javax.swing.JFrame {
                 }
 
             }
-        }
         //update for the storage items list
         if (storage.isChanged()) {
             lstStorage.clear();
