@@ -48,6 +48,7 @@ public class Supermarket extends javax.swing.JFrame {
     private ArrayList<Item> storeItems;
     private ArrayList<Customer> customers;
     private Graphics g;
+    ArrayList<List> aislesListboxList;
 
     /**
      * Creates new form Supermarket
@@ -156,7 +157,17 @@ public class Supermarket extends javax.swing.JFrame {
         //staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
         //staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
         //staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
-
+        
+        //list for the listboxes from aisles
+        aislesListboxList = new ArrayList<>();
+        aislesListboxList.add(lstLiqour);
+        aislesListboxList.add(lstLunchAndBreakfast);
+        aislesListboxList.add(lstCooling);
+        aislesListboxList.add(listLuxury);
+        aislesListboxList.add(lstDurable);
+        aislesListboxList.add(lstVegAndFruit);
+        aislesListboxList.add(lstNonfood);
+        
         for (Person staff : staffMembers) {
             String test = staff.getName();
             staffComboBox.addItem(test);
@@ -607,11 +618,16 @@ public class Supermarket extends javax.swing.JFrame {
             }
         }
     }
-
+    
+    /**
+     * Update for the interface with the latest simulation data
+     */
     private void interfaceUpdate() {
+        //cleans the map
         g.clearRect(0, 0, 400, 400);
+        //cleans the shoppingcart list from the customers
         lstShoppingCart.removeAll();
-        lstOtherCustomerInfo.removeAll();
+        
 
         g.setColor(Color.blue);// sets the colour for the storages on the map
         //draws the rectangle for the storage
@@ -660,8 +676,10 @@ public class Supermarket extends javax.swing.JFrame {
         //draws the rectangle for the truck
         g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
         
+        //update for the other customer info
         try {
-            lstOtherCustomerInfo.clear();
+            //cleans the other info list from the customers
+            lstOtherCustomerInfo.removeAll();
             lstOtherCustomerInfo.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
             lstOtherCustomerInfo.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
             lstOtherCustomerInfo.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
@@ -672,27 +690,21 @@ public class Supermarket extends javax.swing.JFrame {
         } catch (Exception e) {
         }
 
-        ArrayList<List> lists = new ArrayList<>();
-        lists.add(lstLiqour);
-        lists.add(lstLunchAndBreakfast);
-        lists.add(lstCooling);
-        lists.add(listLuxury);
-        lists.add(lstDurable);
-        lists.add(lstVegAndFruit);
-        lists.add(lstNonfood);
+        
 
-
+        //update fot the listboxen to display what's in the aisles
         int counter = 0;
-        for (int i = 0; i < lists.size(); i++) {
-            lists.get(i).clear();
+        for (int i = 0; i < aislesListboxList.size(); i++) {
+            aislesListboxList.get(i).removeAll();
             for (Item shopItem : storeItems) {
                 counter = aisles.get(i).getItemCount(shopItem);
                 if (counter > 0) {
-                    lists.get(i).add(counter + " " + shopItem.getName());
+                    aislesListboxList.get(i).add(counter + " " + shopItem.getName());
                 }
             }
         }
-
+        
+        //update for the storage items list
         if (storage.isIsChanged()) {
             lstStorage.clear();
             for (Item item : storeItems) {
@@ -703,9 +715,11 @@ public class Supermarket extends javax.swing.JFrame {
             }
             storage.setIsChanged(false);
         }
+        
+        //update for the staff
         try {
-            lstItems.clear();
-            lstOtherStaffInfo.clear();
+            lstItems.removeAll();
+            lstOtherStaffInfo.removeAll();
             try{
                 for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getStocker().getItems()) {
                     lstItems.add(item.getName());
