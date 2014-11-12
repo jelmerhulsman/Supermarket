@@ -88,10 +88,14 @@ public class Storage extends ObjectInShop {
 
                 session.delete(item);
                 itemsList.remove(item);
+                try {
+                    hql = "DELETE FROM supermarket.Item WHERE id = '" + item.getId() + "'";
+                    Query delete = session.createQuery(hql);
+                    delete.executeUpdate();
+                } catch (Throwable e) {
+                    System.out.println(e.toString());
+                } //Sanderoplossing <:D
 
-                hql = "DELETE FROM supermarket.Item WHERE id = '" + item.getId() + "'";
-                Query delete = session.createQuery(hql);
-                delete.executeUpdate();
             }
         } catch (HibernateException e) {
             if (tx != null) {

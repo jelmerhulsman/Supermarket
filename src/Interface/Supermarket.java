@@ -159,7 +159,7 @@ public class Supermarket extends javax.swing.JFrame {
         //staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
         //staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
         //staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
-        
+
         //list for the listboxes from aisles
         aislesListboxList = new ArrayList<>();
         aislesListboxList.add(lstLiqour);
@@ -169,7 +169,7 @@ public class Supermarket extends javax.swing.JFrame {
         aislesListboxList.add(lstDurable);
         aislesListboxList.add(lstVegAndFruit);
         aislesListboxList.add(lstNonfood);
-        
+
         for (Person staff : staffMembers) {
             String test = staff.getName();
             staffComboBox.addItem(test);
@@ -552,9 +552,6 @@ public class Supermarket extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void customerSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerSelectorActionPerformed
-
-        
-
     }//GEN-LAST:event_customerSelectorActionPerformed
 
     /**
@@ -586,7 +583,7 @@ public class Supermarket extends javax.swing.JFrame {
         System.out.println("Supermarket initialized...");
 
         simulation.execStaffUpdate();
-        
+
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.staffLoop();
@@ -610,7 +607,7 @@ public class Supermarket extends javax.swing.JFrame {
             }
         }
     }
-    
+
     /**
      * Update for the interface with the latest simulation data
      */
@@ -619,7 +616,7 @@ public class Supermarket extends javax.swing.JFrame {
         g.clearRect(0, 0, 400, 400);
         //cleans the shoppingcart list from the customers
         lstShoppingCart.removeAll();
-        
+
 
         g.setColor(Color.blue);// sets the colour for the storages on the map
         //draws the rectangle for the storage
@@ -635,29 +632,40 @@ public class Supermarket extends javax.swing.JFrame {
         for (Customer customer : customers) {
             //draws the rectangle for the customer
             g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
-            try{
+            try {
                 //tries to add the name from the customers (if the number < 10)
                 g.drawString(customer.getName().substring(13, 15), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
-            }catch(Exception e){
+            } catch (Exception e) {
                 //tries to add the name from the customers (if the number >= 10)
                 g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
             }
         }
         Unloader tempUnl = null;
+        Cashier tempCash = null;
+        Stocker tempSto = null;
         g.setColor(Color.BLUE);// sets the colour for the Staffmembers on the map
-        for(Staff staff : staffMembers){
-            if(staff instanceof Unloader)
-            {
+        for (Staff staff : staffMembers) {
+            if (staff.getFunction().equals("unloader")) {
                 tempUnl = staff.getUnloader();
                 g.drawRect((int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4, 10, 10);
                 g.drawString(tempUnl.getName(), (int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4);
             }
+            if (staff.getFunction().equals("cashier")) {
+                tempCash = staff.getCashier();
+                g.drawRect((int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4, 10, 10);
+                g.drawString(tempCash.getName(), (int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4);
+            }
+            if (staff.getFunction().equals("stocker")) {
+                tempSto = staff.getStocker();
+                g.drawRect((int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4, 10, 10);
+                g.drawString(tempSto.getName(), (int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4);
+            }
             //draws the rectangle for the staff
-            g.drawRect((int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4, 10, 10);
+            //g.drawRect((int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4, 10, 10);
             //adds the name of the staff to the map
-            g.drawString(staff.getName(), (int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4);
+            //g.drawString(staff.getName(), (int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4);
         }
-        
+
 
         g.setColor(Color.PINK);// sets the colour for the Departments on the map
         for (Department department : departments) {
@@ -674,7 +682,7 @@ public class Supermarket extends javax.swing.JFrame {
         g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
         //draws the rectangle for the truck
         g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
-        
+
         //update for the other customer info
         try {
             //cleans the other info list from the customers
@@ -688,8 +696,8 @@ public class Supermarket extends javax.swing.JFrame {
             lstOtherCustomerInfo.add("Shop Location: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
         } catch (Exception e) {
         }
-        
-        try{
+
+        try {
             lstShoppingList.removeAll();
             lstShoppingCart.removeAll();
             for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
@@ -698,9 +706,10 @@ public class Supermarket extends javax.swing.JFrame {
             for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingCart()) {
                 lstShoppingCart.add(item.getName());
             }
-        }catch(Exception e){}
+        } catch (Exception e) {
+        }
 
-        
+
 
         //update fot the listboxen to display what's in the aisles
         int counter = 0;
@@ -713,7 +722,7 @@ public class Supermarket extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         //update for the storage items list
         if (storage.isIsChanged()) {
             lstStorage.clear();
@@ -725,27 +734,27 @@ public class Supermarket extends javax.swing.JFrame {
             }
             storage.setIsChanged(false);
         }
-        
+
         //update for the staff
         try {
             lstItems.removeAll();
             lstOtherStaffInfo.removeAll();
-            try{
+            try {
                 for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getStocker().getItems()) {
                     lstItems.add(item.getName());
                 }
-            }catch(Exception e){
-                    lstItems.add("currently holds nothing");
+            } catch (Exception e) {
+                lstItems.add("currently holds nothing");
             }
             lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
-            lstOtherStaffInfo.add("Location X:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().x + 
-                        " Y:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().y);
-            try{
+            lstOtherStaffInfo.add("Location X:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().x
+                    + " Y:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().y);
+            try {
                 lstOtherStaffInfo.add("Current Object: " + staffMembers.get(staffComboBox.getSelectedIndex()).getCurLocObject().getName());
-            }catch(Exception e){
+            } catch (Exception e) {
                 lstOtherStaffInfo.add("Current Object: Nothing");
             }
-            
+
             if (staffMembers.get(staffComboBox.getSelectedIndex()).getCashier() != null) {
                 lstOtherStaffInfo.add("Function: Cashier");
             } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader() != null) {
@@ -755,13 +764,14 @@ public class Supermarket extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-        
+
 
     }
-    
+
     /**
      * needed for the redirectSystemStreams
-     * @param text 
+     *
+     * @param text
      */
     private void updateTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -772,7 +782,6 @@ public class Supermarket extends javax.swing.JFrame {
         });
     }
 
-    
     /**
      * redirects the console output to a textbox
      */
@@ -813,7 +822,7 @@ public class Supermarket extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         for (int i = 1; i < checkouts.size(); i++) {
             Checkout currentCheckout = checkouts.get(i);
             Checkout previousCheckout = checkouts.get(i - 1);
