@@ -3,7 +3,6 @@ package supermarket;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item.Category;
-import supermarket.StaffTypes.Stocker;
 
 /**
  *
@@ -12,7 +11,6 @@ import supermarket.StaffTypes.Stocker;
 public class Aisle extends ObjectInShop {
 
     private final int ITEM_LIMIT_PER_SHELVE = 25;
-    private Stocker stocker;
     private ArrayList<Category> categories;
     private ArrayList<Item> aisleItems;
     private ArrayList<Item> items;
@@ -20,7 +18,6 @@ public class Aisle extends ObjectInShop {
     public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
         super(name, location);
         this.name = name;
-        stocker = null;
         
         this.categories = new ArrayList<>();
         this.categories.addAll(categories);
@@ -49,24 +46,6 @@ public class Aisle extends ObjectInShop {
         }
         
         return tempArrayList;
-    }
-
-    /**
-     * Sets a Loader staff member to this Aisle
-     *
-     * @param currentLoader The loader that you are willing to assign
-     */
-    public void setCurrentLoader(Stocker stocker) {
-        this.stocker = stocker;
-    }
-
-    /**
-     * Gets the current Loader staff member of this Aisle
-     *
-     * @return the current loader
-     */
-    public Stocker getCurrentLoader() {
-        return stocker;
     }
 
     /**
@@ -104,7 +83,7 @@ public class Aisle extends ObjectInShop {
     public int getItemCount(Item item) {
         int counter = 0;
         for (Item i : items) {
-            if (i == item) {
+            if (item.getName().equals(i.getName())) {
                 counter++;
             }
         }

@@ -312,6 +312,7 @@ public class Customer extends Person {
                             } else {
                                 Checkout checkout = chooseCheckout(staticLocations);
                                 checkout.addCustomer(me);
+                                gotoCoords(checkout.getLocation(), "Checkout " + checkout.getNumber());
                                 collectedItemsCount = shoppingCart.size();
                                 action = Action.WAITING;
                             }
