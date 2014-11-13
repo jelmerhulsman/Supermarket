@@ -88,40 +88,40 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.BEER);
         aisleCategories.add(Category.LIQUOR);
         aisleCategories.add(Category.WINE);
-        aisles.add(new Aisle("Liquor", new Vector2f(30, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Liquor", new Vector2f(10, 60), aisleCategories, storeItems));
         lblLiqour.setText("Liquor");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.BREAD);
         aisleCategories.add(Category.SPREAD);
         aisleCategories.add(Category.BREAKFAST);
-        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(40, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(65, 35), aisleCategories, storeItems));
         lblLunchAndBreakfast.setText("Lunch & Breakfast");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
         aisleCategories.add(Category.DAIRY);
-        aisles.add(new Aisle("Cooling", new Vector2f(50, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Cooling", new Vector2f(35, 60), aisleCategories, storeItems));
         lblCooling.setText("Cooling");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SNACK);
         aisleCategories.add(Category.SODA);
         aisleCategories.add(Category.CAFFEINE);
-        aisles.add(new Aisle("Luxury", new Vector2f(60, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Luxury", new Vector2f(80, 50), aisleCategories, storeItems));
         lblLuxury.setText("Luxury");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SPICES);
         aisleCategories.add(Category.FOREIGN);
         aisleCategories.add(Category.PRESERVATION);
-        aisles.add(new Aisle("Durable", new Vector2f(70, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Durable", new Vector2f(50, 50), aisleCategories, storeItems));
         lblDurable.setText("Durable");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.VEGTABLES);
         aisleCategories.add(Category.FRUIT);
-        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(80, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(50, 20), aisleCategories, storeItems));
         label10.setText("Vegtables & Fruit");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.NONFOOD);
-        aisles.add(new Aisle("Nonfood", new Vector2f(90, 60), aisleCategories, storeItems));
+        aisles.add(new Aisle("Nonfood", new Vector2f(80, 20), aisleCategories, storeItems));
         lblNonfoon.setText("Nonfood");
 
         //Create checkouts
@@ -133,7 +133,7 @@ public class Supermarket extends javax.swing.JFrame {
         //Create departments
         departments = new ArrayList<>();
         for (int i = 0; i < MAX_DEPARTMENTS; i++) {
-            departments.add(new Department("Drinks Department", new Vector2f(50, 50)));
+            departments.add(new Department("Drinks Department", new Vector2f(20, 50)));
 
         }
 
@@ -621,6 +621,7 @@ public class Supermarket extends javax.swing.JFrame {
         for (Aisle aisle : aisles) {
             //draws the rectangle for the ailse
             g.drawRect((int) aisle.getLocation().x * 4, (int) aisle.getLocation().y * 4, 15, 30);
+            g.drawString(aisle.getName(), (int) aisle.getLocation().x * 4, (int) aisle.getLocation().y * 4);
         }
 
         g.setColor(Color.PINK);// sets the colour for the Departments on the map
