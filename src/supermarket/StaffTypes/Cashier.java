@@ -8,7 +8,7 @@ import supermarket.Item;
 import supermarket.ObjectInShop;
 
 public class Cashier extends Staff {
-    
+    private final int PAYMENT_TIME = 3000;
     private enum Action {
         
         GO_TO_CHECKOUT, WORKING, WAITING
@@ -41,6 +41,10 @@ public class Cashier extends Staff {
             float toPay = checkout.printReceipt(c.getShoppingCart());
             System.out.println(c.getName() + "( " + c.getSaldo() + " ) is paying " + toPay);
             c.setSaldo(c.getSaldo() - toPay);
+            
+            sleep(PAYMENT_TIME);
+            c.sleep(PAYMENT_TIME);
+            
             checkout.removeFirstCustomer();
         } else {
             if (checkout.getStatus() == Status.CLOSING) {
