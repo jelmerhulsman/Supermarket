@@ -36,7 +36,7 @@ import supermarket.Truck;
  */
 public class Supermarket extends javax.swing.JFrame {
 
-    private final int MAX_CUSTOMERS = 20;
+    private final int MAX_CUSTOMERS = 10;
     private ArrayList<Aisle> aisles;
     private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;

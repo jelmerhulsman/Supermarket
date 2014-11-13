@@ -66,7 +66,7 @@ public class Unloader extends Staff {
             storage.addItem(i);
             sleep(ITEM_INTERACTION_TIME);
         }
-        
+
         items = new ArrayList<>();
     }
 
@@ -92,14 +92,14 @@ public class Unloader extends Staff {
             System.out.println("Unloader " + name + " has ordered the items.");
         }
     }
-    
-    public Vector2f getLocation()
-    {
+
+    public Vector2f getLocation() {
         return location;
     }
 
     /**
      * This function will be called over and over again
+     *
      * @param staticLocations The collection of all the locations
      */
     @Override

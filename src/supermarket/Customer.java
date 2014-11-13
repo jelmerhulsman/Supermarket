@@ -281,6 +281,7 @@ public class Customer extends Person {
 
     /**
      * this method will loop over and over
+     *
      * @param staticLocations the collection of all the possible locations
      */
     @Override

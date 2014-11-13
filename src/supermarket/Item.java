@@ -19,7 +19,6 @@ public class Item {
 
         BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICES, NONFOOD, FROZEN, PRESERVATION, BREAD, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT
     }
-    
     @Column(name = "name")
     private String name;
     @Column(name = "price")

@@ -8,9 +8,9 @@ import supermarket.Item;
 import supermarket.ObjectInShop;
 
 public class Cashier extends Staff {
-
+    
     private enum Action {
-
+        
         GO_TO_CHECKOUT, WORKING, WAITING
     }
     private Action action;
@@ -33,8 +33,7 @@ public class Cashier extends Staff {
     public void processCustomer() {
         Customer c = checkout.getFirstCustomer();
         if (c != null) {
-            for( Item i : c.getShoppingCart())
-            {
+            for (Item i : c.getShoppingCart()) {
                 System.out.println(getName() + ": Item " + i.getName() + " costs " + i.getPrice());
                 sleep(ITEM_INTERACTION_TIME);
                 c.sleep(ITEM_INTERACTION_TIME);
@@ -49,11 +48,11 @@ public class Cashier extends Staff {
             }
         }
     }
-
+    
     public void setCheckOut(Checkout checkout) {
         this.checkout = checkout;
     }
-
+    
     public boolean isWaiting() {
         return (action == Action.WAITING);
     }
@@ -85,7 +84,7 @@ public class Cashier extends Staff {
                             if (checkout != null) {
                                 action = Action.GO_TO_CHECKOUT;
                             }
-
+                            
                             break;
                     }
                 }

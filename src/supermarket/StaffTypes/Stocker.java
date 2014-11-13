@@ -11,9 +11,9 @@ import supermarket.Storage;
  * @author SDJM
  */
 public class Stocker extends Staff {
-
+    
     private enum Action {
-
+        
         GET_ITEMS, STORE_ITEMS, WAITING
     }
     private Action action;
@@ -22,7 +22,7 @@ public class Stocker extends Staff {
     private boolean working;
     private int runs = 0;
     private final int NUMBER_OF_RUNS_PER_AISLE = 3;
-
+    
     public Stocker(Storage storage) {
         super();
         action = Action.WAITING;
@@ -50,27 +50,27 @@ public class Stocker extends Staff {
             storage.addItem(i);
             sleep(ITEM_INTERACTION_TIME);
         }
-
+        
         items = new ArrayList<>();
     }
-
+    
     public ArrayList<Item> getItems() {
         return items;
     }
-
+    
     public boolean isWorking() {
         return working;
     }
-
+    
     public void setAisle(Aisle aisle) {
         this.aisle = aisle;
     }
-
+    
     private void chooseAisle(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
                 Aisle tempAisle = (Aisle) o;
-
+                
                 if (tempAisle.getItems().isEmpty() && tempAisle.getStocker() == null) {
                     setAisle(tempAisle);
                     tempAisle.setStocker(this);
@@ -89,7 +89,7 @@ public class Stocker extends Staff {
      */
     public void storeItemsInAisle() {
         ArrayList<Item> storedItems = new ArrayList<>();
-
+        
         for (Item i : items) {
             if (aisle.getItemNames().contains(i.getName())) {
                 i.setAvailable(false);
@@ -99,10 +99,10 @@ public class Stocker extends Staff {
                 sleep(ITEM_INTERACTION_TIME);
             }
         }
-
+        
         items.removeAll(storedItems);
     }
-
+    
     public Aisle getAisle() {
         return aisle;
     }
@@ -152,7 +152,7 @@ public class Stocker extends Staff {
                             } else {
                                 sleep(1000);
                             }
-
+                            
                             break;
                     }
                 }
