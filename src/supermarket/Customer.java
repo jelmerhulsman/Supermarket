@@ -24,38 +24,38 @@ public class Customer extends Person {
     private float beginWithSaldo;
     private float saldo;
     private Action action;
-    private ArrayList<Item> shoppingList, shoppingCart;
     private int collectedItemsCount;
+    private ArrayList<Item> shoppingList, shoppingBasket;
     private Customer me;
 
-    public Customer(String name, Vector2f spawnLocation, Stereotype stereotype, ArrayList<Item> uniqueItems) {
-        super(name, spawnLocation);
-        this.stereotype = stereotype;
+    public Customer(String name, Vector2f location, Stereotype stereotype, ArrayList<Item> uniqueItems) {
+        super(name, location);
 
+        this.stereotype = stereotype;
         switch (stereotype) {
             case ELDER:
                 saldo = giveSaldo(70, 250);
-                speed = giveSpeed(chanceOf(90));
+                this.setSpeed(giveSpeed(chanceOf(90)));
                 break;
             case MOTHER:
                 saldo = giveSaldo(40, 80);
-                speed = giveSpeed(chanceOf(15));
+                this.setSpeed(giveSpeed(chanceOf(15)));
                 break;
             case STUDENT:
                 saldo = giveSaldo(5, 35);
-                speed = giveSpeed(chanceOf(5));
+                this.setSpeed(giveSpeed(chanceOf(5)));
                 break;
             case WORKER:
                 saldo = giveSaldo(100, 150);
-                speed = giveSpeed(chanceOf(20));
+                this.setSpeed(giveSpeed(chanceOf(20)));
                 break;
         }
 
         beginWithSaldo = saldo;
         action = Action.ENTERING;
         shoppingList = generateShoppingList(stereotype, uniqueItems);
-        shoppingCart = new ArrayList<>();
         collectedItemsCount = 0;
+        shoppingBasket = new ArrayList<>();
 
         me = this;
     }
@@ -232,7 +232,7 @@ public class Customer extends Person {
         for (Item item : shoppingList) {
             if (aisleItemNames.contains(item.getName())) {
                 if (aisle.getItemCount(item) > 0 && aisle.getItems().get(0).isAvailable()) {
-                    shoppingCart.add(aisle.pickFromShelve(item));
+                    shoppingBasket.add(aisle.pickFromShelve(item));
                 }
 
                 sleep(ITEM_INTERACTION_TIME);
@@ -267,8 +267,8 @@ public class Customer extends Person {
         return c;
     }
 
-    public ArrayList<Item> getShoppingCart() {
-        return shoppingCart;
+    public ArrayList<Item> getShoppingBasket() {
+        return shoppingBasket;
     }
 
     public void setSaldo(float saldo) {
@@ -292,8 +292,7 @@ public class Customer extends Person {
                 while (true) {
                     switch (action) {
                         case ENTERING:
-                            String targetName = "Entrance";
-                            gotoCoords(new Vector2f(location.x, location.y - 20), targetName);
+                            gotoCoords(new Vector2f(location.x, location.y - 20));
                             action = Action.SHOPPING;
                             break;
                         case SHOPPING:
@@ -307,21 +306,26 @@ public class Customer extends Person {
                             }
                             break;
                         case CHOOSING_CHECKOUT:
-                            if (shoppingCart.isEmpty()) {
+                            if (shoppingBasket.isEmpty()) {
                                 gotoLocation("Entrance/Exit", staticLocations);
                                 action = Action.LEAVING;
+                                System.out.println("Customer " + name + "is now leaving (without paying)...");
                             } else {
-                                Checkout checkout = chooseCheckout(staticLocations);
-                                gotoCoords(checkout.getLocation(), "Checkout " + checkout.getNumber());
+                                Checkout checkout = chooseCheckout(staticLocations); //Choose from far away
+                                gotoLocation(checkout.getName(), staticLocations);
+                                checkout = chooseCheckout(staticLocations); //Check from close distance
+                                gotoLocation(checkout.getName(), staticLocations);
                                 checkout.addCustomer(me);
-                                collectedItemsCount = shoppingCart.size();
+                                collectedItemsCount = shoppingBasket.size();
                                 action = Action.WAITING;
+                                System.out.println("Customer " + name + "is now waiting in line at " + checkout.getName() + " #" + checkout.getNumber() + "...");
                             }
                             break;
                         case WAITING:
-                            if (saldo < beginWithSaldo && shoppingCart.size() == collectedItemsCount) {
+                            if (saldo < beginWithSaldo && shoppingBasket.size() == collectedItemsCount) {
                                 gotoLocation("Entrance/Exit", staticLocations);
                                 action = Action.LEAVING;
+                                System.out.println("Customer " + name + "is now leaving...");
                             }
                             break;
                     }
@@ -329,5 +333,6 @@ public class Customer extends Person {
             }
         });
         operation.start();
+        operation.setName("Customer " + name);
     }
 }

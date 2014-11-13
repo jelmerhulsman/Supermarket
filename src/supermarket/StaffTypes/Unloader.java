@@ -12,12 +12,13 @@ import supermarket.Truck;
  * @author SDJM
  */
 public class Unloader extends Staff {
-
+    
     private final int MIN_STASH = 5;
     private final int MAX_STASH = 25;
-
+    private final int ORDER_TIME_PER_ITEM = 100;
+    
     private enum Action {
-
+        
         UNLOAD_TRUCK, STORE_ITEMS, WAITING
     }
     private Action action;
@@ -31,15 +32,13 @@ public class Unloader extends Staff {
      * @param name Specify the name of this person
      * @param storage Specify the workplace of this person
      */
-    public Unloader(Storage storage, Truck truck, ArrayList<Item> shopItems) {
+    public Unloader(String name, Vector2f location, Storage storage, Truck truck, ArrayList<Item> shopItems) {
+        super(name, location);
+        
         action = Action.WAITING;
         this.storage = storage;
         this.truck = truck;
         this.shopItems = shopItems;
-    }
-
-    public ArrayList<Item> getShopItems() {
-        return shopItems;
     }
 
     /**
@@ -61,12 +60,13 @@ public class Unloader extends Staff {
      * Stores the items from the inventory of this unloader in the Storage
      */
     public void storeItemsInStorage() {
+        System.out.println("Unloader " + name + " is storing the ordered items in the storage...");
         for (Item i : items) {
-            System.out.println("Unloader " + name + " is storing item " + i.getName() + " in the storage.");
             storage.addItem(i);
             sleep(ITEM_INTERACTION_TIME);
         }
-
+        
+        System.out.println("Unloader " + name + " has stored the ordered items in the storage.");
         items = new ArrayList<>();
     }
 
@@ -78,23 +78,22 @@ public class Unloader extends Staff {
         for (Item shopItem : shopItems) {
             int currentStash = storage.getItemCount(shopItem.getName());
             if (currentStash < MIN_STASH) {
+                if (orderItems.isEmpty()) {
+                    System.out.println("Unloader " + name + " is ordering items...");
+                }
+                
                 do {
                     orderItems.add(new Item(shopItem));
                     currentStash++;
+                    sleep(ORDER_TIME_PER_ITEM);
                 } while (currentStash < MAX_STASH);
             }
         }
-
+        
         if (!orderItems.isEmpty()) {
-            System.out.println("Unloader " + name + " is ordering items.");
-            sleep(15000);
             truck.putItemsInTruck(orderItems);
             System.out.println("Unloader " + name + " has ordered the items.");
         }
-    }
-
-    public Vector2f getLocation() {
-        return location;
     }
 
     /**
@@ -117,7 +116,7 @@ public class Unloader extends Staff {
                         case STORE_ITEMS:
                             gotoLocation("Storage", staticLocations);
                             storeItemsInStorage();
-
+                            
                             if (truck.getItems().isEmpty()) {
                                 action = Action.WAITING;
                             } else {
@@ -129,7 +128,6 @@ public class Unloader extends Staff {
                                 action = Action.UNLOAD_TRUCK;
                             } else {
                                 orderItems();
-                                sleep(5000);
                             }
                             break;
                     }
@@ -137,5 +135,6 @@ public class Unloader extends Staff {
             }
         });
         operation.start();
+        operation.setName("Unloader " + name);
     }
 }

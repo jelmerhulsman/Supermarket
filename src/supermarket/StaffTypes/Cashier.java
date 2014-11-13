@@ -1,5 +1,6 @@
 package supermarket.StaffTypes;
 
+import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Checkout;
 import supermarket.Checkout.Status;
@@ -8,9 +9,11 @@ import supermarket.Item;
 import supermarket.ObjectInShop;
 
 public class Cashier extends Staff {
+
     private final int PAYMENT_TIME = 3000;
+
     private enum Action {
-        
+
         GO_TO_CHECKOUT, WORKING, WAITING
     }
     private Action action;
@@ -22,7 +25,9 @@ public class Cashier extends Staff {
      * @param name Specify the name of this person
      * @param workplace Specify the workspace of this person
      */
-    public Cashier(Checkout checkout) {
+    public Cashier(String name, Vector2f location, Checkout checkout) {
+        super(name, location);
+
         action = Action.GO_TO_CHECKOUT;
         this.checkout = checkout;
     }
@@ -33,18 +38,19 @@ public class Cashier extends Staff {
     public void processCustomer() {
         Customer c = checkout.getFirstCustomer();
         if (c != null) {
-            for (Item i : c.getShoppingCart()) {
-                System.out.println(getName() + ": Item " + i.getName() + " costs " + i.getPrice());
+            for (Item i : c.getShoppingBasket()) {
+                System.out.println("Cashier " + this.getName() + " -> " + i.getName() + " costs " + i.getPrice() + " and has been added to receipt.");
                 sleep(ITEM_INTERACTION_TIME);
                 c.sleep(ITEM_INTERACTION_TIME);
             }
-            float toPay = checkout.printReceipt(c.getShoppingCart());
-            System.out.println(c.getName() + "( " + c.getSaldo() + " ) is paying " + toPay);
-            c.setSaldo(c.getSaldo() - toPay);
             
+            float toPay = checkout.printReceipt(c.getShoppingBasket());
+            c.setSaldo(c.getSaldo() - toPay);
+            System.out.println("Customer " + c.getName() + " -> Pays " + toPay + " and has " + c.getSaldo() + " left.");
+
             sleep(PAYMENT_TIME);
             c.sleep(PAYMENT_TIME);
-            
+
             checkout.removeFirstCustomer();
         } else {
             if (checkout.getStatus() == Status.CLOSING) {
@@ -52,11 +58,11 @@ public class Cashier extends Staff {
             }
         }
     }
-    
+
     public void setCheckOut(Checkout checkout) {
         this.checkout = checkout;
     }
-    
+
     public boolean isWaiting() {
         return (action == Action.WAITING);
     }
@@ -80,6 +86,7 @@ public class Cashier extends Staff {
                         case WORKING:
                             processCustomer();
                             if (checkout.getStatus() == Status.CLOSED) {
+                                checkout = null;
                                 gotoLocation("Storage", staticLocations);
                                 action = Action.WAITING;
                             }
@@ -88,12 +95,13 @@ public class Cashier extends Staff {
                             if (checkout != null) {
                                 action = Action.GO_TO_CHECKOUT;
                             }
-                            
+
                             break;
                     }
                 }
             }
         });
         operation.start();
+        operation.setName("Cashier " + name);
     }
 }

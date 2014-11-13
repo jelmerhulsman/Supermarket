@@ -12,9 +12,6 @@ public class ObjectInShop {
     protected Vector2f location;
     protected ObjectInShop curLocObject;
 
-    public ObjectInShop() {
-    }
-
     public ObjectInShop(String name, Vector2f location) {
         this.name = name;
         this.location = location;

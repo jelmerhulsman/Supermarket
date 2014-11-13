@@ -15,12 +15,14 @@ public class Person extends ObjectInShop {
     protected Thread operation;
     protected float speed;
 
-    public Person() {
+    public Person(String name, Vector2f location) {
+        super(name, location);
+        operation = new Thread();
+        speed = 2f;
     }
 
-    public Person(String name, Vector2f spawnLocation) {
-        super(name, spawnLocation);
-        operation = new Thread();
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
     /**
@@ -37,10 +39,6 @@ public class Person extends ObjectInShop {
             }
         }
 
-        if (targetObject == null) {
-            System.out.println("ERROR: TARGET / " + targetName + " / " + this.getClass().toString() + " / " + this.name + " NOT FOUND! CHECK YOUR CODE!");
-        }
-
         Vector2f targetLocation = new Vector2f(targetObject.getLocation());
 
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(getLocation().x);
@@ -50,7 +48,10 @@ public class Person extends ObjectInShop {
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
 
-        System.out.println(name + " is going to " + targetName);
+        String[] absoluteClassName = this.getClass().toString().split("\\.");
+        String className = absoluteClassName[absoluteClassName.length - 1] + " ";
+
+        System.out.println(className + name + " is now going to " + targetName + "...");
         float distanceToTarget = location.distance(targetLocation);
         if (distanceToTarget > speed) {
             while (distanceToTarget > speed) {
@@ -65,8 +66,6 @@ public class Person extends ObjectInShop {
 
         location = targetLocation;
         curLocObject = targetObject;
-        System.out.println(name + " has reached " + targetName);
-
     }
 
     /**
@@ -76,7 +75,7 @@ public class Person extends ObjectInShop {
      * @param targetLocation the coordinates where this person will be going to
      * @param targetName the name of the targetlocation
      */
-    public void gotoCoords(Vector2f targetLocation, String targetName) {
+    public void gotoCoords(Vector2f targetLocation) {
 
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
@@ -84,8 +83,7 @@ public class Person extends ObjectInShop {
 
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
-
-        System.out.println(name + " is going to " + targetName);
+        
         float distanceToTarget = location.distance(targetLocation);
         if (distanceToTarget > speed) {
             while (distanceToTarget > speed) {
@@ -99,7 +97,6 @@ public class Person extends ObjectInShop {
         }
 
         location = targetLocation;
-        System.out.println(name + " has reached " + targetName);
     }
 
     /**
