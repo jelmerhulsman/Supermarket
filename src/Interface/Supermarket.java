@@ -583,9 +583,9 @@ public class Supermarket extends javax.swing.JFrame {
         System.out.println("Supermarket initialized...");
 
         simulation.execStaffUpdate();
-
+        simulation.drawOnlyOnce();
         while (true) { //Update loop
-            //simulation.customersLoop();
+            simulation.customersLoop();
             simulation.staffLoop();
             simulation.interfaceUpdate();
             //Sleep at the end of the loop
@@ -612,19 +612,7 @@ public class Supermarket extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Update for the interface with the latest simulation data
-     */
-    private void interfaceUpdate() {
-        Unloader tempUnl = null;
-        Cashier tempCash = null;
-        Stocker tempSto = null;
-        //cleans the map
-        g.clearRect(0, 0, 400, 400);
-        //cleans the shoppingcart list from the customers
-        lstShoppingCart.removeAll();
-
-
+    private void drawOnlyOnce() {
         g.setColor(Color.blue);// sets the colour for the storages on the map
         //draws the rectangle for the storage
         g.drawRect((int) storage.getLocation().x * 4, (int) storage.getLocation().y * 4, 50, 50);
@@ -635,6 +623,36 @@ public class Supermarket extends javax.swing.JFrame {
             g.drawRect((int) aisle.getLocation().x * 4, (int) aisle.getLocation().y * 4, 15, 30);
         }
 
+        g.setColor(Color.PINK);// sets the colour for the Departments on the map
+        for (Department department : departments) {
+            //draws the rectangle for the department
+            g.drawRect((int) department.getLocation().x * 4, (int) department.getLocation().y * 4, 15, 15);
+        }
+
+        g.setColor(Color.orange);// sets the colour for the checkouts on the map
+        for (Checkout checkout : checkouts) {
+            //draws the rectangle for the checkout
+            g.drawRect((int) checkout.getLocation().x * 4, (int) checkout.getLocation().y * 4, 10, 10);
+        }
+
+        g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
+        //draws the rectangle for the truck
+        g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
+    }
+
+    /**
+     * Update for the interface with the latest simulation data
+     */
+    private void interfaceUpdate() {
+        Unloader tempUnl = null;
+        Cashier tempCash = null;
+        Stocker tempSto = null;
+        //cleans the map
+
+        g.clearRect(0, 0, 400, 400);
+        //cleans the shoppingcart list from the customers
+        lstShoppingCart.removeAll();
+        drawOnlyOnce();
         g.setColor(Color.red);// sets the colour for the Customers on the map
         for (Customer customer : customers) {
             //draws the rectangle for the customer
@@ -672,23 +690,6 @@ public class Supermarket extends javax.swing.JFrame {
             }
         }
 
-
-        g.setColor(Color.PINK);// sets the colour for the Departments on the map
-        for (Department department : departments) {
-            //draws the rectangle for the department
-            g.drawRect((int) department.getLocation().x * 4, (int) department.getLocation().y * 4, 15, 15);
-        }
-
-        g.setColor(Color.orange);// sets the colour for the checkouts on the map
-        for (Checkout checkout : checkouts) {
-            //draws the rectangle for the checkout
-            g.drawRect((int) checkout.getLocation().x * 4, (int) checkout.getLocation().y * 4, 10, 10);
-        }
-
-        g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
-        //draws the rectangle for the truck
-        g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
-
         //update for the other customer info
         try {
             //cleans the other info list from the customers
@@ -715,20 +716,19 @@ public class Supermarket extends javax.swing.JFrame {
         } catch (Exception e) {
         }
 
-
-
         //update fot the listboxen to display what's in the aisles
-
-
         int counter = 0;
 
         for (int i = 0; i < aislesListboxList.size(); i++) {
-            aislesListboxList.get(i).removeAll();
-            for (Item item : aisles.get(i).getItems()) {
-                aislesListboxList.get(i).add(item.getName());
+            if (aisles.get(i).isChanged()) {
+                aislesListboxList.get(i).removeAll();
+                for (Item item : aisles.get(i).getItems()) {
+                    aislesListboxList.get(i).add(item.getName());
+                }
             }
-
+            aisles.get(i).setIsChanged(false);
         }
+
         //update for the storage items list
         if (storage.isChanged()) {
             lstStorage.clear();

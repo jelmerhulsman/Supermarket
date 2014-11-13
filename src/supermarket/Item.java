@@ -27,8 +27,18 @@ public class Item {
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private Category category;
+    @Transient
+    private boolean available;
 
     public Item() {
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 
     public Item(Item item) {

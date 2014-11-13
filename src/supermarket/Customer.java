@@ -231,7 +231,7 @@ public class Customer extends Person {
 
         for (Item item : shoppingList) {
             if (aisleItemNames.contains(item.getName())) {
-                if (aisle.getItemCount(item) > 0) {
+                if (aisle.getItemCount(item) > 0 && aisle.getItems().get(0).isAvailable()) {
                     shoppingCart.add(aisle.pickFromShelve(item));
                 }
 

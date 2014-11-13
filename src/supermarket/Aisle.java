@@ -16,6 +16,9 @@ public class Aisle extends ObjectInShop {
     private ArrayList<Item> aisleItems;
     private ArrayList<Item> items;
     private Stocker stocker;
+    private boolean isChanged;
+    
+    
 
     public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
         super(name, location);
@@ -25,7 +28,7 @@ public class Aisle extends ObjectInShop {
         this.categories.addAll(categories);
         
         this.aisleItems = createListOfAisleItems(categories, storeItems);
-        
+        isChanged = false;
         items = new ArrayList<>();
     }
 
@@ -35,6 +38,14 @@ public class Aisle extends ObjectInShop {
 
     public void setStocker(Stocker stocker) {
         this.stocker = stocker;
+    }
+
+    public boolean isChanged() {
+        return isChanged;
+    }
+
+    public void setIsChanged(boolean isChanged) {
+        this.isChanged = isChanged;
     }
     
     /**
@@ -54,7 +65,6 @@ public class Aisle extends ObjectInShop {
                 tempArrayList.add(item);
             }
         }
-        
         return tempArrayList;
     }
 
@@ -81,7 +91,6 @@ public class Aisle extends ObjectInShop {
                 itemNames.add(item.getName());
             }
         }
-        
         return itemNames;
     }
 
@@ -97,7 +106,6 @@ public class Aisle extends ObjectInShop {
                 counter++;
             }
         }
-
         return counter;
     }
     
@@ -109,11 +117,10 @@ public class Aisle extends ObjectInShop {
     public int getItemCount(String itemname){
         int counter = 0;
         for (Item i : items) {
-            if (i.getName() == itemname) {
+            if (i.getName().equals(itemname)) {
                 counter++;
             }
         }
-
         return counter;
     }
 
@@ -127,8 +134,10 @@ public class Aisle extends ObjectInShop {
             if (i.getName().equals(item.getName())) {
                 Item temp = i;
                 items.remove(i);
+                isChanged = true;
                 return temp;
             }
+            
         }
 
         return null;
@@ -150,7 +159,9 @@ public class Aisle extends ObjectInShop {
      * @param item The item you are willing to add to this Aisle
      */
     public void loadAisle(Item item) {
+        item.setAvailable(true);
         items.add(item);
+        isChanged = true;
     }
     
     public boolean fullShelve(Item item) {

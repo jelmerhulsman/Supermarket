@@ -92,6 +92,7 @@ public class Stocker extends Staff {
 
         for (Item i : items) {
             if (aisle.getItemNames().contains(i.getName())) {
+                i.setAvailable(false);
                 System.out.println("Stocker " + name + " is storing item" + i.getName() + " in aisle " + aisle.getName());
                 aisle.loadAisle(i);
                 storedItems.add(i);

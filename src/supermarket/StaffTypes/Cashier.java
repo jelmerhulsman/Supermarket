@@ -37,6 +37,7 @@ public class Cashier extends Staff {
             {
                 System.out.println(getName() + ": Item " + i.getName() + " costs " + i.getPrice());
                 sleep(ITEM_INTERACTION_TIME);
+                c.sleep(ITEM_INTERACTION_TIME);
             }
             float toPay = checkout.printReceipt(c.getShoppingCart());
             System.out.println(c.getName() + "( " + c.getSaldo() + " ) is paying " + toPay);
