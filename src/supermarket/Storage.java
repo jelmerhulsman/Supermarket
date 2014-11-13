@@ -83,7 +83,6 @@ public class Storage extends ObjectInShop {
                 Item item = (Item) iterator.next();
                 items.add(item);
 
-                session.delete(item);
                 itemsList.remove(item);
                 try {
                     hql = "DELETE FROM supermarket.Item WHERE id = '" + item.getId() + "'";

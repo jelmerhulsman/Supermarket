@@ -3,6 +3,7 @@ package supermarket;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item.Category;
+import supermarket.StaffTypes.Stocker;
 
 /**
  *
@@ -14,6 +15,7 @@ public class Aisle extends ObjectInShop {
     private ArrayList<Category> categories;
     private ArrayList<Item> aisleItems;
     private ArrayList<Item> items;
+    private Stocker stocker;
 
     public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
         super(name, location);
@@ -25,6 +27,14 @@ public class Aisle extends ObjectInShop {
         this.aisleItems = createListOfAisleItems(categories, storeItems);
         
         items = new ArrayList<>();
+    }
+
+    public Stocker getStocker() {
+        return stocker;
+    }
+
+    public void setStocker(Stocker stocker) {
+        this.stocker = stocker;
     }
     
     /**

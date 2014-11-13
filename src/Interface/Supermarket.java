@@ -156,9 +156,9 @@ public class Supermarket extends javax.swing.JFrame {
         staffMembers.add(new Staff("Jannes", storage.getLocation(), storage, truck, storeItems));
         staffMembers.add(new Staff("Johanna", storage.getLocation(), checkouts.get(0)));
         staffMembers.add(new Staff("Jan de Bierman", storage.getLocation(), storage));
-        //staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
-        //staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
-        //staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
+        staffMembers.add(new Staff("Jip de Chip", storage.getLocation(), storage));
+        staffMembers.add(new Staff("Grietje Gezond", storage.getLocation(), storage));
+        staffMembers.add(new Staff("Koel Cooler", storage.getLocation(), storage));
 
         //list for the listboxes from aisles
         aislesListboxList = new ArrayList<>();
@@ -585,7 +585,7 @@ public class Supermarket extends javax.swing.JFrame {
         simulation.execStaffUpdate();
 
         while (true) { //Update loop
-            simulation.customersLoop();
+            //simulation.customersLoop();
             simulation.staffLoop();
             simulation.interfaceUpdate();
             //Sleep at the end of the loop
@@ -650,25 +650,26 @@ public class Supermarket extends javax.swing.JFrame {
 
         g.setColor(Color.BLUE);// sets the colour for the Staffmembers on the map
         for (Staff staff : staffMembers) {
-            if (staff.getFunction().equals("unloader")) {
-                tempUnl = staff.getUnloader();
-                g.drawRect((int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4, 10, 10);
-                g.drawString(tempUnl.getName(), (int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4);
+            switch (staff.getFunction()) {
+                case "unloader": {
+                    tempUnl = staff.getUnloader();
+                    g.drawRect((int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4, 10, 10);
+                    g.drawString(tempUnl.getName(), (int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4);
+                    break;
+                }
+                case "cashier": {
+                    tempCash = staff.getCashier();
+                    g.drawRect((int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4, 10, 10);
+                    g.drawString(tempCash.getName(), (int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4);
+                    break;
+                }
+                case "stocker": {
+                    tempSto = staff.getStocker();
+                    g.drawRect((int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4, 10, 10);
+                    g.drawString(tempSto.getName(), (int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4);
+                    break;
+                }
             }
-            if (staff.getFunction().equals("cashier")) {
-                tempCash = staff.getCashier();
-                g.drawRect((int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4, 10, 10);
-                g.drawString(tempCash.getName(), (int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4);
-            }
-            if (staff.getFunction().equals("stocker")) {
-                tempSto = staff.getStocker();
-                g.drawRect((int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4, 10, 10);
-                g.drawString(tempSto.getName(), (int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4);
-            }
-            //draws the rectangle for the staff
-            //g.drawRect((int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4, 10, 10);
-            //adds the name of the staff to the map
-            //g.drawString(staff.getName(), (int) staff.getLocation().x * 4, (int) staff.getLocation().y * 4);
         }
 
 
@@ -717,17 +718,17 @@ public class Supermarket extends javax.swing.JFrame {
 
 
         //update fot the listboxen to display what's in the aisles
-        
-        
-        int counter = 0;
-        
-            for (int i = 0; i < aislesListboxList.size(); i++) {
-                aislesListboxList.get(i).removeAll();
-                for (Item item : aisles.get(i).getItems()) {
-                    aislesListboxList.get(i).add(item.getName());
-                }
 
+
+        int counter = 0;
+
+        for (int i = 0; i < aislesListboxList.size(); i++) {
+            aislesListboxList.get(i).removeAll();
+            for (Item item : aisles.get(i).getItems()) {
+                aislesListboxList.get(i).add(item.getName());
             }
+
+        }
         //update for the storage items list
         if (storage.isChanged()) {
             lstStorage.clear();
@@ -813,21 +814,6 @@ public class Supermarket extends javax.swing.JFrame {
     }
 
     private void staffLoop() {
-        if (!storage.getAllItems().isEmpty()) {
-            for (Staff staff : staffMembers) {
-                if (staff.getFunction().equals("stocker")) {
-                    Stocker stocker = staff.getStocker();
-                    if (!stocker.isWorking() && stocker.getAisle() == null) {
-                        for (Aisle aisle : aisles) {
-                            if (aisle.getItems().size() < 10) {
-                                stocker.setAisle(aisle);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         for (int i = 1; i < checkouts.size(); i++) {
             Checkout currentCheckout = checkouts.get(i);
             Checkout previousCheckout = checkouts.get(i - 1);
