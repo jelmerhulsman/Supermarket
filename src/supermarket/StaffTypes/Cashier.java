@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import supermarket.Checkout;
 import supermarket.Checkout.Status;
 import supermarket.Customer;
+import supermarket.Item;
 import supermarket.ObjectInShop;
 
 public class Cashier extends Staff {
@@ -29,10 +30,16 @@ public class Cashier extends Staff {
     /**
      * Help the customer.
      */
-    public void processCustsomer() {
+    public void processCustomer() {
         Customer c = checkout.getFirstCustomer();
         if (c != null) {
+            for( Item i : c.getShoppingCart())
+            {
+                System.out.println(getName() + ": Item " + i.getName() + " costs " + i.getPrice());
+                sleep(ITEM_INTERACTION_TIME);
+            }
             float toPay = checkout.printReceipt(c.getShoppingCart());
+            System.out.println(c.getName() + "( " + c.getSaldo() + " ) is paying " + toPay);
             c.setSaldo(c.getSaldo() - toPay);
             checkout.removeFirstCustomer();
         } else {
@@ -67,7 +74,7 @@ public class Cashier extends Staff {
                             checkout.open();
                             action = Action.WORKING;
                         case WORKING:
-                            processCustsomer();
+                            processCustomer();
                             if (checkout.getStatus() == Status.CLOSED) {
                                 gotoLocation("Storage", staticLocations);
                                 action = Action.WAITING;

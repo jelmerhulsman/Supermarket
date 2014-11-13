@@ -311,8 +311,8 @@ public class Customer extends Person {
                                 action = Action.LEAVING;
                             } else {
                                 Checkout checkout = chooseCheckout(staticLocations);
-                                checkout.addCustomer(me);
                                 gotoCoords(checkout.getLocation(), "Checkout " + checkout.getNumber());
+                                checkout.addCustomer(me);
                                 collectedItemsCount = shoppingCart.size();
                                 action = Action.WAITING;
                             }
