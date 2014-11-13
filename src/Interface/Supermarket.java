@@ -462,6 +462,7 @@ public class Supermarket extends javax.swing.JFrame {
 
         Panes.addTab("Storage", jPanel4);
 
+        txtConsole.setEditable(false);
         txtConsole.setColumns(20);
         txtConsole.setRows(5);
         jScrollPane1.setViewportView(txtConsole);
@@ -649,129 +650,131 @@ public class Supermarket extends javax.swing.JFrame {
         Cashier tempCash = null;
         Stocker tempSto = null;
         //cleans the map
-
-        g.clearRect(0, 0, 400, 400);
-        //cleans the shoppingcart list from the customers
-        lstShoppingCart.removeAll();
-        drawOnlyOnce();
-        g.setColor(Color.red);// sets the colour for the Customers on the map
-        for (Customer customer : customers) {
-            //draws the rectangle for the customer
-            g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
-            try {
-                //tries to add the name from the customers (if the number < 10)
-                g.drawString(customer.getName().substring(13, 15), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
-            } catch (Exception e) {
-                //tries to add the name from the customers (if the number >= 10)
-                g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
-            }
-        }
-
-        g.setColor(Color.BLUE);// sets the colour for the Staffmembers on the map
-        for (Staff staff : staffMembers) {
-            switch (staff.getFunction()) {
-                case "unloader": {
-                    tempUnl = staff.getUnloader();
-                    g.drawRect((int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4, 10, 10);
-                    g.drawString(tempUnl.getName(), (int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4);
-                    break;
-                }
-                case "cashier": {
-                    tempCash = staff.getCashier();
-                    g.drawRect((int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4, 10, 10);
-                    g.drawString(tempCash.getName(), (int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4);
-                    break;
-                }
-                case "stocker": {
-                    tempSto = staff.getStocker();
-                    g.drawRect((int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4, 10, 10);
-                    g.drawString(tempSto.getName(), (int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4);
-                    break;
-                }
-            }
-        }
-
-        //update for the other customer info
-        try {
-            //cleans the other info list from the customers
-            lstOtherCustomerInfo.removeAll();
-            lstOtherCustomerInfo.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
-            lstOtherCustomerInfo.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
-            lstOtherCustomerInfo.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
-            lstOtherCustomerInfo.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
-            lstOtherCustomerInfo.add("Location X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
-                    + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
-            lstOtherCustomerInfo.add("Shop Location: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
-        } catch (Exception e) {
-        }
-
-        try {
-            lstShoppingList.removeAll();
+        if (Panes.getSelectedIndex() == 1) {
+            g.clearRect(0, 0, 400, 400);
+            //cleans the shoppingcart list from the customers
             lstShoppingCart.removeAll();
-            for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
-                lstShoppingList.add(item.getName());
-            }
-            for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingCart()) {
-                lstShoppingCart.add(item.getName());
-            }
-        } catch (Exception e) {
-        }
-
-        //update fot the listboxen to display what's in the aisles
-        int counter = 0;
-
-        for (int i = 0; i < aislesListboxList.size(); i++) {
-            if (aisles.get(i).isChanged()) {
-                aislesListboxList.get(i).removeAll();
-                for (Item item : aisles.get(i).getItems()) {
-                    aislesListboxList.get(i).add(item.getName());
+            drawOnlyOnce();
+            g.setColor(Color.red);// sets the colour for the Customers on the map
+            for (Customer customer : customers) {
+                //draws the rectangle for the customer
+                g.drawRect((int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4, 10, 10);
+                try {
+                    //tries to add the name from the customers (if the number < 10)
+                    g.drawString(customer.getName().substring(13, 15), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
+                } catch (Exception e) {
+                    //tries to add the name from the customers (if the number >= 10)
+                    g.drawString(customer.getName().substring(13, 14), (int) customer.getLocation().x * 4, (int) customer.getLocation().y * 4);
                 }
             }
-            aisles.get(i).setIsChanged(false);
-        }
 
-        //update for the storage items list
-        if (storage.isChanged()) {
-            lstStorage.clear();
-            for (Item item : storeItems) {
-                counter = storage.getItemCount(item.getName());
-                if (counter > 0) {
-                    lstStorage.add(counter + " " + item.getName());
+            g.setColor(Color.BLUE);// sets the colour for the Staffmembers on the map
+            for (Staff staff : staffMembers) {
+                switch (staff.getFunction()) {
+                    case "unloader": {
+                        tempUnl = staff.getUnloader();
+                        g.drawRect((int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4, 10, 10);
+                        g.drawString(tempUnl.getName(), (int) tempUnl.getLocation().x * 4, (int) tempUnl.getLocation().y * 4);
+                        break;
+                    }
+                    case "cashier": {
+                        tempCash = staff.getCashier();
+                        g.drawRect((int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4, 10, 10);
+                        g.drawString(tempCash.getName(), (int) tempCash.getLocation().x * 4, (int) tempCash.getLocation().y * 4);
+                        break;
+                    }
+                    case "stocker": {
+                        tempSto = staff.getStocker();
+                        g.drawRect((int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4, 10, 10);
+                        g.drawString(tempSto.getName(), (int) tempSto.getLocation().x * 4, (int) tempSto.getLocation().y * 4);
+                        break;
+                    }
                 }
             }
-            storage.setIsChanged(false);
-        }
-
-        //update for the staff
-        try {
-            lstItems.removeAll();
-            lstOtherStaffInfo.removeAll();
+        } //update for the other customer info
+        else if (Panes.getSelectedIndex() == 0) {
             try {
-                for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getStocker().getItems()) {
-                    lstItems.add(item.getName());
+                //cleans the other info list from the customers
+                lstOtherCustomerInfo.removeAll();
+                lstOtherCustomerInfo.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
+                lstOtherCustomerInfo.add("Saldo: " + customers.get(customerSelector.getSelectedIndex()).getSaldo());
+                lstOtherCustomerInfo.add("Action: " + customers.get(customerSelector.getSelectedIndex()).getAction());
+                lstOtherCustomerInfo.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
+                lstOtherCustomerInfo.add("Location X:" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + " Y:"
+                        + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
+                lstOtherCustomerInfo.add("Shop Location: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
+            } catch (Exception e) {
+            }
+
+
+            try {
+                lstShoppingList.removeAll();
+                lstShoppingCart.removeAll();
+                for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
+                    lstShoppingList.add(item.getName());
+                }
+                for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingCart()) {
+                    lstShoppingCart.add(item.getName());
                 }
             } catch (Exception e) {
-                lstItems.add("currently holds nothing");
             }
-            lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
-            lstOtherStaffInfo.add("Location X:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().x
-                    + " Y:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().y);
+        } else if (Panes.getSelectedIndex() == 2) {
+            //update fot the listboxen to display what's in the aisles
+
+
+            for (int i = 0; i < aislesListboxList.size(); i++) {
+                if (aisles.get(i).isChanged()) {
+                    aislesListboxList.get(i).removeAll();
+                    for (Item item : aisles.get(i).getItems()) {
+                        aislesListboxList.get(i).add(item.getName());
+                    }
+                }
+                aisles.get(i).setIsChanged(false);
+            }
+        } else if (Panes.getSelectedIndex() == 3) {
+            //update for the storage items list
+            if (storage.isChanged()) {
+                lstStorage.clear();
+                int counter = 0;
+                for (Item item : storeItems) {
+                    counter = storage.getItemCount(item.getName());
+                    if (counter > 0) {
+                        lstStorage.add(counter + " " + item.getName());
+                    }
+                }
+                storage.setIsChanged(false);
+            }
+        } else if (Panes.getSelectedIndex() == 5) {
+            //update for the staff
             try {
-                lstOtherStaffInfo.add("Current Object: " + staffMembers.get(staffComboBox.getSelectedIndex()).getCurLocObject().getName());
+                lstItems.removeAll();
+                lstOtherStaffInfo.removeAll();
+                try {
+                    for (Item item : staffMembers.get(staffComboBox.getSelectedIndex()).getStocker().getItems()) {
+                        lstItems.add(item.getName());
+                    }
+                } catch (Exception e) {
+                    lstItems.add("currently holds nothing");
+                }
+                lstOtherStaffInfo.add("Name: " + staffMembers.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Location X:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().x
+                        + " Y:" + staffMembers.get(staffComboBox.getSelectedIndex()).getLocation().y);
+                try {
+                    lstOtherStaffInfo.add("Current Object: " + staffMembers.get(staffComboBox.getSelectedIndex()).getCurLocObject().getName());
+                } catch (Exception e) {
+                    lstOtherStaffInfo.add("Current Object: Nothing");
+                }
+
+                if (staffMembers.get(staffComboBox.getSelectedIndex()).getCashier() != null) {
+                    lstOtherStaffInfo.add("Function: Cashier");
+                } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader() != null) {
+                    lstOtherStaffInfo.add("Function: Unloader");
+                } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getStocker() != null) {
+                    lstOtherStaffInfo.add("Function: Stocker");
+                }
             } catch (Exception e) {
-                lstOtherStaffInfo.add("Current Object: Nothing");
             }
-
-            if (staffMembers.get(staffComboBox.getSelectedIndex()).getCashier() != null) {
-                lstOtherStaffInfo.add("Function: Cashier");
-            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getUnloader() != null) {
-                lstOtherStaffInfo.add("Function: Unloader");
-            } else if (staffMembers.get(staffComboBox.getSelectedIndex()).getStocker() != null) {
-                lstOtherStaffInfo.add("Function: Stocker");
-            }
-        } catch (Exception e) {
         }
-
 
     }
 
@@ -781,12 +784,14 @@ public class Supermarket extends javax.swing.JFrame {
      * @param text
      */
     private void updateTextArea(final String text) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                txtConsole.append(text);
-            }
-        });
+        if (Panes.getSelectedIndex() == 4) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    txtConsole.append(text);
+                }
+            });
+        }
     }
 
     /**
