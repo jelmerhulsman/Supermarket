@@ -65,7 +65,7 @@ public class Person extends ObjectInShop {
         }
 
         location = targetLocation;
-        curLocObject = targetObject;
+        locationObject = targetObject;
     }
 
     /**

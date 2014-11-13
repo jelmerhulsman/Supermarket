@@ -30,7 +30,7 @@ import supermarket.Truck;
 
 /**
  *
- * @author Sander
+ * @author SDJM
  */
 public class Supermarket extends javax.swing.JFrame {
 
@@ -59,7 +59,7 @@ public class Supermarket extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     public Supermarket() {
         initComponents();
-        
+
         //Graphics
         mapCanvas.setBackground(Color.white);
         g = mapCanvas.getGraphics();
@@ -128,7 +128,17 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Create departments
         departments = new ArrayList<>();
-        departments.add(new Department("Drinks Department", new Vector2f(20, 50)));
+        ArrayList<String> departmentAisleNames = new ArrayList<>();
+        departmentAisleNames.add("Lunch & Breakfast");
+        departmentAisleNames.add("Durable");
+        departmentAisleNames.add("Vegtables & Fruit");
+        departments.add(new Department("Primary Department", departmentAisleNames, aisles));
+        departmentAisleNames = new ArrayList<>();
+        departmentAisleNames.add("Liquor");
+        departmentAisleNames.add("Cooling");
+        departmentAisleNames.add("Luxury");
+        departmentAisleNames.add("Nonfood");
+        departments.add(new Department("Secondary Department", departmentAisleNames, aisles));
 
         //Create storage and truck
         storage = new Storage("Storage", new Vector2f(0, 22.5f));
@@ -137,7 +147,6 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
-        staticLocations.addAll(departments);
         staticLocations.addAll(aisles);
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
@@ -149,9 +158,10 @@ public class Supermarket extends javax.swing.JFrame {
 
         stockers = new ArrayList<>();
         stockers.add(new Stocker("Jan de Bierman", storage.getLocation(), storage));
-        //stockers.add(new Stocker("Jip de Chip", storage.getLocation(), storage));
-        //stockers.add(new Stocker("Grietje Gezond", storage.getLocation(), storage));
-        //stockers.add(new Stocker("Kees Cooler", storage.getLocation(), storage));
+        stockers.add(new Stocker("Jip de Chip", storage.getLocation(), storage));
+        stockers.add(new Stocker("Grietje Gezond", storage.getLocation(), storage));
+        stockers.add(new Stocker("Kees Koeler", storage.getLocation(), storage));
+        stockers.add(new Stocker("Jacob Dubbelfris", storage.getLocation(), storage));
 
         cashiers = new ArrayList<>();
         cashiers.add(new Cashier("Johanna Doekoe", storage.getLocation(), checkouts.get(0)));
@@ -609,7 +619,7 @@ public class Supermarket extends javax.swing.JFrame {
             g.drawString(aisle.getName(), (int) aisle.getLocation().x * 4, (int) aisle.getLocation().y * 4);
         }
 
-        g.setColor(Color.PINK);// sets the colour for the Departments on the map
+        g.setColor(Color.BLACK);// sets the colour for the Departments on the map
         for (Department department : departments) {
             //draws the rectangle for the department
             g.drawRect((int) department.getLocation().x * 4, (int) department.getLocation().y * 4, 15, 15);
@@ -620,10 +630,6 @@ public class Supermarket extends javax.swing.JFrame {
             //draws the rectangle for the checkout
             g.drawRect((int) checkout.getLocation().x * 4, (int) checkout.getLocation().y * 4, 10, 10);
         }
-
-        g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
-        //draws the rectangle for the truck
-        g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
     }
 
     /**
@@ -643,7 +649,7 @@ public class Supermarket extends javax.swing.JFrame {
                 lstOtherCustomerInfo.add("Stereotype: " + customers.get(customerSelector.getSelectedIndex()).getStereotype());
                 lstOtherCustomerInfo.add("Location: X->" + customers.get(customerSelector.getSelectedIndex()).getLocation().x + ", Y->"
                         + customers.get(customerSelector.getSelectedIndex()).getLocation().y);
-                lstOtherCustomerInfo.add("Shop Location: " + customers.get(customerSelector.getSelectedIndex()).getCurLocObject().getName());
+                lstOtherCustomerInfo.add("Shop Location: " + customers.get(customerSelector.getSelectedIndex()).getLocationObject().getName());
             } catch (Exception e) {
             }
 
@@ -663,6 +669,12 @@ public class Supermarket extends javax.swing.JFrame {
             g.clearRect(0, 0, 400, 400);
             drawStore();
 
+            g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
+            if (!truck.isEmpty()) {
+                //draws the rectangle for the truck
+                g.drawRect((int) truck.getLocation().x * 4, (int) truck.getLocation().y * 4, 20, 40);
+            }
+
             g.setColor(Color.red);// sets the colour for the Customers on the map
             for (Customer customer : customers) {
                 //draws the rectangle for the customer
@@ -671,7 +683,6 @@ public class Supermarket extends javax.swing.JFrame {
             }
 
             for (Staff staff : workForce) {
-                g.setColor(Color.BLACK);
                 if (staff instanceof Unloader) {
                     g.setColor(Color.CYAN);
                 } else if (staff instanceof Stocker) {
@@ -717,19 +728,19 @@ public class Supermarket extends javax.swing.JFrame {
                 lstItems.removeAll();
                 lstOtherStaffInfo.removeAll();
 
-                if ( workForce.get(staffComboBox.getSelectedIndex()).getItems().size() > 0) {
+                if (workForce.get(staffComboBox.getSelectedIndex()).getItems().size() > 0) {
                     for (Item item : workForce.get(staffComboBox.getSelectedIndex()).getItems()) {
                         lstItems.add(item.getName());
                     }
                 } else {
                     lstItems.add("Currently holds nothing...");
                 }
-                
+
                 lstOtherStaffInfo.add("Name: " + workForce.get(staffComboBox.getSelectedIndex()).getName());
                 lstOtherStaffInfo.add("Location: X->" + workForce.get(staffComboBox.getSelectedIndex()).getLocation().x
                         + ", Y->" + workForce.get(staffComboBox.getSelectedIndex()).getLocation().y);
                 try {
-                    lstOtherStaffInfo.add("Current Object: " + workForce.get(staffComboBox.getSelectedIndex()).getCurLocObject().getName());
+                    lstOtherStaffInfo.add("Current Object: " + workForce.get(staffComboBox.getSelectedIndex()).getLocationObject().getName());
                 } catch (Exception e) {
                     lstOtherStaffInfo.add("Current Object: Nothing");
                 }

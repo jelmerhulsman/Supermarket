@@ -11,9 +11,17 @@ public class Department extends ObjectInShop {
 
     private ArrayList<Aisle> aisles;
 
-    public Department(String name, Vector2f location) {
-        super(name, location);
-        this.name = name;
+    public Department(String name, ArrayList<String> aisleNames, ArrayList<Aisle> aisles) {
+        super(name, new Vector2f(-100f, -100f));
+        
+        this.aisles = new ArrayList<>();
+        for (Aisle aisle : aisles) {
+            if (aisleNames.contains(aisle.getName())) {
+                this.aisles.add(aisle);
+            }
+        }
+
+        this.setLocation(getCentralPoint());
     }
 
     /**
@@ -25,12 +33,13 @@ public class Department extends ObjectInShop {
         return aisles;
     }
 
-    /**
-     * Sets the aisles in this department
-     *
-     * @param aisles The aisles you are willing to set to this department
-     */
-    public void setAisles(ArrayList<Aisle> aisles) {
-        this.aisles = aisles;
+    private Vector2f getCentralPoint() {
+        Vector2f centralPoint = new Vector2f();
+        
+        for (Aisle aisle:aisles) {
+            centralPoint.addLocal(aisle.getLocation());
+        }
+        
+        return centralPoint.divideLocal(aisles.size());
     }
 }

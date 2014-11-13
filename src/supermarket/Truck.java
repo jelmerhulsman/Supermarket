@@ -24,6 +24,10 @@ public class Truck extends ObjectInShop {
     public ArrayList<Item> getItems() {
         return items;
     }
+    
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
 
     /**
      * unloads x amount of items from the truck (returns x items in the truck in
