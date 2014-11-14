@@ -12,17 +12,23 @@ public class Person extends ObjectInShop {
 
     final protected int ITEM_INTERACTION_TIME = 250;
     final private int STEP_TIME = 100;
+    final private int WALKING_SPEED = 5;
     protected Thread operation;
+    protected ObjectInShop locationObject;
     protected float speed;
 
     public Person(String name, Vector2f location) {
         super(name, location);
         operation = new Thread();
-        speed = 2f;
+        speed = WALKING_SPEED;
+    }
+    
+    public ObjectInShop getLocationObject() {
+        return locationObject;
     }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
+    public void multiplySpeed(float multiplier) {
+        this.speed *= multiplier;
     }
 
     /**
@@ -40,7 +46,8 @@ public class Person extends ObjectInShop {
         }
 
         Vector2f targetLocation = new Vector2f(targetObject.getLocation());
-
+        locationObject = null;
+        
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(getLocation().x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(getLocation().y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);

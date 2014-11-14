@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class Checkout extends ObjectInShop {
 
+    final int CROWDED_SIZE = 3;
+    
     public enum Status {
 
         CLOSED, CLOSING, OPEN, CROWDED
@@ -22,6 +24,22 @@ public class Checkout extends ObjectInShop {
         this.number = number;
         status = Status.CLOSED;
         customers = new ArrayList<>();
+    }
+
+    public boolean isClosed() {
+        return (status == Status.CLOSED);
+    }
+
+    public boolean isClosing() {
+        return (status == Status.CLOSING);
+    }
+
+    public boolean isOpen() {
+        return (status == Status.OPEN);
+    }
+
+    public boolean isCrowded() {
+        return (status == Status.CROWDED);
     }
 
     /**
@@ -41,8 +59,7 @@ public class Checkout extends ObjectInShop {
         status = Status.CLOSED;
         customers = new ArrayList<>();
     }
-    
-    
+
     /**
      * Sets checkout status closing
      */
@@ -59,11 +76,10 @@ public class Checkout extends ObjectInShop {
         return number;
     }
 
-    /**
-     * Returns the size of the customers in lane
-     *
-     * @return size
-     */
+    public boolean noCustomersLeft() {
+        return customers.isEmpty();
+    }
+    
     public int getCustomersCount() {
         return customers.size();
     }
@@ -76,7 +92,7 @@ public class Checkout extends ObjectInShop {
     public void addCustomer(Customer customer) {
         this.customers.add(customer);
 
-        if (customers.size() > 3) {
+        if (customers.size() >= CROWDED_SIZE) {
             status = Status.CROWDED;
         } else {
             status = Status.OPEN;
@@ -108,16 +124,6 @@ public class Checkout extends ObjectInShop {
             status = Status.OPEN;
         }
     }
-
-    /**
-     * Returns checkout status
-     *
-     * @return status
-     */
-    public Status getStatus() {
-        return status;
-    }
-
 
     /**
      * Returns price of all the customer's items

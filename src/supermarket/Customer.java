@@ -2,7 +2,6 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
-import supermarket.Checkout.Status;
 import supermarket.Item.Category;
 
 /**
@@ -35,19 +34,19 @@ public class Customer extends Person {
         switch (stereotype) {
             case ELDER:
                 saldo = giveSaldo(70, 250);
-                this.setSpeed(giveSpeed(chanceOf(90)));
+                this.multiplySpeed(0.5f);
                 break;
             case MOTHER:
                 saldo = giveSaldo(40, 80);
-                this.setSpeed(giveSpeed(chanceOf(15)));
+                this.multiplySpeed(0.8f);
                 break;
             case STUDENT:
                 saldo = giveSaldo(5, 35);
-                this.setSpeed(giveSpeed(chanceOf(5)));
+                this.multiplySpeed(1f);
                 break;
             case WORKER:
                 saldo = giveSaldo(100, 150);
-                this.setSpeed(giveSpeed(chanceOf(20)));
+                this.multiplySpeed(1.1f);
                 break;
         }
 
@@ -75,20 +74,6 @@ public class Customer extends Person {
         }
 
         return amount;
-    }
-
-    /**
-     * Gives this customer either a normal walking speed or a slow walking speed
-     *
-     * @param slow is this person an old fart?
-     * @return the speed
-     */
-    private float giveSpeed(boolean slow) {
-        if (slow) {
-            return 0.5f;
-        } else {
-            return 1f;
-        }
     }
 
     /**
@@ -255,11 +240,10 @@ public class Customer extends Person {
 
         for (ObjectInShop o : staticLocations) { //Check all open checkouts
             if (o instanceof Checkout) {
-                Checkout tempCheckout = (Checkout) o;
-                Status status = tempCheckout.getStatus();
-                if ((status == Status.OPEN || status == Status.CROWDED) && tempCheckout.getCustomersCount() < size) {
-                    c = tempCheckout;
-                    size = tempCheckout.getCustomersCount();
+                Checkout temp = (Checkout) o;
+                if ((temp.isOpen() || temp.isCrowded()) && temp.getCustomersCount() < size) {
+                    c = temp;
+                    size = temp.getCustomersCount();
                 }
             }
         }

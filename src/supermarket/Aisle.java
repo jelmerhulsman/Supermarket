@@ -3,7 +3,6 @@ package supermarket;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Item.Category;
-import supermarket.StaffTypes.Stocker;
 
 /**
  *
@@ -15,37 +14,35 @@ public class Aisle extends ObjectInShop {
     private ArrayList<Category> categories;
     private ArrayList<Item> aisleItems;
     private ArrayList<Item> items;
-    private Stocker stocker;
-    private boolean isChanged;
-    
-    
+    private boolean changed;
+    private boolean manned;
 
     public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
         super(name, location);
-        this.name = name;
         
         this.categories = new ArrayList<>();
         this.categories.addAll(categories);
         
-        this.aisleItems = createListOfAisleItems(categories, storeItems);
-        isChanged = false;
+        aisleItems = createListOfAisleItems(categories, storeItems);
         items = new ArrayList<>();
-    }
-
-    public Stocker getStocker() {
-        return stocker;
-    }
-
-    public void setStocker(Stocker stocker) {
-        this.stocker = stocker;
+        changed = false;
+        manned = false;
     }
 
     public boolean isChanged() {
-        return isChanged;
+        return changed;
     }
 
-    public void setIsChanged(boolean isChanged) {
-        this.isChanged = isChanged;
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+    
+    public boolean  isManned() {
+        return manned;
+    }
+    
+    public void setManned(boolean manned) {
+        this.manned = manned;
     }
     
     /**
@@ -134,7 +131,7 @@ public class Aisle extends ObjectInShop {
             if (i.getName().equals(item.getName())) {
                 Item temp = i;
                 items.remove(i);
-                isChanged = true;
+                changed = true;
                 return temp;
             }
             
@@ -161,7 +158,7 @@ public class Aisle extends ObjectInShop {
     public void loadAisle(Item item) {
         item.setAvailable(true);
         items.add(item);
-        isChanged = true;
+        changed = true;
     }
     
     public boolean fullShelve(Item item) {

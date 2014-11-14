@@ -10,15 +10,10 @@ public class ObjectInShop {
 
     protected String name;
     protected Vector2f location;
-    protected ObjectInShop locationObject;
 
     public ObjectInShop(String name, Vector2f location) {
         this.name = name;
         this.location = location;
-    }
-
-    public ObjectInShop getLocationObject() {
-        return locationObject;
     }
 
     public String getName() {

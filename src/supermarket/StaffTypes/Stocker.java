@@ -14,7 +14,7 @@ import supermarket.Storage;
 public class Stocker extends Staff {
 
     private final int NUMBER_OF_RUNS_PER_AISLE = 3;
-    
+
     private enum Action {
 
         GET_ITEMS, STORE_ITEMS, WAITING
@@ -31,6 +31,18 @@ public class Stocker extends Staff {
         this.storage = storage;
         aisle = null;
         runs = 0;
+    }
+
+    public Aisle getAisle() {
+        return aisle;
+    }
+
+    public void setAisle(Aisle aisle) {
+        this.aisle = aisle;
+    }
+
+    public boolean isWaiting() {
+        return (action == Action.WAITING);
     }
 
     /**
@@ -57,22 +69,19 @@ public class Stocker extends Staff {
         items = new ArrayList<>();
     }
 
-    public void setAisle(Aisle aisle) {
-        this.aisle = aisle;
-    }
-
     private void chooseAisle(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
                 Aisle tempAisle = (Aisle) o;
 
-                if (tempAisle.getItems().isEmpty() && tempAisle.getStocker() == null) {
+                if (tempAisle.getItems().isEmpty() && !tempAisle.isManned()) {
                     setAisle(tempAisle);
-                    tempAisle.setStocker(this);
+                    tempAisle.setManned(true);
                     break;
                 }
-                if (tempAisle.getStocker() == this && runs == 0) {
-                    tempAisle.setStocker(null);
+                
+                if (tempAisle == this.getAisle() && runs == 0) {
+                    tempAisle.setManned(false);
                 }
             }
         }
@@ -84,10 +93,10 @@ public class Stocker extends Staff {
      */
     public void storeItemsInAisle() {
         ArrayList<Item> storedItems = new ArrayList<>();
-        
+
         System.out.println("Stocker " + name + " is storing items in aisle " + aisle.getName() + "...");
         for (Item i : items) {
-            
+
             if (aisle.getItemNames().contains(i.getName())) {
                 i.setAvailable(false);
                 aisle.loadAisle(i);
@@ -97,10 +106,6 @@ public class Stocker extends Staff {
         }
 
         items.removeAll(storedItems);
-    }
-
-    public Aisle getAisle() {
-        return aisle;
     }
 
     /**
