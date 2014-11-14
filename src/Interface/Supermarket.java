@@ -140,8 +140,8 @@ public class Supermarket extends javax.swing.JFrame {
         }
 
         //Create storage and truck
-        storage = new Storage("Storage", new Vector2f(0, 100));
-        truck = new Truck("Truck", new Vector2f(0, 0));
+        storage = new Storage("Storage", new Vector2f(10, 100));
+        truck = new Truck("Truck", new Vector2f(10, 10));
         doorway = new ObjectInShop("Doorway", new Vector2f(20, 400));
 
         //Assign locations in the shop
@@ -658,6 +658,7 @@ public class Supermarket extends javax.swing.JFrame {
                 Stocker stocker = new Stocker(cashier.getName(), cashier.getLocation(), storage);
                 stockers.add(stocker);
                 workforce.add(stocker);
+                cashier.kill();
                 formerCashiers.add(cashier);
             }
         }
@@ -681,6 +682,7 @@ public class Supermarket extends javax.swing.JFrame {
                             Cashier cashier = new Cashier(stocker.getName(), stocker.getLocation(), currentCheckout);
                             cashiers.add(cashier);
                             workforce.add(cashier);
+                            stocker.kill();
                             formerStocker = stocker;
                             break;
                         }
@@ -709,7 +711,7 @@ public class Supermarket extends javax.swing.JFrame {
         g.setColor(Color.BLUE);// sets the colour for the storages on the map
         //draws the rectangle for the storage
         g.drawRect((int) storage.getLocation().x, (int) storage.getLocation().y, 50, 50);
-        storeLocationName = storage.getName() + " (" + peopleAtObjectCount(storage) + ")";
+        storeLocationName = storage.getName() + " " + peopleAtObject(storage);
         g.drawString(storeLocationName, (int) storage.getLocation().x, (int) storage.getLocation().y);
 
         g.setColor(Color.BLACK);// sets the colour for the Departments on the map
@@ -718,12 +720,12 @@ public class Supermarket extends javax.swing.JFrame {
             g.drawRect((int) department.getTopLeft().x - 15, (int) department.getTopLeft().y - 15, (int) department.getWidth() + 45, (int) department.getHeight() + 60);
             g.drawString(department.getName(), (int) department.getTopLeft().x - 15, (int) department.getTopLeft().y - 15);
         }
-        
+
         g.setColor(Color.GREEN);// sets the colour for the ailsel on the map
         for (Aisle aisle : aisles) {
             //draws the rectangle for the ailse
             g.drawRect((int) aisle.getLocation().x, (int) aisle.getLocation().y, 15, 30);
-            storeLocationName = aisle.getName() + " (" + peopleAtObjectCount(aisle) + ")";
+            storeLocationName = aisle.getName() + " " + peopleAtObject(aisle);
             g.drawString(storeLocationName, (int) aisle.getLocation().x, (int) aisle.getLocation().y);
         }
 
@@ -735,28 +737,41 @@ public class Supermarket extends javax.swing.JFrame {
             }
             //draws the rectangle for the checkout
             g.drawRect((int) checkout.getLocation().x, (int) checkout.getLocation().y, 10, 10);
-            storeLocationName = checkout.getName() + " (" + peopleAtObjectCount(checkout) + ")";
+            storeLocationName = checkout.getName() + " " + peopleAtObject(checkout);
             g.drawString(storeLocationName, (int) checkout.getLocation().x, (int) checkout.getLocation().y);
         }
 
         g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
-        if (!truck.isEmpty() && unloader.getLocationObject() != truck) {
+        if (!truck.isEmpty() || unloader.getLocationObject() == truck) {
             //draws the rectangle for the truck
             g.drawRect((int) truck.getLocation().x, (int) truck.getLocation().y, 25, 10);
-            storeLocationName = truck.getName() + " (" + peopleAtObjectCount(truck) + ")";
+            storeLocationName = truck.getName() + " " + peopleAtObject(truck);
             g.drawString(storeLocationName, (int) truck.getLocation().x, (int) truck.getLocation().y);
         }
     }
 
-    private int peopleAtObjectCount(ObjectInShop object) {
+    private String peopleAtObject(ObjectInShop object) {
         int counter = 0;
+        int counter2 = 0;
         for (Person person : people) {
             if (person.getLocationObject() == object) {
-                counter++;
+                if (person instanceof Staff) {
+                    counter++;
+                } else {
+                    counter2++;
+                }
             }
         }
 
-        return counter;
+        if (counter == 0 && counter2 == 0) {
+            return "(0)";
+        } else if (counter == 0) {
+            return "(" + counter2 + "C)";
+        } else if (counter2 == 0) {
+            return "(" + counter + "S)";
+        } else {
+            return "(" + counter + "S/" + counter2 + "C)";
+        }
     }
 
     /**

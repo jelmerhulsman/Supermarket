@@ -23,6 +23,10 @@ public class Person extends ObjectInShop {
         speed = WALKING_SPEED;
     }
     
+    public void kill() {
+        operation.stop();
+    }
+    
     public ObjectInShop getLocationObject() {
         return locationObject;
     }
