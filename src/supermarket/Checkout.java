@@ -48,8 +48,8 @@ public class Checkout extends ObjectInShop {
      * @param cashier
      */
     public void open() {
-        status = Status.OPEN;
         customers = new ArrayList<>();
+        status = Status.OPEN;
     }
 
     /**
@@ -57,7 +57,6 @@ public class Checkout extends ObjectInShop {
      */
     public void close() {
         status = Status.CLOSED;
-        customers = new ArrayList<>();
     }
 
     /**

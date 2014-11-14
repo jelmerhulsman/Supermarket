@@ -30,7 +30,8 @@ import supermarket.Truck;
  */
 public class Supermarket extends javax.swing.JFrame {
 
-    private final int MAX_CUSTOMERS = 10;
+    private final int MAX_CUSTOMERS = 15;
+    private final int CHANCE_OF_ENTERING = 100;
     private ArrayList<Aisle> aisles;
     private ArrayList<Department> departments;
     private ArrayList<Checkout> checkouts;
@@ -628,7 +629,7 @@ public class Supermarket extends javax.swing.JFrame {
     private void addEnteringCustomers() {
         if (customers.size() < MAX_CUSTOMERS) {
 
-            if (chanceOf(12)) {
+            if (chanceOf(CHANCE_OF_ENTERING)) {
                 ArrayList<Customer.Stereotype> stereotype;
                 do {
                     stereotype = new ArrayList<>();

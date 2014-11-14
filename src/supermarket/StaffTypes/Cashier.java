@@ -88,9 +88,6 @@ public class Cashier extends Staff {
                                 action = Action.HELP_STOCKERS;
                             }
                             break;
-                        case HELP_STOCKERS:
-                            sleep(500);
-                            break;
                     }
                 }
             }
