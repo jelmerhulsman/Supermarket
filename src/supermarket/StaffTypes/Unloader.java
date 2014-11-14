@@ -12,13 +12,13 @@ import supermarket.Truck;
  * @author SDJM
  */
 public class Unloader extends Staff {
-    
+
     private final int MIN_STASH = 5;
     private final int MAX_STASH = 25;
     private final int ORDER_TIME_PER_ITEM = 100;
-    
+
     private enum Action {
-        
+
         UNLOAD_TRUCK, STORE_ITEMS, WAITING
     }
     private Action action;
@@ -34,7 +34,7 @@ public class Unloader extends Staff {
      */
     public Unloader(String name, Vector2f location, Storage storage, Truck truck, ArrayList<Item> shopItems) {
         super(name, location);
-        
+
         action = Action.WAITING;
         this.storage = storage;
         this.truck = truck;
@@ -65,7 +65,7 @@ public class Unloader extends Staff {
             storage.addItem(i);
             sleep(ITEM_INTERACTION_TIME);
         }
-        
+
         System.out.println("Unloader " + name + " has stored the ordered items in the storage.");
         items = new ArrayList<>();
     }
@@ -81,7 +81,7 @@ public class Unloader extends Staff {
                 if (orderItems.isEmpty()) {
                     System.out.println("Unloader " + name + " is ordering items...");
                 }
-                
+
                 do {
                     orderItems.add(new Item(shopItem));
                     currentStash++;
@@ -89,7 +89,7 @@ public class Unloader extends Staff {
                 } while (currentStash < MAX_STASH);
             }
         }
-        
+
         if (!orderItems.isEmpty()) {
             truck.putItemsInTruck(orderItems);
             System.out.println("Unloader " + name + " has ordered the items.");
@@ -116,7 +116,7 @@ public class Unloader extends Staff {
                         case STORE_ITEMS:
                             gotoLocation("Storage", staticLocations);
                             storeItemsInStorage();
-                            
+
                             if (truck.getItems().isEmpty()) {
                                 action = Action.WAITING;
                             } else {
@@ -127,7 +127,11 @@ public class Unloader extends Staff {
                             if (!truck.getItems().isEmpty()) {
                                 action = Action.UNLOAD_TRUCK;
                             } else {
-                                orderItems();
+                                if (locationObject != storage) {
+                                    gotoLocation("Storage", staticLocations);
+                                } else {
+                                    orderItems();
+                                }
                             }
                             break;
                     }

@@ -16,6 +16,7 @@ import supermarket.Department;
 import supermarket.Item;
 import supermarket.Item.Category;
 import supermarket.ObjectInShop;
+import supermarket.Person;
 import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
@@ -31,13 +32,14 @@ public class Supermarket extends javax.swing.JFrame {
 
     private final int MAX_CUSTOMERS = 10;
     private ArrayList<Aisle> aisles;
-    private ArrayList<Checkout> checkouts;
     private ArrayList<Department> departments;
+    private ArrayList<Checkout> checkouts;
     private Storage storage;
     private Truck truck;
-    private ObjectInShop entrance;
+    private ObjectInShop doorway;
     private ArrayList<ObjectInShop> staticLocations;
-    private ArrayList<Staff> workForce;
+    private ArrayList<Person> people;
+    private ArrayList<Staff> workforce;
     private Unloader unloader;
     private ArrayList<Stocker> stockers;
     private ArrayList<Cashier> cashiers;
@@ -75,51 +77,46 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Create aisles
         aisles = new ArrayList<>();
-        ArrayList<Category> aisleCategories = new ArrayList<>();
-        aisleCategories.add(Category.BEER);
-        aisleCategories.add(Category.LIQUOR);
-        aisleCategories.add(Category.WINE);
-        aisles.add(new Aisle("Liquor", new Vector2f(40, 240), aisleCategories, storeItems));
-        lblLiqour.setText("Liquor");
-        aisleCategories = new ArrayList<>();
+        ArrayList<Category> aisleCategories = new ArrayList<>(); //start primary department
         aisleCategories.add(Category.BREAD);
         aisleCategories.add(Category.SPREAD);
         aisleCategories.add(Category.BREAKFAST);
-        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(260, 140), aisleCategories, storeItems));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, storeItems));
         lblLunchAndBreakfast.setText("Lunch & Breakfast");
+        aisleCategories = new ArrayList<>();
+        aisleCategories.add(Category.SPICES);
+        aisleCategories.add(Category.FOREIGN);
+        aisleCategories.add(Category.PRESERVATION);
+        aisles.add(new Aisle("Durable", new Vector2f(250, 275), aisleCategories, storeItems));
+        lblDurable.setText("Durable");
+        aisleCategories = new ArrayList<>();
+        aisleCategories.add(Category.VEGTABLES);
+        aisleCategories.add(Category.FRUIT);
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(250, 350), aisleCategories, storeItems));
+        label10.setText("Vegtables & Fruit"); //end primary department
+
+        aisleCategories = new ArrayList<>(); //start secondary department
+        aisleCategories.add(Category.BEER);
+        aisleCategories.add(Category.LIQUOR);
+        aisleCategories.add(Category.WINE);
+        aisles.add(new Aisle("Liquor", new Vector2f(150, 50), aisleCategories, storeItems));
+        lblLiqour.setText("Liquor");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
         aisleCategories.add(Category.DAIRY);
-        aisles.add(new Aisle("Cooling", new Vector2f(140, 240), aisleCategories, storeItems));
+        aisles.add(new Aisle("Cooling", new Vector2f(150, 125), aisleCategories, storeItems));
         lblCooling.setText("Cooling");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SNACK);
         aisleCategories.add(Category.SODA);
         aisleCategories.add(Category.CAFFEINE);
-        aisles.add(new Aisle("Luxury", new Vector2f(320, 200), aisleCategories, storeItems));
+        aisles.add(new Aisle("Luxury", new Vector2f(250, 50), aisleCategories, storeItems));
         lblLuxury.setText("Luxury");
         aisleCategories = new ArrayList<>();
-        aisleCategories.add(Category.SPICES);
-        aisleCategories.add(Category.FOREIGN);
-        aisleCategories.add(Category.PRESERVATION);
-        aisles.add(new Aisle("Durable", new Vector2f(200, 200), aisleCategories, storeItems));
-        lblDurable.setText("Durable");
-        aisleCategories = new ArrayList<>();
-        aisleCategories.add(Category.VEGTABLES);
-        aisleCategories.add(Category.FRUIT);
-        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(200, 80), aisleCategories, storeItems));
-        label10.setText("Vegtables & Fruit");
-        aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.NONFOOD);
-        aisles.add(new Aisle("Nonfood", new Vector2f(320, 80), aisleCategories, storeItems));
-        lblNonfoon.setText("Nonfood");
-
-        //Create checkouts
-        checkouts = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            checkouts.add(new Checkout(i + 1, new Vector2f(360 - 40 * i, 320)));
-        }
+        aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, storeItems));
+        lblNonfoon.setText("Nonfood"); //end secondary department
 
         //Create departments
         departments = new ArrayList<>();
@@ -128,6 +125,7 @@ public class Supermarket extends javax.swing.JFrame {
         departmentAisleNames.add("Durable");
         departmentAisleNames.add("Vegtables & Fruit");
         departments.add(new Department("Primary Department", departmentAisleNames, aisles));
+
         departmentAisleNames = new ArrayList<>();
         departmentAisleNames.add("Liquor");
         departmentAisleNames.add("Cooling");
@@ -135,10 +133,16 @@ public class Supermarket extends javax.swing.JFrame {
         departmentAisleNames.add("Nonfood");
         departments.add(new Department("Secondary Department", departmentAisleNames, aisles));
 
+        //Create checkouts
+        checkouts = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            checkouts.add(new Checkout(i + 1, new Vector2f(100, 380 - (i * 35))));
+        }
+
         //Create storage and truck
         storage = new Storage("Storage", new Vector2f(0, 100));
         truck = new Truck("Truck", new Vector2f(0, 0));
-        entrance = new ObjectInShop("Entrance/Exit", new Vector2f(20, 400));
+        doorway = new ObjectInShop("Doorway", new Vector2f(20, 400));
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -146,7 +150,7 @@ public class Supermarket extends javax.swing.JFrame {
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
         staticLocations.add(truck);
-        staticLocations.add(entrance);
+        staticLocations.add(doorway);
 
         //Create Staff members
         unloader = new Unloader("Jannes Panzerfaust", storage.getLocation(), storage, truck, storeItems);
@@ -161,10 +165,10 @@ public class Supermarket extends javax.swing.JFrame {
         cashiers = new ArrayList<>();
         cashiers.add(new Cashier("Johanna Doekoe", storage.getLocation(), checkouts.get(0)));
 
-        workForce = new ArrayList<>();
-        workForce.add(unloader);
-        workForce.addAll(stockers);
-        workForce.addAll(cashiers);
+        workforce = new ArrayList<>();
+        workforce.add(unloader);
+        workforce.addAll(stockers);
+        workforce.addAll(cashiers);
 
         //List for the listboxes from aisles
         aislesListboxList = new ArrayList<>();
@@ -177,13 +181,16 @@ public class Supermarket extends javax.swing.JFrame {
         aislesListboxList.add(lstNonfood);
 
         //Add staff to combo box
-        for (Staff staff : workForce) {
+        for (Staff staff : workforce) {
             staffComboBox.addItem(staff.getName());
         }
 
         //List of customers
         customerCounter = 0;
         customers = new ArrayList<>();
+
+        //List of all people
+        people = new ArrayList<>();
     }
 
     /**
@@ -591,40 +598,165 @@ public class Supermarket extends javax.swing.JFrame {
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.staffLoop();
+            simulation.updatePeoplesList();
+
             simulation.interfaceUpdate();
             simulation.sleep(1000); //Sleep at the end of the loop
         }
     }
 
     private void executeStaffUpdate() {
-        for (Staff staff : workForce) {
+        for (Staff staff : workforce) {
             staff.update(staticLocations);
         }
     }
 
+    private void customersLoop() {
+        addEnteringCustomers();
+
+        ArrayList<Customer> leavingCustomers = new ArrayList<>();
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers.get(i).isLeaving()) {
+                leavingCustomers.add(customers.get(i));
+                customerSelector.removeItemAt(i);
+            }
+        }
+
+        customers.removeAll(leavingCustomers);
+    }
+
+    private void addEnteringCustomers() {
+        if (customers.size() < MAX_CUSTOMERS) {
+
+            if (chanceOf(12)) {
+                ArrayList<Customer.Stereotype> stereotype;
+                do {
+                    stereotype = new ArrayList<>();
+                    for (Customer.Stereotype s : Customer.Stereotype.values()) {
+                        if (chanceOf(25)) {
+                            stereotype.add(s);
+                        }
+                    }
+                } while (stereotype.size() != 1);
+
+
+                customerCounter++;
+                String name = "#" + customerCounter;
+                Customer customer = new Customer(name, doorway.getLocation(), stereotype.get(0), storeItems);
+                customer.update(staticLocations);
+
+                customers.add(customer);
+                customerSelector.addItem(customer.getName());
+            }
+        }
+    }
+
+    private void staffLoop() {
+        ArrayList<Cashier> formerCashiers = new ArrayList<>();
+        for (Cashier cashier : cashiers) {
+            if (cashier.isWaiting()) {
+                Stocker stocker = new Stocker(cashier.getName(), cashier.getLocation(), storage);
+                stockers.add(stocker);
+                workforce.add(stocker);
+                formerCashiers.add(cashier);
+            }
+        }
+        cashiers.removeAll(formerCashiers);
+        workforce.removeAll(formerCashiers);
+
+        handleCheckouts();
+    }
+
+    private void handleCheckouts() {
+        for (int i = 1; i < checkouts.size(); i++) {
+            Checkout currentCheckout = checkouts.get(i);
+            Checkout previousCheckout = checkouts.get(i - 1);
+            if (previousCheckout.isOpen() && (currentCheckout.isOpen() || currentCheckout.isCrowded())) {
+                currentCheckout.closing();
+            } else if (previousCheckout.isCrowded()) {
+                if (currentCheckout.isClosed() || currentCheckout.isClosing()) {
+                    Stocker formerStocker = null;
+                    for (Stocker stocker : stockers) {
+                        if (stocker.isWaiting()) {
+                            Cashier cashier = new Cashier(stocker.getName(), stocker.getLocation(), currentCheckout);
+                            cashiers.add(cashier);
+                            workforce.add(cashier);
+                            formerStocker = stocker;
+                            break;
+                        }
+                    }
+
+                    if (formerStocker != null) {
+                        stockers.remove(formerStocker);
+                        workforce.remove(formerStocker);
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    private void updatePeoplesList() {
+        people = new ArrayList<>();
+        people.addAll(workforce);
+        people.addAll(customers);
+    }
+
     private void drawStore() {
+        String storeLocationName;
+
         g.setColor(Color.BLUE);// sets the colour for the storages on the map
         //draws the rectangle for the storage
         g.drawRect((int) storage.getLocation().x, (int) storage.getLocation().y, 50, 50);
-
-        g.setColor(Color.GREEN);// sets the colour for the ailsel on the map
-        for (Aisle aisle : aisles) {
-            //draws the rectangle for the ailse
-            g.drawRect((int) aisle.getLocation().x, (int) aisle.getLocation().y, 15, 30);
-            g.drawString(aisle.getName(), (int) aisle.getLocation().x, (int) aisle.getLocation().y);
-        }
+        storeLocationName = storage.getName() + " (" + peopleAtObjectCount(storage) + ")";
+        g.drawString(storeLocationName, (int) storage.getLocation().x, (int) storage.getLocation().y);
 
         g.setColor(Color.BLACK);// sets the colour for the Departments on the map
         for (Department department : departments) {
             //draws the rectangle for the department
-            g.drawRect((int) department.getLocation().x, (int) department.getLocation().y, 15, 15);
+            g.drawRect((int) department.getTopLeft().x - 15, (int) department.getTopLeft().y - 15, (int) department.getWidth() + 45, (int) department.getHeight() + 60);
+            g.drawString(department.getName(), (int) department.getTopLeft().x - 15, (int) department.getTopLeft().y - 15);
+        }
+        
+        g.setColor(Color.GREEN);// sets the colour for the ailsel on the map
+        for (Aisle aisle : aisles) {
+            //draws the rectangle for the ailse
+            g.drawRect((int) aisle.getLocation().x, (int) aisle.getLocation().y, 15, 30);
+            storeLocationName = aisle.getName() + " (" + peopleAtObjectCount(aisle) + ")";
+            g.drawString(storeLocationName, (int) aisle.getLocation().x, (int) aisle.getLocation().y);
         }
 
-        g.setColor(Color.ORANGE);// sets the colour for the checkouts on the map
         for (Checkout checkout : checkouts) {
+            if (checkout.isClosed()) {
+                g.setColor(Color.ORANGE);// sets the colour for the unmanned checkouts on the map
+            } else {
+                g.setColor(Color.YELLOW);// sets the colour for the manned checkouts on the map
+            }
             //draws the rectangle for the checkout
             g.drawRect((int) checkout.getLocation().x, (int) checkout.getLocation().y, 10, 10);
+            storeLocationName = checkout.getName() + " (" + peopleAtObjectCount(checkout) + ")";
+            g.drawString(storeLocationName, (int) checkout.getLocation().x, (int) checkout.getLocation().y);
         }
+
+        g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
+        if (!truck.isEmpty() && unloader.getLocationObject() != truck) {
+            //draws the rectangle for the truck
+            g.drawRect((int) truck.getLocation().x, (int) truck.getLocation().y, 25, 10);
+            storeLocationName = truck.getName() + " (" + peopleAtObjectCount(truck) + ")";
+            g.drawString(storeLocationName, (int) truck.getLocation().x, (int) truck.getLocation().y);
+        }
+    }
+
+    private int peopleAtObjectCount(ObjectInShop object) {
+        int counter = 0;
+        for (Person person : people) {
+            if (person.getLocationObject() == object) {
+                counter++;
+            }
+        }
+
+        return counter;
     }
 
     /**
@@ -664,32 +796,23 @@ public class Supermarket extends javax.swing.JFrame {
             g.clearRect(0, 0, 400, 400);
             drawStore();
 
-            g.setColor(Color.DARK_GRAY);// sets the colour for the trucks on the map
-            if (!truck.isEmpty() && unloader.getLocationObject() != truck) {
-                //draws the rectangle for the truck
-                g.drawRect((int) truck.getLocation().x, (int) truck.getLocation().y, 25, 10);
-            }
+            for (Person person : people) {
+                if (person.getLocationObject() == null) {
+                    if (person instanceof Unloader) {
+                        g.setColor(Color.CYAN);
+                    } else if (person instanceof Stocker) {
+                        g.setColor(Color.PINK);
+                    } else if (person instanceof Cashier) {
+                        g.setColor(Color.YELLOW);
+                    } else if (person instanceof Customer) {
+                        g.setColor(Color.RED);
+                    }
 
-            g.setColor(Color.red);// sets the colour for the Customers on the map
-            for (Customer customer : customers) {
-                //draws the rectangle for the customer
-                g.drawRect((int) customer.getLocation().x, (int) customer.getLocation().y, 10, 10);
-                g.drawString(customer.getName(), (int) customer.getLocation().x, (int) customer.getLocation().y);
-            }
-
-            for (Staff staff : workForce) {
-                if (staff instanceof Unloader) {
-                    g.setColor(Color.CYAN);
-                } else if (staff instanceof Stocker) {
-                    g.setColor(Color.PINK);
-                } else if (staff instanceof Cashier) {
-                    g.setColor(Color.YELLOW);
+                    //draws the rectangle for this person
+                    g.drawRect((int) person.getLocation().x, (int) person.getLocation().y, 10, 10);
+                    g.drawString(person.getName(), (int) person.getLocation().x, (int) person.getLocation().y);
                 }
-
-                g.drawRect((int) staff.getLocation().x, (int) staff.getLocation().y, 10, 10);
-                g.drawString(staff.getName(), (int) staff.getLocation().x, (int) staff.getLocation().y);
             }
-
         } //update for the other customer info
         else if (Panes.getSelectedIndex() == 2) {
             //update fot the listboxen to display what's in the aisles
@@ -723,28 +846,28 @@ public class Supermarket extends javax.swing.JFrame {
                 lstItems.removeAll();
                 lstOtherStaffInfo.removeAll();
 
-                if (workForce.get(staffComboBox.getSelectedIndex()).getItems().size() > 0) {
-                    for (Item item : workForce.get(staffComboBox.getSelectedIndex()).getItems()) {
+                if (workforce.get(staffComboBox.getSelectedIndex()).getItems().size() > 0) {
+                    for (Item item : workforce.get(staffComboBox.getSelectedIndex()).getItems()) {
                         lstItems.add(item.getName());
                     }
                 } else {
                     lstItems.add("Currently holds nothing...");
                 }
 
-                lstOtherStaffInfo.add("Name: " + workForce.get(staffComboBox.getSelectedIndex()).getName());
-                lstOtherStaffInfo.add("Location: X->" + workForce.get(staffComboBox.getSelectedIndex()).getLocation().x
-                        + ", Y->" + workForce.get(staffComboBox.getSelectedIndex()).getLocation().y);
+                lstOtherStaffInfo.add("Name: " + workforce.get(staffComboBox.getSelectedIndex()).getName());
+                lstOtherStaffInfo.add("Location: X->" + workforce.get(staffComboBox.getSelectedIndex()).getLocation().x
+                        + ", Y->" + workforce.get(staffComboBox.getSelectedIndex()).getLocation().y);
                 try {
-                    lstOtherStaffInfo.add("Current Object: " + workForce.get(staffComboBox.getSelectedIndex()).getLocationObject().getName());
+                    lstOtherStaffInfo.add("Current Object: " + workforce.get(staffComboBox.getSelectedIndex()).getLocationObject().getName());
                 } catch (Exception e) {
                     lstOtherStaffInfo.add("Current Object: Nothing");
                 }
 
-                if (workForce.get(staffComboBox.getSelectedIndex()) instanceof Unloader) {
+                if (workforce.get(staffComboBox.getSelectedIndex()) instanceof Unloader) {
                     lstOtherStaffInfo.add("Function: Unloader");
-                } else if (workForce.get(staffComboBox.getSelectedIndex()) instanceof Stocker) {
+                } else if (workforce.get(staffComboBox.getSelectedIndex()) instanceof Stocker) {
                     lstOtherStaffInfo.add("Function: Stocker");
-                } else if (workForce.get(staffComboBox.getSelectedIndex()) instanceof Cashier) {
+                } else if (workforce.get(staffComboBox.getSelectedIndex()) instanceof Cashier) {
                     lstOtherStaffInfo.add("Function: Cashier");
                 }
             } catch (Exception e) {
@@ -791,87 +914,6 @@ public class Supermarket extends javax.swing.JFrame {
 
         System.setOut(new PrintStream(out, true));
         System.setErr(new PrintStream(out, true));
-    }
-
-    private void staffLoop() {
-        ArrayList<Cashier> formerCashiers = new ArrayList<>();
-        for (Cashier cashier : cashiers) {
-            if (cashier.isWaiting()) {
-                stockers.add(new Stocker(cashier.getName(), cashier.getLocation(), storage));
-                formerCashiers.add(cashier);
-            }
-        }
-        cashiers.removeAll(formerCashiers);
-
-        handleCheckouts();
-    }
-
-    private void handleCheckouts() {
-        for (int i = 1; i < checkouts.size(); i++) {
-            Checkout currentCheckout = checkouts.get(i);
-            Checkout previousCheckout = checkouts.get(i - 1);
-            if (previousCheckout.isOpen() && (currentCheckout.isOpen() || currentCheckout.isCrowded())) {
-                currentCheckout.closing();
-            } else if (previousCheckout.isCrowded()) {
-                if (currentCheckout.isClosed() || currentCheckout.isClosing()) {
-                    Stocker formerStocker = null;
-                    for (Stocker stocker : stockers) {
-                        if (stocker.isWaiting()) {
-                            Cashier cashier = new Cashier(stocker.getName(), stocker.getLocation(), currentCheckout);
-                            cashiers.add(cashier);
-                            formerStocker = stocker;
-                            break;
-                        }
-                    }
-
-                    if (formerStocker != null) {
-                        stockers.remove(formerStocker);
-                    }
-                }
-            }
-
-            
-        }
-    }
-
-    private void customersLoop() {
-        addEnteringCustomers();
-
-        ArrayList<Customer> leavingCustomers = new ArrayList<>();
-        for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).isLeaving()) {
-                leavingCustomers.add(customers.get(i));
-                customerSelector.removeItemAt(i);
-            }
-        }
-
-        customers.removeAll(leavingCustomers);
-    }
-
-    private void addEnteringCustomers() {
-        if (customers.size() < MAX_CUSTOMERS) {
-
-            if (chanceOf(12)) {
-                ArrayList<Customer.Stereotype> stereotype;
-                do {
-                    stereotype = new ArrayList<>();
-                    for (Customer.Stereotype s : Customer.Stereotype.values()) {
-                        if (chanceOf(25)) {
-                            stereotype.add(s);
-                        }
-                    }
-                } while (stereotype.size() != 1);
-
-
-                customerCounter++;
-                String name = "#" + customerCounter;
-                Customer customer = new Customer(name, entrance.getLocation(), stereotype.get(0), storeItems);
-                customer.update(staticLocations);
-
-                customers.add(customer);
-                customerSelector.addItem(customer.getName());
-            }
-        }
     }
 
     private boolean chanceOf(int percent) {

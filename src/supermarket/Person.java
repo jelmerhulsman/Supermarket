@@ -83,7 +83,8 @@ public class Person extends ObjectInShop {
      * @param targetName the name of the targetlocation
      */
     public void gotoCoords(Vector2f targetLocation) {
-
+        locationObject = null;
+        
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);

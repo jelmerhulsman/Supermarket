@@ -35,7 +35,7 @@ public class Cashier extends Staff {
      * Help the customer.
      */
     public void processCustomer() {
-        if (checkout.noCustomersLeft()) {
+        if (!checkout.noCustomersLeft()) {
             Customer customer = checkout.getFirstCustomer();
             for (Item i : customer.getShoppingBasket()) {
                 System.out.println("Cashier " + this.getName() + " -> " + i.getName() + " costs " + i.getPrice() + " and has been added to receipt.");
