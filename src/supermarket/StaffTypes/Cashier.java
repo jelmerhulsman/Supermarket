@@ -65,9 +65,9 @@ public class Cashier extends Staff {
     }
 
     /**
-     * This method will be looped over and over
+     * this function will be looped over and over
      *
-     * @param staticLocations the collection of all the locations
+     * @param staticLocations the collection of locations
      */
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {

@@ -12,8 +12,8 @@ public class Aisle extends ObjectInShop {
 
     private final int ITEM_LIMIT_PER_SHELVE = 25;
     private ArrayList<Category> categories;
-    private ArrayList<Item> aisleItems;
     private ArrayList<Item> items;
+    private ArrayList<Item> stock;
     private boolean changed;
     private boolean manned;
 
@@ -23,8 +23,8 @@ public class Aisle extends ObjectInShop {
         this.categories = new ArrayList<>();
         this.categories.addAll(categories);
         
-        aisleItems = createListOfAisleItems(categories, storeItems);
-        items = new ArrayList<>();
+        createListOfAisleItems(categories, storeItems);
+        stock = new ArrayList<>();
         changed = false;
         manned = false;
     }
@@ -49,20 +49,18 @@ public class Aisle extends ObjectInShop {
      * Creates a list of items for this aisle
      * @param categories the category
      * @param storeItems the collection of items
-     * @return 
      */
-    private ArrayList<Item> createListOfAisleItems(ArrayList<Category> categories, ArrayList<Item> storeItems)
+    private void createListOfAisleItems(ArrayList<Category> categories, ArrayList<Item> storeItems)
     {
-        ArrayList<Item> tempArrayList = new ArrayList<>();
+        items = new ArrayList<>();
         
         for (Item item : storeItems)
         {
             if (categories.contains(item.getCategory()))
             {
-                tempArrayList.add(item);
+                items.add(item);
             }
         }
-        return tempArrayList;
     }
 
     /**
@@ -71,7 +69,7 @@ public class Aisle extends ObjectInShop {
      * @return a list of all the items
      */
     public ArrayList<Item> getItems() {
-        return items;
+        return stock;
     }
     
     /**
@@ -81,7 +79,7 @@ public class Aisle extends ObjectInShop {
     public ArrayList<String> getItemNames() {
         ArrayList<String> itemNames = new ArrayList<>();
         
-        for (Item item : aisleItems)
+        for (Item item : items)
         {
             if (!itemNames.contains(item.getName()))
             {
@@ -98,7 +96,7 @@ public class Aisle extends ObjectInShop {
      */
     public int getItemCount(Item item) {
         int counter = 0;
-        for (Item i : items) {
+        for (Item i : stock) {
             if (item.getName().equals(i.getName())) {
                 counter++;
             }
@@ -113,7 +111,7 @@ public class Aisle extends ObjectInShop {
      */
     public int getItemCount(String itemname){
         int counter = 0;
-        for (Item i : items) {
+        for (Item i : stock) {
             if (i.getName().equals(itemname)) {
                 counter++;
             }
@@ -127,10 +125,10 @@ public class Aisle extends ObjectInShop {
      * @return 
      */
     public Item pickFromShelve(Item item) {
-        for (Item i : items) {
+        for (Item i : stock) {
             if (i.getName().equals(item.getName())) {
                 Item temp = i;
-                items.remove(i);
+                stock.remove(i);
                 changed = true;
                 return temp;
             }
@@ -157,13 +155,13 @@ public class Aisle extends ObjectInShop {
      */
     public void loadAisle(Item item) {
         item.setAvailable(true);
-        items.add(item);
+        stock.add(item);
         changed = true;
     }
     
     public boolean fullShelve(Item item) {
         int counter = 0;
-        for (Item i : items)
+        for (Item i : stock)
         {
             if (item.getName().equals(i.getName()))
             {

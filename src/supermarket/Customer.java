@@ -16,7 +16,7 @@ public class Customer extends Person {
 
     private enum Action {
 
-        ENTERING, SHOPPING, CHOOSING_CHECKOUT, WAITING, LEAVING
+        ENTERING, SHOPPING_AT_DEPARTMENTS, SHOPPING_AT_AISLES, CHOOSING_CHECKOUT, WAITING, LEAVING
     }
 
     public enum Stereotype {
@@ -178,18 +178,40 @@ public class Customer extends Person {
     }
 
     /**
-     * Gets the first item from the aisle
+     * Gets the first department to go to
      *
      * @param staticLocations a collection of all possible locations
      * @return
      */
-    private Aisle getFirstItemLocation(ArrayList<ObjectInShop> staticLocations) {
+    private Department getFirstDepartment(ArrayList<ObjectInShop> staticLocations) {
+        for (ObjectInShop o : staticLocations) {
+            if (o instanceof Department) {
+                Department temp = (Department) o;
+                ArrayList<String> departmentItemNames = temp.getItemNames();
+                for (Item item : shoppingList) {
+                    if (departmentItemNames.contains(item.getName())) {
+                        return temp;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the first aisle to go to
+     *
+     * @param staticLocations a collection of all possible locations
+     * @return
+     */
+    private Aisle getFirstAisle(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
-                Aisle tempAisle = (Aisle) o;
-                ArrayList<String> aisleItemNames = tempAisle.getItemNames();
+                Aisle temp = (Aisle) o;
+                ArrayList<String> aisleItemNames = temp.getItemNames();
                 if (aisleItemNames.contains(shoppingList.get(0).getName())) {
-                    return tempAisle;
+                    return temp;
                 }
             }
         }
@@ -198,8 +220,38 @@ public class Customer extends Person {
         return null;
     }
 
+    public void addItemToBasket(Item item) {
+        shoppingBasket.add(item);
+
+        Item i = null;
+        for (Item i2 : shoppingList) {
+            if (item.getName().equals(i2.getName())) {
+                i = i2;
+                break;
+            }
+        }
+
+        shoppingList.remove(i);
+    }
+
     public ArrayList<Item> getShoppingList() {
         return shoppingList;
+    }
+
+    /**
+     * returns all the item names from the shopping list
+     *
+     * @return
+     */
+    public ArrayList<String> getShoppingListItemNames() {
+        ArrayList<String> itemNames = new ArrayList<>();
+
+        for (Item item : shoppingList) {
+            if (!itemNames.contains(item.getName())) {
+                itemNames.add(item.getName());
+            }
+        }
+        return itemNames;
     }
 
     public Action getAction() {
@@ -208,6 +260,10 @@ public class Customer extends Person {
 
     public Stereotype getStereotype() {
         return stereotype;
+    }
+    
+    public void helped() {
+        action = Action.SHOPPING_AT_DEPARTMENTS;
     }
 
     /**
@@ -271,9 +327,9 @@ public class Customer extends Person {
     }
 
     /**
-     * this method will loop over and over
+     * this function will be looped over and over
      *
-     * @param staticLocations the collection of all the possible locations
+     * @param staticLocations the collection of locations
      */
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
@@ -284,11 +340,21 @@ public class Customer extends Person {
                     switch (action) {
                         case ENTERING:
                             gotoCoords(new Vector2f(location.x, 200));
-                            gotoCoords(new Vector2f(150, location.y));
-                            action = Action.SHOPPING;
+                            action = Action.SHOPPING_AT_DEPARTMENTS;
                             break;
-                        case SHOPPING:
-                            Aisle aisle = getFirstItemLocation(staticLocations);
+                        case SHOPPING_AT_DEPARTMENTS:
+                            Department department = getFirstDepartment(staticLocations);
+                            
+                            if (department != null) {
+                                gotoLocation(department.getName(), staticLocations);
+                                department.addCustomer(myself);
+                                action = Action.WAITING;
+                            } else {
+                                action = Action.SHOPPING_AT_AISLES;
+                            }
+                            break;
+                        case SHOPPING_AT_AISLES:
+                            Aisle aisle = getFirstAisle(staticLocations);
 
                             gotoLocation(aisle.getName(), staticLocations);
                             getItemsFromAisle(aisle);

@@ -17,6 +17,7 @@ import supermarket.Item;
 import supermarket.Item.Category;
 import supermarket.ObjectInShop;
 import supermarket.Person;
+import supermarket.StaffTypes.Artisan;
 import supermarket.StaffTypes.Cashier;
 import supermarket.StaffTypes.Staff;
 import supermarket.StaffTypes.Stocker;
@@ -30,10 +31,12 @@ import supermarket.Truck;
  */
 public class Supermarket extends javax.swing.JFrame {
 
-    private final int MAX_CUSTOMERS = 15;
-    private final int CHANCE_OF_ENTERING = 100;
+    private final int MAX_CUSTOMERS = 10;
+    private final int CHANCE_OF_ENTERING = 12;
     private ArrayList<Aisle> aisles;
     private ArrayList<Department> departments;
+    private Department bakery;
+    private Department butchery;
     private ArrayList<Checkout> checkouts;
     private Storage storage;
     private Truck truck;
@@ -42,6 +45,8 @@ public class Supermarket extends javax.swing.JFrame {
     private ArrayList<Person> people;
     private ArrayList<Staff> workforce;
     private Unloader unloader;
+    private Artisan baker;
+    private Artisan butcher;
     private ArrayList<Stocker> stockers;
     private ArrayList<Cashier> cashiers;
     private ArrayList<Item> storeItems;
@@ -66,6 +71,8 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Add all unique items to a list
         storeItems = new ArrayList<>();
+        storeItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
+        storeItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
         storeItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
         storeItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
         storeItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
@@ -79,7 +86,6 @@ public class Supermarket extends javax.swing.JFrame {
         //Create aisles
         aisles = new ArrayList<>();
         ArrayList<Category> aisleCategories = new ArrayList<>(); //start primary department
-        aisleCategories.add(Category.BREAD);
         aisleCategories.add(Category.SPREAD);
         aisleCategories.add(Category.BREAKFAST);
         aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, storeItems));
@@ -121,18 +127,10 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Create departments
         departments = new ArrayList<>();
-        ArrayList<String> departmentAisleNames = new ArrayList<>();
-        departmentAisleNames.add("Lunch & Breakfast");
-        departmentAisleNames.add("Durable");
-        departmentAisleNames.add("Vegtables & Fruit");
-        departments.add(new Department("Primary Department", departmentAisleNames, aisles));
-
-        departmentAisleNames = new ArrayList<>();
-        departmentAisleNames.add("Liquor");
-        departmentAisleNames.add("Cooling");
-        departmentAisleNames.add("Luxury");
-        departmentAisleNames.add("Nonfood");
-        departments.add(new Department("Secondary Department", departmentAisleNames, aisles));
+        bakery = new Department("Bakery", new Vector2f(100, 190), Category.BREAD, storeItems);
+        departments.add(bakery);
+        butchery = new Department("Butchery", new Vector2f(100, 220), Category.MEAT, storeItems);
+        departments.add(butchery);
 
         //Create checkouts
         checkouts = new ArrayList<>();
@@ -148,6 +146,7 @@ public class Supermarket extends javax.swing.JFrame {
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
         staticLocations.addAll(aisles);
+        staticLocations.addAll(departments);
         staticLocations.addAll(checkouts);
         staticLocations.add(storage);
         staticLocations.add(truck);
@@ -155,6 +154,9 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Create Staff members
         unloader = new Unloader("Jannes Panzerfaust", storage.getLocation(), storage, truck, storeItems);
+
+        baker = new Artisan("Bartje Zaanbrood", storage.getLocation(), bakery);
+        butcher = new Artisan("Timo Gehaktbal", storage.getLocation(), butchery);
 
         stockers = new ArrayList<>();
         stockers.add(new Stocker("Jan de Bierman", storage.getLocation(), storage));
@@ -168,6 +170,8 @@ public class Supermarket extends javax.swing.JFrame {
 
         workforce = new ArrayList<>();
         workforce.add(unloader);
+        workforce.add(baker);
+        workforce.add(butcher);
         workforce.addAll(stockers);
         workforce.addAll(cashiers);
 
@@ -718,8 +722,9 @@ public class Supermarket extends javax.swing.JFrame {
         g.setColor(Color.BLACK);// sets the colour for the Departments on the map
         for (Department department : departments) {
             //draws the rectangle for the department
-            g.drawRect((int) department.getTopLeft().x - 15, (int) department.getTopLeft().y - 15, (int) department.getWidth() + 45, (int) department.getHeight() + 60);
-            g.drawString(department.getName(), (int) department.getTopLeft().x - 15, (int) department.getTopLeft().y - 15);
+            g.drawRect((int) department.getLocation().x, (int) department.getLocation().y, 50, 10);
+            storeLocationName = department.getName() + " " + peopleAtObject(department);
+            g.drawString(storeLocationName, (int) department.getLocation().x, (int) department.getLocation().y);
         }
 
         g.setColor(Color.GREEN);// sets the colour for the ailsel on the map
@@ -816,6 +821,8 @@ public class Supermarket extends javax.swing.JFrame {
                 if (person.getLocationObject() == null) {
                     if (person instanceof Unloader) {
                         g.setColor(Color.CYAN);
+                    } else if (person instanceof Artisan) {
+                        g.setColor(Color.BLACK);
                     } else if (person instanceof Stocker) {
                         g.setColor(Color.PINK);
                     } else if (person instanceof Cashier) {
@@ -831,9 +838,7 @@ public class Supermarket extends javax.swing.JFrame {
             }
         } //update for the other customer info
         else if (Panes.getSelectedIndex() == 2) {
-            //update fot the listboxen to display what's in the aisles
-
-
+            //update for the listboxen to display what's in the aisles
             for (int i = 0; i < aislesListboxList.size(); i++) {
                 if (aisles.get(i).isChanged()) {
                     aislesListboxList.get(i).removeAll();
@@ -896,13 +901,13 @@ public class Supermarket extends javax.swing.JFrame {
      *
      * @param text
      */
-    private void updateTextArea(final String text) {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    txtConsole.append(text);
-                }
-            });
+    private void updateConsole(final String text) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                txtConsole.append(text);
+            }
+        });
     }
 
     /**
@@ -912,12 +917,12 @@ public class Supermarket extends javax.swing.JFrame {
         OutputStream out = new OutputStream() {
             @Override
             public void write(int b) throws IOException {
-                updateTextArea(String.valueOf((char) b));
+                updateConsole(String.valueOf((char) b));
             }
 
             @Override
             public void write(byte[] b, int off, int len) throws IOException {
-                updateTextArea(new String(b, off, len));
+                updateConsole(new String(b, off, len));
             }
 
             @Override

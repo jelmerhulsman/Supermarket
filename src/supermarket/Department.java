@@ -2,6 +2,7 @@ package supermarket;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
+import supermarket.Item.Category;
 
 /**
  *
@@ -9,104 +10,79 @@ import java.util.ArrayList;
  */
 public class Department extends ObjectInShop {
 
-    private ArrayList<Aisle> aisles;
-    private Vector2f topLeft;
-    private float width;
-    private float height;
+    private ArrayList<Item> items;
+    private ArrayList<Customer> customers;
 
-    public Department(String name, ArrayList<String> aisleNames, ArrayList<Aisle> aisles) {
-        super(name, new Vector2f(-100f, -100f));
+    public Department(String name, Vector2f location, Category category, ArrayList<Item> storeItems) {
+        super(name, location);
 
-        this.aisles = new ArrayList<>();
-        for (Aisle aisle : aisles) {
-            if (aisleNames.contains(aisle.getName())) {
-                this.aisles.add(aisle);
+        createListOfDepartmentItems(category, storeItems);
+        customers = new ArrayList<>();
+    }
+    
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+    
+     /**
+     * returns all the item names in this department
+     * @return 
+     */
+    public ArrayList<String> getItemNames() {
+        ArrayList<String> itemNames = new ArrayList<>();
+        
+        for (Item item : items)
+        {
+            if (!itemNames.contains(item.getName()))
+            {
+                itemNames.add(item.getName());
             }
         }
+        return itemNames;
+    }
+    
+    public boolean noCustomersLeft() {
+        return customers.isEmpty();
+    }
 
-        setTopLeft();
-        setWidth();
-        setHeight();
+    private void createListOfDepartmentItems(Category category, ArrayList<Item> storeItems) {
+        items = new ArrayList<>();
 
-        this.setLocation(centralPoint());
+        for (Item item : storeItems) {
+            if (category == item.getCategory()) {
+                items.add(item);
+            }
+        }
+    }
+    
+    /**
+     * Adds customer to the end of the lane
+     *
+     * @param customer
+     */
+    public void addCustomer(Customer customer) {
+        this.customers.add(customer);
     }
 
     /**
-     * Gets all the containing Aisles in this department
+     * Returns the first customer in lane
      *
-     * @return an ArrayList of aisles
+     * @return customer
      */
-    public ArrayList<Aisle> getAisles() {
-        return aisles;
-    }
-
-    public Vector2f getTopLeft() {
-        return new Vector2f(topLeft);
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    private void setTopLeft() {
-        topLeft = new Vector2f(500f, 500f);
-
-        for (Aisle aisle : aisles) {
-            if (aisle.getLocation().x < topLeft.x) {
-                topLeft.x = aisle.getLocation().x;
-            }
-
-            if (aisle.getLocation().y < topLeft.y) {
-                topLeft.y = aisle.getLocation().y;
-            }
+    public Customer getFirstCustomer() {
+        if (customers.size() > 0) {
+            return customers.get(0);
+        } else {
+            return null;
         }
     }
 
-    private void setWidth() {
-        float minX = 500f;
-        float maxX = -100f;
-
-        for (Aisle aisle : aisles) {
-            if (aisle.getLocation().x < minX) {
-                minX = aisle.getLocation().x;
-            }
-
-            if (aisle.getLocation().x > maxX) {
-                maxX = aisle.getLocation().x;
-            }
-        }
-
-        width = maxX - minX;
-    }
-
-    private void setHeight() {
-        float minY = 500f;
-        float maxY = -100f;
-
-        for (Aisle aisle : aisles) {
-            if (aisle.getLocation().y < minY) {
-                minY = aisle.getLocation().y;
-            }
-
-            if (aisle.getLocation().y > maxY) {
-                maxY = aisle.getLocation().y;
-            }
-        }
-
-        height = maxY - minY;
-    }
-
-    private Vector2f centralPoint() {
-        Vector2f centralPoint = new Vector2f();
-
-        for (Aisle aisle : aisles) {
-            centralPoint.addLocal(aisle.getLocation());
-        }
-
-        return centralPoint.divideLocal(aisles.size());
+    /**
+     * Removes the first customer in lane
+     */
+    public void removeFirstCustomer() {
+        Customer customer = customers.get(0);
+        customer.helped();
+        customers.remove(customer);
     }
 }

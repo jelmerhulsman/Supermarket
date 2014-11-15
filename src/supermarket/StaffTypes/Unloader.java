@@ -97,9 +97,9 @@ public class Unloader extends Staff {
     }
 
     /**
-     * This function will be called over and over again
+     * this function will be looped over and over
      *
-     * @param staticLocations The collection of all the locations
+     * @param staticLocations the collection of locations
      */
     @Override
     public void update(final ArrayList<ObjectInShop> staticLocations) {
