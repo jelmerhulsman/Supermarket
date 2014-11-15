@@ -60,6 +60,10 @@ public class Cashier extends Staff {
         this.checkout = checkout;
     }
 
+    public Checkout getCheckout() {
+        return checkout;
+    }
+    
     public boolean isWaiting() {
         return (action == Action.HELP_STOCKERS);
     }
@@ -77,12 +81,13 @@ public class Cashier extends Staff {
                 while (true) {
                     switch (action) {
                         case GO_TO_CHECKOUT:
-                            checkout.open();
+                            checkout.open();                            
                             gotoLocation(checkout.getName(), staticLocations);
                             action = Action.WORKING;
                         case WORKING:
                             processCustomer();
                             if (checkout.isClosed()) {
+                                checkout.setManned(false);
                                 checkout = null;
                                 gotoLocation("Storage", staticLocations);
                                 action = Action.HELP_STOCKERS;

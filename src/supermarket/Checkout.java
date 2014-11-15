@@ -18,7 +18,8 @@ public class Checkout extends ObjectInShop {
     private int number;
     private Status status;
     private ArrayList<Customer> customers;
-
+    private boolean manned = false;
+    
     public Checkout(int number, Vector2f location) {
         super("Checkout " + number, location);
         this.number = number;
@@ -42,6 +43,14 @@ public class Checkout extends ObjectInShop {
         return (status == Status.CROWDED);
     }
 
+    public void setManned(boolean manned) {
+        this.manned = manned;
+    }
+
+    public boolean isManned() {
+        return this.manned;
+    }
+    
     /**
      * Let cashier open the checkout
      *

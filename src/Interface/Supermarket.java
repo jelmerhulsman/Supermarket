@@ -31,8 +31,8 @@ import supermarket.Truck;
  */
 public class Supermarket extends javax.swing.JFrame {
 
-    private final int MAX_CUSTOMERS = 10;
-    private final int CHANCE_OF_ENTERING = 12;
+    private final int MAX_CUSTOMERS = 10; //10;
+    private final int CHANCE_OF_ENTERING = 100; //12;
     private ArrayList<Aisle> aisles;
     private ArrayList<Department> departments;
     private Department bakery;
@@ -64,7 +64,7 @@ public class Supermarket extends javax.swing.JFrame {
         initComponents();
 
         //Graphics
-        mapCanvas.setBackground(Color.white);
+        mapCanvas.setBackground(Color.gray);
         g = mapCanvas.getGraphics();
         customerSelector.setLightWeightPopupEnabled(false);
         staffComboBox.setLightWeightPopupEnabled(false);
@@ -164,7 +164,11 @@ public class Supermarket extends javax.swing.JFrame {
         stockers.add(new Stocker("Grietje Gezond", storage.getLocation(), storage));
         stockers.add(new Stocker("Kees Koeler", storage.getLocation(), storage));
         stockers.add(new Stocker("Jacob Dubbelfris", storage.getLocation(), storage));
-
+        stockers.add(new Stocker("Pietje Nietsnut", storage.getLocation(), storage));
+        stockers.add(new Stocker("Achmed Joseph Adam Gelovig", storage.getLocation(), storage));
+        stockers.add(new Stocker("Triensje Treintje", storage.getLocation(), storage));
+        
+        
         cashiers = new ArrayList<>();
         cashiers.add(new Cashier("Johanna Doekoe", storage.getLocation(), checkouts.get(0)));
 
@@ -661,10 +665,12 @@ public class Supermarket extends javax.swing.JFrame {
         for (Cashier cashier : cashiers) {
             if (cashier.isWaiting()) {
                 Stocker stocker = new Stocker(cashier.getName(), cashier.getLocation(), storage);
+                stocker.gotoLocation(storage.getName(), staticLocations);
                 stockers.add(stocker);
                 workforce.add(stocker);
+                stocker.update(staticLocations);                
                 cashier.kill();
-                formerCashiers.add(cashier);
+                formerCashiers.add(cashier);                
             }
         }
         cashiers.removeAll(formerCashiers);
@@ -680,7 +686,7 @@ public class Supermarket extends javax.swing.JFrame {
             if (previousCheckout.isOpen() && (currentCheckout.isOpen() || currentCheckout.isCrowded())) {
                 currentCheckout.closing();
             } else if (previousCheckout.isCrowded()) {
-                if (currentCheckout.isClosed() || currentCheckout.isClosing()) {
+                if (currentCheckout.isClosed() || currentCheckout.isClosing() && !currentCheckout.isManned()) {
                     Stocker formerStocker = null;
                     for (Stocker stocker : stockers) {
                         if (stocker.isWaiting()) {
@@ -689,6 +695,8 @@ public class Supermarket extends javax.swing.JFrame {
                             workforce.add(cashier);
                             stocker.kill();
                             formerStocker = stocker;
+                            cashier.update(staticLocations);
+                            currentCheckout.setManned(true);
                             break;
                         }
                     }
