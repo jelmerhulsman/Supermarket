@@ -897,14 +897,12 @@ public class Supermarket extends javax.swing.JFrame {
      * @param text
      */
     private void updateTextArea(final String text) {
-        if (Panes.getSelectedIndex() == 4) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     txtConsole.append(text);
                 }
             });
-        }
     }
 
     /**
