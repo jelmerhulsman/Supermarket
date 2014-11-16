@@ -137,6 +137,7 @@ public class Stocker extends Staff {
                             if (runs == NUMBER_OF_RUNS_PER_AISLE) {
                                 runs = 0;
                                 aisle = null;
+                                action = Action.WAITING;
                             }
                             if (storage.getAllItems().isEmpty() || aisle == null) {
                                 action = Action.WAITING;
