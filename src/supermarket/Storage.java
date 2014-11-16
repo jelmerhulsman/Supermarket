@@ -74,7 +74,7 @@ public class Storage extends ObjectInShop {
      * @return
      */
     public ArrayList<Item> getItems(int count, Category category) {
-        items.clear();
+        items = new ArrayList<>();
         Session session = factory.openSession();
         Transaction tx = null;
         try {
@@ -88,8 +88,8 @@ public class Storage extends ObjectInShop {
                 Iterator iterator = itemsList.iterator();
                 Item item = (Item) iterator.next();
                 items.add(item);
-
                 itemsList.remove(item);
+                
                 try {
                     hql = "DELETE FROM supermarket.Item WHERE id = '" + item.getId() + "'";
                     Query delete = session.createQuery(hql);
@@ -172,7 +172,7 @@ public class Storage extends ObjectInShop {
      * @return the list of the items
      */
     public ArrayList<Item> moveItem(Item.Category cat, int amount) {
-        items.clear();
+        items = new ArrayList<>();
         ArrayList<Item> allItems = getAllItems();
         int counter = 0;
         for (int i = 0; i < allItems.size(); i++) {

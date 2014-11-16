@@ -104,7 +104,7 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.BEER);
         aisleCategories.add(Category.LIQUOR);
         aisleCategories.add(Category.WINE);
-        aisles.add(new Aisle("Liquor", new Vector2f(150, 50), aisleCategories, aisleItems));
+        aisles.add(new Aisle("Liquor", new Vector2f(170, 50), aisleCategories, aisleItems));
         lblLiqour.setText("Liquor");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SPREAD);
@@ -115,7 +115,7 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
         aisleCategories.add(Category.DAIRY);
-        aisles.add(new Aisle("Cooling", new Vector2f(150, 125), aisleCategories, aisleItems));
+        aisles.add(new Aisle("Cooling", new Vector2f(170, 125), aisleCategories, aisleItems));
         lblCooling.setText("Cooling");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SNACK);
@@ -828,7 +828,7 @@ public class Supermarket extends javax.swing.JFrame {
      * Draws the map with squares representing entities
      */
     private void drawStore() {
-        String storeLocationName;
+        String storeLocationName = "";
 
         g.setColor(Color.BLUE);// sets the colour for the storages on the map
         //draws the rectangle for the storage
@@ -853,7 +853,7 @@ public class Supermarket extends javax.swing.JFrame {
         }
 
         g.setColor(Color.WHITE);
-        g.drawRect((int) sales.getLocation().x, (int) sales.getLocation().y, 15, 30);
+        g.drawRect((int) sales.getLocation().x, (int) sales.getLocation().y, 20, 105);
         storeLocationName = sales.getName() + " " + peopleAtObject(sales);
         g.drawString(storeLocationName, (int) sales.getLocation().x, (int) sales.getLocation().y);
 
