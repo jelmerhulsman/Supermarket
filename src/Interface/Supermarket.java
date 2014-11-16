@@ -978,7 +978,7 @@ public class Supermarket extends javax.swing.JFrame {
                 if (aisles.get(i).isChanged()) {
                     aislesListboxList.get(i).removeAll();
                     try {
-                        for (Item item : aisles.get(i).getItems()) {
+                        for (Item item : aisles.get(i).getStock()) {
                             aislesListboxList.get(i).add(item.getName());
                         }
                     } catch (Exception e) {
@@ -990,8 +990,8 @@ public class Supermarket extends javax.swing.JFrame {
 
             if (sales.isChanged()) {
                 lstSales.removeAll();
-                if (!sales.getItems().isEmpty()) {
-                    for (Item item : sales.getItems()) {
+                if (!sales.getStock().isEmpty()) {
+                    for (Item item : sales.getStock()) {
                         lstSales.add(item.getName());
                     }
                 }

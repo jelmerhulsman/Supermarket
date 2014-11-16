@@ -51,8 +51,8 @@ public class Unloader extends Staff {
     public void getItemsFromTruck() {
         if (!truck.getItems().isEmpty()) {
             System.out.println("Unloader " + name + " is picking up items from truck...");
-            items.addAll(truck.unload(MAX_ITEMS));
-            sleep(MAX_ITEMS * ITEM_INTERACTION_TIME);
+            items.addAll(truck.unload(CARRYING_CAPACITY));
+            sleep(CARRYING_CAPACITY * ITEM_INTERACTION_TIME);
         }
     }
 

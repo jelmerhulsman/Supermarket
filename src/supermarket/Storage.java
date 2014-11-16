@@ -69,29 +69,29 @@ public class Storage extends ObjectInShop {
     /**
      * returns gets items from the storage and removes it in the database
      *
-     * @param count Total number of items to pick
+     * @param amount Total number of items to pick
      * @param category From which category
      * @return
      */
-    public ArrayList<Item> getItems(int count, Category category) {
+    public ArrayList<Item> getItems(int amount, Item item) {
         items = new ArrayList<>();
         Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql = "FROM supermarket.Item WHERE Category = '" + category.toString() + "'";
+            String hql = "FROM supermarket.Item WHERE name = '" + item.getName() + "'";
             List itemsList = session.createQuery(hql).list();
-            if (itemsList.size() < count) {
-                count = itemsList.size();
+            if (itemsList.size() < amount) {
+                amount = itemsList.size();
             }
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < amount; i++) {
                 Iterator iterator = itemsList.iterator();
-                Item item = (Item) iterator.next();
-                items.add(item);
-                itemsList.remove(item);
+                Item temp = (Item) iterator.next();
+                items.add(temp);
+                itemsList.remove(temp);
                 
                 try {
-                    hql = "DELETE FROM supermarket.Item WHERE id = '" + item.getId() + "'";
+                    hql = "DELETE FROM supermarket.Item WHERE id = '" + temp.getId() + "'";
                     Query delete = session.createQuery(hql);
                     delete.executeUpdate();
                 } catch (HibernateException e) {

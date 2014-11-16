@@ -4,7 +4,6 @@ import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import supermarket.Aisle;
 import supermarket.Item;
-import supermarket.Item.Category;
 import supermarket.ObjectInShop;
 import supermarket.Sales;
 import supermarket.Storage;
@@ -60,10 +59,8 @@ public class Stocker extends Staff {
      */
     public void getItemsFromStorage() {
         System.out.println("Stocker " + name + " is picking up items from storage...");
-        for (Category category : aisle.getCategories()) {
-            items.addAll(storage.getItems(MAX_ITEMS, category));
-            sleep(items.size() * ITEM_INTERACTION_TIME);
-        }
+        items.addAll(storage.getItems(CARRYING_CAPACITY, aisle.getLowestStockItem()));
+        sleep(ITEM_INTERACTION_TIME * items.size());
     }
 
     /**
@@ -89,7 +86,7 @@ public class Stocker extends Staff {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Sales) {
                 Sales temp = (Sales) o;
-                if (temp.isEmpty() && !temp.isManned()) {
+                if (temp.getStock().isEmpty() && !temp.isManned()) {
                     temp.giveNewSales(aisleItems);
                     temp.setManned(true);
                     aisle = temp;
@@ -97,7 +94,7 @@ public class Stocker extends Staff {
                 }
             } else if (o instanceof Aisle) {
                 Aisle temp = (Aisle) o;
-                if (temp.isEmpty() && !temp.isManned()) {
+                if (temp.needsStock() && !temp.isManned()) {
                     temp.setManned(true);
                     aisle = temp;
                     break;
@@ -114,14 +111,16 @@ public class Stocker extends Staff {
         ArrayList<Item> storedItems = new ArrayList<>();
 
         System.out.println("Stocker " + name + " is storing items in aisle " + aisle.getName() + "...");
-        for (Item i : items) {
-
-            if (aisle.getItemNames().contains(i.getName())) {
-                i.setAvailable(false);
-                aisle.loadAisle(i);
-                storedItems.add(i);
+        for (Item item : items) {
+            if (aisle.getItemNames().contains(item.getName())) {
+                aisle.loadAisle(item);
+                storedItems.add(item);
                 sleep(ITEM_INTERACTION_TIME);
             }
+        }
+
+        for (Item item : storedItems) {
+            item.setAvailable(true);
         }
 
         items.removeAll(storedItems);

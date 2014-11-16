@@ -218,7 +218,7 @@ public class Customer extends Person {
             if (o instanceof Sales) {
                 Sales sales = (Sales) o;
                 for (Item item : shoppingList) {
-                    if (sales.getItems().contains(item)) {
+                    if (sales.getStock().contains(item)) {
                         return sales;
                     }
                 }
@@ -316,7 +316,7 @@ public class Customer extends Person {
             sleep(ITEM_SEARCH_TIME);
 
             if (aisleItemNames.contains(item.getName())) {
-                if (aisle.getItemCount(item) > 0) {
+                if (aisle.getStockCount(item) > 0) {
                     while (!item.isAvailable()) {
                         sleep(100);
                     }

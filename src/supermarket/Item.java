@@ -43,6 +43,7 @@ public class Item {
         this.name = item.name;
         this.price = item.price;
         this.category = item.category;
+        available = false;
     }
 
     /**

@@ -11,7 +11,7 @@ import supermarket.Person;
  */
 public abstract class Staff extends Person {
 
-    protected final int MAX_ITEMS = 10;
+    protected final int CARRYING_CAPACITY = 10;
     protected ArrayList<Item> items;
 
     /**

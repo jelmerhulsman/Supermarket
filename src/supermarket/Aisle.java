@@ -10,7 +10,8 @@ import supermarket.Item.Category;
  */
 public class Aisle extends ObjectInShop {
 
-    private final int ITEM_LIMIT_PER_SHELVE = 25;
+    private final int STOCK_LIMIT_PER_SHELVE = 25;
+    private final int MINIMUM_STOCK_PER_SHELVE = 5;
     private ArrayList<Category> categories;
     protected ArrayList<Item> items;
     protected ArrayList<Item> stock;
@@ -74,12 +75,36 @@ public class Aisle extends ObjectInShop {
     }
 
     /**
-     * Wether aisle is empty or not
+     * Gets boolean wether aisle needs stock
      *
-     * @return empty
+     * @return True if aisle needs stock
      */
-    public boolean isEmpty() {
-        return stock.isEmpty();
+    public boolean needsStock() {
+        for (Item item : items) {
+            if (getStockCount(item) < MINIMUM_STOCK_PER_SHELVE) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Gets item with the lowest stock
+     *
+     * @return Item
+     */
+    public Item getLowestStockItem() {
+        Item temp = null;
+        int count = STOCK_LIMIT_PER_SHELVE;
+
+        for (Item item : items) {
+            if (getStockCount(item) < count) {
+                temp = item;
+            }
+        }
+        
+        return temp;
     }
 
     /**
@@ -99,12 +124,21 @@ public class Aisle extends ObjectInShop {
     }
 
     /**
+     * Gets all the stock that are in the Aisle
+     *
+     * @return a list of all the items
+     */
+    public ArrayList<Item> getStock() {
+        return stock;
+    }
+
+    /**
      * Gets all the items that are in the Aisle
      *
      * @return a list of all the items
      */
     public ArrayList<Item> getItems() {
-        return stock;
+        return items;
     }
 
     /**
@@ -116,27 +150,10 @@ public class Aisle extends ObjectInShop {
         ArrayList<String> itemNames = new ArrayList<>();
 
         for (Item item : items) {
-            if (!itemNames.contains(item.getName())) {
-                itemNames.add(item.getName());
-            }
+            itemNames.add(item.getName());
         }
-        return itemNames;
-    }
 
-    /**
-     * returns the total amount of items
-     *
-     * @param item
-     * @return
-     */
-    public int getItemCount(Item item) {
-        int counter = 0;
-        for (Item i : stock) {
-            if (item.getName().equals(i.getName())) {
-                counter++;
-            }
-        }
-        return counter;
+        return itemNames;
     }
 
     /**
@@ -145,10 +162,10 @@ public class Aisle extends ObjectInShop {
      * @param itemname
      * @return
      */
-    public int getItemCount(String itemname) {
+    public int getStockCount(Item item) {
         int counter = 0;
         for (Item i : stock) {
-            if (i.getName().equals(itemname)) {
+            if (i.getName().equals(item.getName())) {
                 counter++;
             }
         }
@@ -190,7 +207,7 @@ public class Aisle extends ObjectInShop {
      * @param item The item you are willing to add to this Aisle
      */
     public void loadAisle(Item item) {
-        item.setAvailable(true);
+        item.setAvailable(false);
         stock.add(item);
         changed = true;
     }
@@ -209,6 +226,6 @@ public class Aisle extends ObjectInShop {
             }
         }
 
-        return (counter == ITEM_LIMIT_PER_SHELVE);
+        return (counter == STOCK_LIMIT_PER_SHELVE);
     }
 }
