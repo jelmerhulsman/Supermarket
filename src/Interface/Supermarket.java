@@ -50,6 +50,8 @@ public class Supermarket extends javax.swing.JFrame {
     private ArrayList<Stocker> stockers;
     private ArrayList<Cashier> cashiers;
     private ArrayList<Item> storeItems;
+    private ArrayList<Item> departmentItems;
+    private ArrayList<Item> aisleItems;
     private int customerCounter;
     private ArrayList<Customer> customers;
     //Graphics attributes
@@ -71,17 +73,24 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Add all unique items to a list
         storeItems = new ArrayList<>();
-        storeItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
-        storeItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
-        storeItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
-        storeItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
-        storeItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
-        storeItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
-        storeItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
-        storeItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
-        storeItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
-        storeItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
-        storeItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
+        
+        departmentItems = new ArrayList<>();
+        departmentItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
+        departmentItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
+        storeItems.addAll(departmentItems);
+        
+        aisleItems = new ArrayList<>();
+        aisleItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
+        aisleItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
+        aisleItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
+        aisleItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
+        aisleItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
+        aisleItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
+        aisleItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
+        aisleItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
+        aisleItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
+        storeItems.addAll(aisleItems);
+        
 
         //Create aisles
 
@@ -90,24 +99,24 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.BEER);
         aisleCategories.add(Category.LIQUOR);
         aisleCategories.add(Category.WINE);
-        aisles.add(new Aisle("Liquor", new Vector2f(150, 50), aisleCategories, storeItems));
+        aisles.add(new Aisle("Liquor", new Vector2f(150, 50), aisleCategories, aisleItems));
         lblLiqour.setText("Liquor");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SPREAD);
         aisleCategories.add(Category.BREAKFAST);
-        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, storeItems));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, aisleItems));
         lblLunchAndBreakfast.setText("Lunch & Breakfast");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
         aisleCategories.add(Category.DAIRY);
-        aisles.add(new Aisle("Cooling", new Vector2f(150, 125), aisleCategories, storeItems));
+        aisles.add(new Aisle("Cooling", new Vector2f(150, 125), aisleCategories, aisleItems));
         lblCooling.setText("Cooling");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SNACK);
         aisleCategories.add(Category.SODA);
         aisleCategories.add(Category.CAFFEINE);
-        aisles.add(new Aisle("Luxury", new Vector2f(250, 50), aisleCategories, storeItems));
+        aisles.add(new Aisle("Luxury", new Vector2f(250, 50), aisleCategories, aisleItems));
         lblLuxury.setText("Luxury");
 
 
@@ -115,23 +124,23 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.SPICES);
         aisleCategories.add(Category.FOREIGN);
         aisleCategories.add(Category.PRESERVATION);
-        aisles.add(new Aisle("Durable", new Vector2f(250, 275), aisleCategories, storeItems));
+        aisles.add(new Aisle("Durable", new Vector2f(250, 275), aisleCategories, aisleItems));
         lblDurable.setText("Durable");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.VEGTABLES);
         aisleCategories.add(Category.FRUIT);
-        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(250, 350), aisleCategories, storeItems));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(250, 350), aisleCategories, aisleItems));
         label10.setText("Vegtables & Fruit");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.NONFOOD);
-        aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, storeItems));
+        aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, aisleItems));
         lblNonfoon.setText("Nonfood");
 
         //Create departments
         departments = new ArrayList<>();
-        bakery = new Department("Bakery", new Vector2f(100, 190), Category.BREAD, storeItems);
+        bakery = new Department("Bakery", new Vector2f(100, 190), Category.BREAD, departmentItems);
         departments.add(bakery);
-        butchery = new Department("Butchery", new Vector2f(100, 220), Category.MEAT, storeItems);
+        butchery = new Department("Butchery", new Vector2f(100, 220), Category.MEAT, departmentItems);
         departments.add(butchery);
 
         //Create checkouts
@@ -156,7 +165,7 @@ public class Supermarket extends javax.swing.JFrame {
         staticLocations.add(doorway);
 
         //Create Staff members
-        unloader = new Unloader("Jannes Panzerfaust", storage.getLocation(), storage, truck, storeItems);
+        unloader = new Unloader("Jannes Panzerfaust", storage.getLocation(), storage, truck, aisleItems);
 
         baker = new Artisan("Bartje Zaanbrood", storage.getLocation(), bakery);
         butcher = new Artisan("Timo Gehaktbal", storage.getLocation(), butchery);
@@ -650,7 +659,6 @@ public class Supermarket extends javax.swing.JFrame {
      */
     private void addEnteringCustomers() {
         if (customers.size() < MAX_CUSTOMERS) {
-
             if (chanceOf(CHANCE_OF_ENTERING)) {
                 ArrayList<Customer.Stereotype> stereotype;
                 do {
@@ -711,13 +719,13 @@ public class Supermarket extends javax.swing.JFrame {
                     Stocker formerStocker = null;
                     for (Stocker stocker : stockers) {
                         if (stocker.isWaiting()) {
-                            Cashier cashier = new Cashier(stocker.getName(), stocker.getLocation(), currentCheckout);
+                            currentCheckout.setManned(true);
+                            Cashier cashier = new Cashier(stocker.getName(), storage.getLocation(), currentCheckout);
                             cashiers.add(cashier);
                             workforce.add(cashier);
                             stocker.kill();
                             formerStocker = stocker;
                             cashier.update(staticLocations);
-                            currentCheckout.setManned(true);
                             break;
                         }
                     }
@@ -900,11 +908,10 @@ public class Supermarket extends javax.swing.JFrame {
             //update for the storage items list
             if (storage.isChanged()) {
                 lstStorage.clear();
-                int counter = 0;
-                for (Item item : storeItems) {
-                    counter = storage.getItemCount(item.getName());
-                    if (counter > 0) {
-                        lstStorage.add(counter + " " + item.getName());
+                for (Item item : aisleItems) {
+                    int count = storage.getItemCount(item.getName());
+                    if (count > 0) {
+                        lstStorage.add(count + " " + item.getName() + " stored");
                     }
                 }
                 storage.setIsChanged(false);
