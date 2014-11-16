@@ -212,6 +212,14 @@ public class Supermarket extends javax.swing.JFrame {
 
         //List of all people
         people = new ArrayList<>();
+        
+        //Fills the departmentlistst
+        lstDepartment1.add("Bakery makes:");
+        lstDepartment2.add("Butchery makes:");
+        for(String s :departments.get(0).getItemNames())
+            lstDepartment1.add(s);
+        for(String s :departments.get(1).getItemNames())
+            lstDepartment2.add(s);
     }
 
     /**
@@ -268,6 +276,17 @@ public class Supermarket extends javax.swing.JFrame {
         lblItems = new java.awt.Label();
         lstOtherStaffInfo = new java.awt.List();
         lblOtherStaffInfo = new java.awt.Label();
+        jPanel7 = new javax.swing.JPanel();
+        textField1 = new java.awt.TextField();
+        textArea1 = new java.awt.TextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        department1textpane = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextPane2 = new javax.swing.JTextPane();
+        lstDepartment1 = new java.awt.List();
+        lstDepartment2 = new java.awt.List();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -570,6 +589,39 @@ public class Supermarket extends javax.swing.JFrame {
         lblOtherStaffInfo.getAccessibleContext().setAccessibleDescription("");
 
         Panes.addTab("Staff", jPanel6);
+
+        textField1.setText("textField1");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jScrollPane3.setViewportView(department1textpane);
+
+        jScrollPane4.setViewportView(jTextPane2);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lstDepartment1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(lstDepartment2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lstDepartment2, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                    .addComponent(lstDepartment1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        Panes.addTab("Derpartments", jPanel7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1015,13 +1067,20 @@ public class Supermarket extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane Panes;
     private javax.swing.JComboBox customerSelector;
+    private javax.swing.JTextPane department1textpane;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextPane jTextPane2;
     private java.awt.Label label10;
     private java.awt.Label label12;
     private java.awt.Label lblCooling;
@@ -1039,6 +1098,8 @@ public class Supermarket extends javax.swing.JFrame {
     private javax.swing.JLabel lblStaffName;
     private java.awt.List listLuxury;
     private java.awt.List lstCooling;
+    private java.awt.List lstDepartment1;
+    private java.awt.List lstDepartment2;
     private java.awt.List lstDurable;
     private java.awt.List lstItems;
     private java.awt.List lstLiqour;
@@ -1057,6 +1118,8 @@ public class Supermarket extends javax.swing.JFrame {
     private java.awt.PopupMenu popupMenu1;
     private java.awt.PopupMenu popupMenu2;
     private javax.swing.JComboBox staffComboBox;
+    private java.awt.TextArea textArea1;
+    private java.awt.TextField textField1;
     private javax.swing.JTextArea txtConsole;
     // End of variables declaration//GEN-END:variables
 }
