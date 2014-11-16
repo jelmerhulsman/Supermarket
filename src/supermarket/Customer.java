@@ -317,8 +317,13 @@ public class Customer extends Person {
 
             if (aisleItemNames.contains(item.getName())) {
                 if (aisle.getStockCount(item) > 0) {
+                    int tryCount = 0;
                     while (!item.isAvailable()) {
                         sleep(100);
+                        tryCount++;
+                        if(tryCount == 10){
+                            break;
+                        }
                     }
                     
                     if (aisle instanceof Sales) {
