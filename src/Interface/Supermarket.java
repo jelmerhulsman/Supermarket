@@ -52,6 +52,8 @@ public class Supermarket extends javax.swing.JFrame {
     private ArrayList<Stocker> stockers;
     private ArrayList<Cashier> cashiers;
     private ArrayList<Item> storeItems;
+    private ArrayList<Item> departmentItems;
+    private ArrayList<Item> aisleItems;
     private int customerCounter;
     private ArrayList<Customer> customers;
     //Graphics attributes
@@ -72,20 +74,26 @@ public class Supermarket extends javax.swing.JFrame {
         staffComboBox.setLightWeightPopupEnabled(false);
 
         //Add all unique items to a list
-        storeItems = new ArrayList<>();
-        storeItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
-        storeItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
-        storeItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
-        storeItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
-        storeItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
-        storeItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
-        storeItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
-        storeItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
-        storeItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
-        storeItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
-        storeItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
-        storeItems.add(new Item("Heimstel-Jan 25% off", 0.75f, Item.Category.BEER_IN_SALE));
-        storeItems.add(new Item("Moo-Moo Milk 25% off", 1.05f, Item.Category.DAIRY_IN_SALE));
+        departmentItems = new ArrayList<>();
+        departmentItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
+        departmentItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
+        storeItems.addAll(departmentItems);
+
+        aisleItems = new ArrayList<>();
+        aisleItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
+        aisleItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
+        aisleItems.add(new Item("Slurpys", 2.00f, Item.Category.SODA));
+        aisleItems.add(new Item("Ready 2 Eat Lasagne", 2.50f, Item.Category.READY_TO_EAT));
+        aisleItems.add(new Item("Nazi-kraut", 2.80f, Item.Category.VEGTABLES));
+        aisleItems.add(new Item("Tomahawkto", 0.50f, Item.Category.FRUIT));
+        aisleItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
+        aisleItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
+        aisleItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
+        aisleItems.add(new Item("Heimstel-Jan 25% off", 0.75f, Item.Category.BEER_IN_SALE));
+        aisleItems.add(new Item("Moo-Moo Milk 25% off", 1.05f, Item.Category.DAIRY_IN_SALE));
+       
+        storeItems.addAll(aisleItems);
+
 
         //Create aisles
 
@@ -94,41 +102,41 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.BEER);
         aisleCategories.add(Category.LIQUOR);
         aisleCategories.add(Category.WINE);
-        aisles.add(new Aisle("Liquor", new Vector2f(150, 50), aisleCategories, storeItems));
+        aisles.add(new Aisle("Liquor", new Vector2f(150, 50), aisleCategories, aisleItems));
         lblLiqour.setText("Liquor");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SPREAD);
         aisleCategories.add(Category.BREAKFAST);
-        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, storeItems));
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, aisleItems));
         lblLunchAndBreakfast.setText("Lunch & Breakfast");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
         aisleCategories.add(Category.DAIRY);
-        aisles.add(new Aisle("Cooling", new Vector2f(150, 125), aisleCategories, storeItems));
+        aisles.add(new Aisle("Cooling", new Vector2f(150, 125), aisleCategories, aisleItems));
         lblCooling.setText("Cooling");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SNACK);
         aisleCategories.add(Category.SODA);
         aisleCategories.add(Category.CAFFEINE);
-        aisles.add(new Aisle("Luxury", new Vector2f(250, 50), aisleCategories, storeItems));
+        aisles.add(new Aisle("Luxury", new Vector2f(250, 50), aisleCategories, aisleItems));
         lblLuxury.setText("Luxury");
-        
-        
+
+
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SPICES);
         aisleCategories.add(Category.FOREIGN);
         aisleCategories.add(Category.PRESERVATION);
-        aisles.add(new Aisle("Durable", new Vector2f(250, 275), aisleCategories, storeItems));
+        aisles.add(new Aisle("Durable", new Vector2f(250, 275), aisleCategories, aisleItems));
         lblDurable.setText("Durable");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.VEGTABLES);
         aisleCategories.add(Category.FRUIT);
-        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(250, 350), aisleCategories, storeItems));
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(250, 350), aisleCategories, aisleItems));
         label10.setText("Vegtables & Fruit");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.NONFOOD);
-        aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, storeItems));
+        aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, aisleItems));
         lblNonfoon.setText("Nonfood");
 
         aisleCategories = new ArrayList<>();
@@ -139,9 +147,9 @@ public class Supermarket extends javax.swing.JFrame {
         
         //Create departments
         departments = new ArrayList<>();
-        bakery = new Department("Bakery", new Vector2f(100, 190), Category.BREAD, storeItems);
+        bakery = new Department("Bakery", new Vector2f(100, 190), Category.BREAD, departmentItems);
         departments.add(bakery);
-        butchery = new Department("Butchery", new Vector2f(100, 220), Category.MEAT, storeItems);
+        butchery = new Department("Butchery", new Vector2f(100, 220), Category.MEAT, departmentItems);
         departments.add(butchery);
 
         //Create checkouts
@@ -167,7 +175,7 @@ public class Supermarket extends javax.swing.JFrame {
         staticLocations.add(doorway);
 
         //Create Staff members
-        unloader = new Unloader("Jannes Panzerfaust", storage.getLocation(), storage, truck, storeItems);
+        unloader = new Unloader("Jannes Panzerfaust", storage.getLocation(), storage, truck, aisleItems);
 
         baker = new Artisan("Bartje Zaanbrood", storage.getLocation(), bakery);
         butcher = new Artisan("Timo Gehaktbal", storage.getLocation(), butchery);
@@ -214,6 +222,16 @@ public class Supermarket extends javax.swing.JFrame {
 
         //List of all people
         people = new ArrayList<>();
+
+        //Fills the departmentlistst
+        lstDepartment1.add("Bakery makes:");
+        lstDepartment2.add("Butchery makes:");
+        for (String s : departments.get(0).getItemNames()) {
+            lstDepartment1.add(s);
+        }
+        for (String s : departments.get(1).getItemNames()) {
+            lstDepartment2.add(s);
+        }
     }
 
     /**
@@ -272,6 +290,17 @@ public class Supermarket extends javax.swing.JFrame {
         lblItems = new java.awt.Label();
         lstOtherStaffInfo = new java.awt.List();
         lblOtherStaffInfo = new java.awt.Label();
+        jPanel7 = new javax.swing.JPanel();
+        textField1 = new java.awt.TextField();
+        textArea1 = new java.awt.TextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        department1textpane = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextPane2 = new javax.swing.JTextPane();
+        lstDepartment1 = new java.awt.List();
+        lstDepartment2 = new java.awt.List();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -587,6 +616,39 @@ public class Supermarket extends javax.swing.JFrame {
 
         Panes.addTab("Staff", jPanel6);
 
+        textField1.setText("textField1");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jScrollPane3.setViewportView(department1textpane);
+
+        jScrollPane4.setViewportView(jTextPane2);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lstDepartment1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(lstDepartment2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lstDepartment2, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                    .addComponent(lstDepartment1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        Panes.addTab("Departments", jPanel7);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -675,7 +737,6 @@ public class Supermarket extends javax.swing.JFrame {
      */
     private void addEnteringCustomers() {
         if (customers.size() < MAX_CUSTOMERS) {
-
             if (chanceOf(CHANCE_OF_ENTERING)) {
                 ArrayList<Customer.Stereotype> stereotype;
                 do {
@@ -689,8 +750,7 @@ public class Supermarket extends javax.swing.JFrame {
 
 
                 customerCounter++;
-                String name = "#" + customerCounter;
-                Customer customer = new Customer(name, doorway.getLocation(), stereotype.get(0), storeItems);
+                Customer customer = new Customer("#" + customerCounter, doorway.getLocation(), stereotype.get(0), storeItems);
                 customer.update(staticLocations);
 
                 customers.add(customer);
@@ -736,13 +796,13 @@ public class Supermarket extends javax.swing.JFrame {
                     Stocker formerStocker = null;
                     for (Stocker stocker : stockers) {
                         if (stocker.isWaiting()) {
-                            Cashier cashier = new Cashier(stocker.getName(), stocker.getLocation(), currentCheckout);
+                            currentCheckout.setManned(true);
+                            Cashier cashier = new Cashier(stocker.getName(), storage.getLocation(), currentCheckout);
                             cashiers.add(cashier);
                             workforce.add(cashier);
                             stocker.kill();
                             formerStocker = stocker;
                             cashier.update(staticLocations);
-                            currentCheckout.setManned(true);
                             break;
                         }
                     }
@@ -859,9 +919,6 @@ public class Supermarket extends javax.swing.JFrame {
     private void interfaceUpdate() {
         if (Panes.getSelectedIndex() == 0) {
             try {
-                //cleans the shoppingcart list from the customers
-                lstShoppingCart.removeAll();
-
                 //cleans the other info list from the customers
                 lstOtherCustomerInfo.removeAll();
                 lstOtherCustomerInfo.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
@@ -877,11 +934,19 @@ public class Supermarket extends javax.swing.JFrame {
             try {
                 lstShoppingList.removeAll();
                 lstShoppingCart.removeAll();
-                for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
-                    lstShoppingList.add(item.getName());
+                if (customers.get(customerSelector.getSelectedIndex()).getShoppingList().size() > 0) {
+                    for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
+                        lstShoppingList.add(item.getName());
+                    }
+                } else {
+                    lstShoppingList.add("Currently has nothing...");
                 }
-                for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingBasket()) {
-                    lstShoppingCart.add(item.getName());
+                if (customers.get(customerSelector.getSelectedIndex()).getShoppingBasket().size() > 0) {
+                    for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingBasket()) {
+                        lstShoppingCart.add(item.getName());
+                    }
+                } else {
+                    lstShoppingCart.add("Currently has nothing...");
                 }
             } catch (Exception e) {
             }
@@ -915,11 +980,15 @@ public class Supermarket extends javax.swing.JFrame {
             for (int i = 0; i < aislesListboxList.size(); i++) {
                 if (aisles.get(i).isChanged()) {
                     aislesListboxList.get(i).removeAll();
-                    for (Item item : aisles.get(i).getItems()) {
-                        aislesListboxList.get(i).add(item.getName());
+                    try {
+                        for (Item item : aisles.get(i).getItems()) {
+                            aislesListboxList.get(i).add(item.getName());
+                        }
+                    } catch (Exception e) {
                     }
+
+                    aisles.get(i).setChanged(false);
                 }
-                aisles.get(i).setChanged(false);
             }
             
             if (sales.isChanged()) {
@@ -935,11 +1004,10 @@ public class Supermarket extends javax.swing.JFrame {
             //update for the storage items list
             if (storage.isChanged()) {
                 lstStorage.clear();
-                int counter = 0;
-                for (Item item : storeItems) {
-                    counter = storage.getItemCount(item.getName());
-                    if (counter > 0) {
-                        lstStorage.add(counter + " " + item.getName());
+                for (Item item : aisleItems) {
+                    int count = storage.getItemCount(item.getName());
+                    if (count > 0) {
+                        lstStorage.add(count + " " + item.getName() + " stored");
                     }
                 }
                 storage.setIsChanged(false);
@@ -1043,13 +1111,20 @@ public class Supermarket extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane Panes;
     private javax.swing.JComboBox customerSelector;
+    private javax.swing.JTextPane department1textpane;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextPane jTextPane2;
     private java.awt.Label label10;
     private java.awt.Label label12;
     private java.awt.Label lblCooling;
@@ -1068,6 +1143,8 @@ public class Supermarket extends javax.swing.JFrame {
     private javax.swing.JLabel lblStaffName;
     private java.awt.List listLuxury;
     private java.awt.List lstCooling;
+    private java.awt.List lstDepartment1;
+    private java.awt.List lstDepartment2;
     private java.awt.List lstDurable;
     private java.awt.List lstItems;
     private java.awt.List lstLiqour;
@@ -1087,6 +1164,8 @@ public class Supermarket extends javax.swing.JFrame {
     private java.awt.PopupMenu popupMenu1;
     private java.awt.PopupMenu popupMenu2;
     private javax.swing.JComboBox staffComboBox;
+    private java.awt.TextArea textArea1;
+    private java.awt.TextField textField1;
     private javax.swing.JTextArea txtConsole;
     // End of variables declaration//GEN-END:variables
 }

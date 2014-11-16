@@ -22,7 +22,7 @@ public class Stocker extends Staff {
     private Action action;
     private Storage storage;
     private Aisle aisle;
-    private int runs;
+    private int currentRun;
 
     /**
      * Make a new stocker, this person will slowly fill up all the aisles
@@ -37,7 +37,7 @@ public class Stocker extends Staff {
         action = Action.WAITING;
         this.storage = storage;
         aisle = null;
-        runs = 0;
+        currentRun = 0;
     }
 
     public Aisle getAisle() {
@@ -93,7 +93,7 @@ public class Stocker extends Staff {
                     break;
                 }
 
-                if (tempAisle == this.getAisle() && runs == 0) {
+                if (tempAisle == this.getAisle() && currentRun == 0) {
                     tempAisle.setManned(false);
                 }
             }
@@ -134,8 +134,8 @@ public class Stocker extends Staff {
                 while (true) {
                     switch (action) {
                         case GET_ITEMS:
-                            if (runs == NUMBER_OF_RUNS_PER_AISLE) {
-                                runs = 0;
+                            if (currentRun == NUMBER_OF_RUNS_PER_AISLE) {
+                                currentRun = 0;
                                 aisle = null;
                                 action = Action.WAITING;
                             }
@@ -151,7 +151,7 @@ public class Stocker extends Staff {
                         case STORE_ITEMS:
                             gotoLocation(aisle.getName(), staticLocations);
                             storeItemsInAisle();
-                            runs++;
+                            currentRun++;
                             action = Action.GET_ITEMS;
                             break;
                         case WAITING:

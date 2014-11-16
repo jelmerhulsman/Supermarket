@@ -403,7 +403,7 @@ public class Customer extends Person {
                             if (saldo < beginWithSaldo && shoppingBasket.size() == collectedItemsCount) {
                                 gotoLocation("Doorway", staticLocations);
                                 action = Action.LEAVING;
-                                System.out.println("Customer " + name + "is now leaving...");
+                                System.out.println("Customer " + name + " has left.");
                             }
                             break;
                     }
