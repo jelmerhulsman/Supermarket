@@ -51,7 +51,6 @@ public class Supermarket extends javax.swing.JFrame {
     private Artisan butcher;
     private ArrayList<Stocker> stockers;
     private ArrayList<Cashier> cashiers;
-    private ArrayList<Item> storeItems;
     private ArrayList<Item> departmentItems;
     private ArrayList<Item> aisleItems;
     private int customerCounter;
@@ -72,12 +71,10 @@ public class Supermarket extends javax.swing.JFrame {
         g = mapCanvas.getGraphics();
         customerSelector.setLightWeightPopupEnabled(false);
         staffComboBox.setLightWeightPopupEnabled(false);
-
         //Add all unique items to a list
         departmentItems = new ArrayList<>();
         departmentItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
         departmentItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
-        storeItems.addAll(departmentItems);
 
         aisleItems = new ArrayList<>();
         aisleItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
@@ -91,8 +88,6 @@ public class Supermarket extends javax.swing.JFrame {
         aisleItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
         aisleItems.add(new Item("Heimstel-Jan 25% off", 0.75f, Item.Category.BEER_IN_SALE));
         aisleItems.add(new Item("Moo-Moo Milk 25% off", 1.05f, Item.Category.DAIRY_IN_SALE));
-       
-        storeItems.addAll(aisleItems);
 
 
         //Create aisles
@@ -142,7 +137,7 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.BEER_IN_SALE);
         aisleCategories.add(Category.DAIRY_IN_SALE);
-        sales = new Sales("Sales", new Vector2f(100, 50), aisleCategories, storeItems);
+        sales = new Sales("Sales", new Vector2f(100, 50), aisleCategories, aisleItems);
         lblSales.setText("Sales");
         
         //Create departments
@@ -750,7 +745,7 @@ public class Supermarket extends javax.swing.JFrame {
 
 
                 customerCounter++;
-                Customer customer = new Customer("#" + customerCounter, doorway.getLocation(), stereotype.get(0), storeItems);
+                Customer customer = new Customer("#" + customerCounter, doorway.getLocation(), stereotype.get(0), aisleItems);
                 customer.update(staticLocations);
 
                 customers.add(customer);

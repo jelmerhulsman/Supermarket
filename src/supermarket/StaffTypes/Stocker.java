@@ -6,6 +6,7 @@ import supermarket.Aisle;
 import supermarket.Item;
 import supermarket.Item.Category;
 import supermarket.ObjectInShop;
+import supermarket.Sales;
 import supermarket.Storage;
 
 /**
@@ -84,9 +85,9 @@ public class Stocker extends Staff {
      */
     private void chooseAisle(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
+            Sales tempSales = null;
             if (o instanceof Aisle) {
                 Aisle tempAisle = (Aisle) o;
-
                 if (tempAisle.getItems().isEmpty() && !tempAisle.isManned()) {
                     setAisle(tempAisle);
                     tempAisle.setManned(true);
@@ -95,6 +96,18 @@ public class Stocker extends Staff {
 
                 if (tempAisle == this.getAisle() && currentRun == 0) {
                     tempAisle.setManned(false);
+                }
+            }
+            if (o instanceof Sales) {
+                tempSales = (Sales) o;
+                if (tempSales.getItems().isEmpty() && !tempSales.isManned()) {
+                    setAisle(tempSales);
+                    tempSales.setManned(true);
+                    break;
+                }
+
+                if (tempSales == this.getAisle() && currentRun == 0) {
+                    tempSales.setManned(false);
                 }
             }
         }
