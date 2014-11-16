@@ -14,7 +14,7 @@ import supermarket.Truck;
 public class Unloader extends Staff {
 
     private final int MIN_STOCK = 5;
-    private final int MAX_STOCK = 25;
+    private final int MAX_STOCK = 30;
     private final int ORDER_TIME_PER_ITEM_GROUP = 1000;
 
     private enum Action {

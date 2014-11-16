@@ -316,11 +316,7 @@ public class Customer extends Person {
             sleep(ITEM_SEARCH_TIME);
 
             if (aisleItemNames.contains(item.getName())) {
-                if (aisle.getStockCount(item) > 0) {
-                    while (!item.isAvailable()) {
-                        sleep(100);
-                    }
-                    
+                if (aisle.getStockCount(item) > 0 && item.isAvailable()) {
                     if (aisle instanceof Sales) {
                         item.discount();
                     }
@@ -328,7 +324,7 @@ public class Customer extends Person {
                     shoppingBasket.add(aisle.pickFromShelve(item));
                     System.out.println("Customer " + name + " picked " + item.getName() + " up from the shelves.");
                 } else {
-                    System.out.println("Customer " + name + " -> " + item.getName() + " has no stock.");
+                    System.out.println("Customer " + name + " -> " + item.getName() + " not available.");
                 }
 
                 sleep(ITEM_INTERACTION_TIME);

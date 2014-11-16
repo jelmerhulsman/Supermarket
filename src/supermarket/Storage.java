@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
-import supermarket.Item.Category;
 
 /**
  *
