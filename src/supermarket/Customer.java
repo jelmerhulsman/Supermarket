@@ -316,7 +316,16 @@ public class Customer extends Person {
             sleep(ITEM_SEARCH_TIME);
 
             if (aisleItemNames.contains(item.getName())) {
+<<<<<<< HEAD
                 if (aisle.getStockCount(item) > 0 && item.isAvailable()) {
+=======
+                if (aisle.getStockCount(item) > 0) {
+                    if (!item.isAvailable()) {
+                        sleep(100);
+                        item.setAvailable(true);
+                    }
+                    
+>>>>>>> bfb31c1836a7f08d7a4c42f1fd13a1719992b3a8
                     if (aisle instanceof Sales) {
                         item.discount();
                     }
