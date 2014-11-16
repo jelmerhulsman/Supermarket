@@ -94,7 +94,7 @@ public class Storage extends ObjectInShop {
                     hql = "DELETE FROM supermarket.Item WHERE id = '" + item.getId() + "'";
                     Query delete = session.createQuery(hql);
                     delete.executeUpdate();
-                } catch (StaleStateException e) {
+                } catch (HibernateException e) {
                 } //Hibernate bug
 
             }

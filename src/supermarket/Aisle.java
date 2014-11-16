@@ -166,6 +166,11 @@ public class Aisle extends ObjectInShop {
         changed = true;
     }
     
+    /**
+     * Returns wether this aisle is full or not
+     * @param item the specified item
+     * @return 
+     */
     public boolean fullShelve(Item item) {
         int counter = 0;
         for (Item i : stock)

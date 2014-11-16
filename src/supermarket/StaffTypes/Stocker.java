@@ -156,6 +156,7 @@ public class Stocker extends Staff {
                         case WAITING:
                             if (aisle == null) {
                                 chooseAisle(staticLocations);
+                                action = Action.WAITING;
                             } else {
                                 if (!storage.getAllItems().isEmpty()) {
                                     action = Action.GET_ITEMS;

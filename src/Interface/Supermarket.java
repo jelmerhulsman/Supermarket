@@ -84,30 +84,19 @@ public class Supermarket extends javax.swing.JFrame {
         storeItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
 
         //Create aisles
-        aisles = new ArrayList<>();
-        ArrayList<Category> aisleCategories = new ArrayList<>(); //start primary department
-        aisleCategories.add(Category.SPREAD);
-        aisleCategories.add(Category.BREAKFAST);
-        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, storeItems));
-        lblLunchAndBreakfast.setText("Lunch & Breakfast");
-        aisleCategories = new ArrayList<>();
-        aisleCategories.add(Category.SPICES);
-        aisleCategories.add(Category.FOREIGN);
-        aisleCategories.add(Category.PRESERVATION);
-        aisles.add(new Aisle("Durable", new Vector2f(250, 275), aisleCategories, storeItems));
-        lblDurable.setText("Durable");
-        aisleCategories = new ArrayList<>();
-        aisleCategories.add(Category.VEGTABLES);
-        aisleCategories.add(Category.FRUIT);
-        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(250, 350), aisleCategories, storeItems));
-        label10.setText("Vegtables & Fruit"); //end primary department
 
-        aisleCategories = new ArrayList<>(); //start secondary department
+        aisles = new ArrayList<>();
+        ArrayList<Category> aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.BEER);
         aisleCategories.add(Category.LIQUOR);
         aisleCategories.add(Category.WINE);
         aisles.add(new Aisle("Liquor", new Vector2f(150, 50), aisleCategories, storeItems));
         lblLiqour.setText("Liquor");
+        aisleCategories = new ArrayList<>();
+        aisleCategories.add(Category.SPREAD);
+        aisleCategories.add(Category.BREAKFAST);
+        aisles.add(new Aisle("Lunch & Breakfast", new Vector2f(250, 200), aisleCategories, storeItems));
+        lblLunchAndBreakfast.setText("Lunch & Breakfast");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.FROZEN);
         aisleCategories.add(Category.READY_TO_EAT);
@@ -120,10 +109,23 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.CAFFEINE);
         aisles.add(new Aisle("Luxury", new Vector2f(250, 50), aisleCategories, storeItems));
         lblLuxury.setText("Luxury");
+        
+        
+        aisleCategories = new ArrayList<>();
+        aisleCategories.add(Category.SPICES);
+        aisleCategories.add(Category.FOREIGN);
+        aisleCategories.add(Category.PRESERVATION);
+        aisles.add(new Aisle("Durable", new Vector2f(250, 275), aisleCategories, storeItems));
+        lblDurable.setText("Durable");
+        aisleCategories = new ArrayList<>();
+        aisleCategories.add(Category.VEGTABLES);
+        aisleCategories.add(Category.FRUIT);
+        aisles.add(new Aisle("Vegtables & Fruit", new Vector2f(250, 350), aisleCategories, storeItems));
+        label10.setText("Vegtables & Fruit");
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.NONFOOD);
         aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, storeItems));
-        lblNonfoon.setText("Nonfood"); //end secondary department
+        lblNonfoon.setText("Nonfood");
 
         //Create departments
         departments = new ArrayList<>();
