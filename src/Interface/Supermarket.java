@@ -109,8 +109,8 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.CAFFEINE);
         aisles.add(new Aisle("Luxury", new Vector2f(250, 50), aisleCategories, storeItems));
         lblLuxury.setText("Luxury");
-        
-        
+
+
         aisleCategories = new ArrayList<>();
         aisleCategories.add(Category.SPICES);
         aisleCategories.add(Category.FOREIGN);
@@ -829,9 +829,6 @@ public class Supermarket extends javax.swing.JFrame {
     private void interfaceUpdate() {
         if (Panes.getSelectedIndex() == 0) {
             try {
-                //cleans the shoppingcart list from the customers
-                lstShoppingCart.removeAll();
-
                 //cleans the other info list from the customers
                 lstOtherCustomerInfo.removeAll();
                 lstOtherCustomerInfo.add("Name: " + customers.get(customerSelector.getSelectedIndex()).getName());
@@ -847,11 +844,19 @@ public class Supermarket extends javax.swing.JFrame {
             try {
                 lstShoppingList.removeAll();
                 lstShoppingCart.removeAll();
-                for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
-                    lstShoppingList.add(item.getName());
+                if (customers.get(customerSelector.getSelectedIndex()).getShoppingList().size() > 0) {
+                    for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingList()) {
+                        lstShoppingList.add(item.getName());
+                    }
+                } else {
+                    lstShoppingList.add("Currently has nothing...");
                 }
-                for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingBasket()) {
-                    lstShoppingCart.add(item.getName());
+                if (customers.get(customerSelector.getSelectedIndex()).getShoppingBasket().size() > 0) {
+                    for (Item item : customers.get(customerSelector.getSelectedIndex()).getShoppingBasket()) {
+                        lstShoppingCart.add(item.getName());
+                    }
+                } else {
+                    lstShoppingCart.add("Currently has nothing...");
                 }
             } catch (Exception e) {
             }
@@ -909,7 +914,7 @@ public class Supermarket extends javax.swing.JFrame {
             try {
                 lstItems.removeAll();
                 lstOtherStaffInfo.removeAll();
-
+       
                 if (workforce.get(staffComboBox.getSelectedIndex()).getItems().size() > 0) {
                     for (Item item : workforce.get(staffComboBox.getSelectedIndex()).getItems()) {
                         lstItems.add(item.getName());
