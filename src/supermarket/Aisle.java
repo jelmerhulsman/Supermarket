@@ -12,7 +12,7 @@ public class Aisle extends ObjectInShop {
 
     private final int ITEM_LIMIT_PER_SHELVE = 25;
     private ArrayList<Category> categories;
-    private ArrayList<Item> items;
+    protected ArrayList<Item> items;
     private ArrayList<Item> stock;
     private boolean changed;
     private boolean manned;
@@ -22,15 +22,15 @@ public class Aisle extends ObjectInShop {
      * @param name The name of this aisle
      * @param location The location in the store
      * @param categories List of categories which this aisle will contain
-     * @param storeItems All the available items in the supermarket
+     * @param aisleItems All the available items in the supermarket
      */
-    public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
+    public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> aisleItems) {
         super(name, location);
         
         this.categories = new ArrayList<>();
         this.categories.addAll(categories);
         
-        createListOfAisleItems(categories, storeItems);
+        createListOfAisleItems(categories, aisleItems);
         stock = new ArrayList<>();
         changed = false;
         manned = false;
@@ -55,13 +55,13 @@ public class Aisle extends ObjectInShop {
     /**
      * Creates a list of items for this aisle
      * @param categories the category
-     * @param storeItems the collection of items
+     * @param aisleItems the collection of items
      */
-    private void createListOfAisleItems(ArrayList<Category> categories, ArrayList<Item> storeItems)
+    private void createListOfAisleItems(ArrayList<Category> categories, ArrayList<Item> aisleItems)
     {
         items = new ArrayList<>();
         
-        for (Item item : storeItems)
+        for (Item item : aisleItems)
         {
             if (categories.contains(item.getCategory()))
             {

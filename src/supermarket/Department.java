@@ -19,12 +19,12 @@ public class Department extends ObjectInShop {
      * @param name the name of this department
      * @param location the location of this department
      * @param category the category of the item from this department
-     * @param storeItems all the available items in the simulation
+     * @param departmentItems all the available items in the simulation
      */
-    public Department(String name, Vector2f location, Category category, ArrayList<Item> storeItems) {
+    public Department(String name, Vector2f location, Category category, ArrayList<Item> departmentItems) {
         super(name, location);
 
-        createListOfDepartmentItems(category, storeItems);
+        createListOfDepartmentItems(category, departmentItems);
         customers = new ArrayList<>();
     }
 
@@ -61,12 +61,12 @@ public class Department extends ObjectInShop {
      * Creates a list of items for this department
      *
      * @param category The category which we will be using
-     * @param storeItems all the available items in the simulation
+     * @param departmentItems all the available items in the simulation
      */
-    private void createListOfDepartmentItems(Category category, ArrayList<Item> storeItems) {
+    private void createListOfDepartmentItems(Category category, ArrayList<Item> departmentItems) {
         items = new ArrayList<>();
 
-        for (Item item : storeItems) {
+        for (Item item : departmentItems) {
             if (category == item.getCategory()) {
                 items.add(item);
             }

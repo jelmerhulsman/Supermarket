@@ -129,20 +129,17 @@ public class Customer extends Person {
                 blackList.add(Category.SPICES);
                 blackList.add(Category.FOREIGN);
                 blackList.add(Category.CAFFEINE);
-                likingList.add(Category.DAIRY_IN_SALE);
                 likingList.add(Category.VEGTABLES);
                 likingList.add(Category.DAIRY);
                 break;
             case MOTHER:
                 blackList.add(Category.READY_TO_EAT);
-                likingList.add(Category.DAIRY_IN_SALE);
                 break;
             case STUDENT:
                 blackList.add(Category.NONFOOD);
                 blackList.add(Category.WINE);
                 blackList.add(Category.VEGTABLES);
                 blackList.add(Category.FRUIT);
-                likingList.add(Category.BEER_IN_SALE);
                 likingList.add(Category.BEER);
                 likingList.add(Category.LIQUOR);
                 likingList.add(Category.CAFFEINE);
@@ -151,7 +148,6 @@ public class Customer extends Person {
                 break;
             case WORKER:
                 blackList.add(Category.NONFOOD);
-                likingList.add(Category.BEER_IN_SALE);
                 likingList.add(Category.BEER);
                 likingList.add(Category.LIQUOR);
                 likingList.add(Category.FROZEN);
@@ -203,6 +199,27 @@ public class Customer extends Person {
                 for (Item item : shoppingList) {
                     if (departmentItemNames.contains(item.getName())) {
                         return temp;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the first aisle to go to
+     *
+     * @param staticLocations a collection of all possible locations
+     * @return
+     */
+    private Sales getSalesAisle(ArrayList<ObjectInShop> staticLocations) {
+        for (ObjectInShop o : staticLocations) {
+            if (o instanceof Sales) {
+                Sales sales = (Sales) o;
+                for (Item item : shoppingList) {
+                    if (sales.getItems().contains(item)) {
+                        return sales;
                     }
                 }
             }
@@ -300,6 +317,9 @@ public class Customer extends Person {
 
             if (aisleItemNames.contains(item.getName())) {
                 if (aisle.getItemCount(item) > 0 && aisle.getItems().get(0).isAvailable()) {
+                    if (aisle instanceof Sales) {
+                        item.discount();
+                    }
                     shoppingBasket.add(aisle.pickFromShelve(item));
                 }
 
@@ -374,10 +394,16 @@ public class Customer extends Person {
                             }
                             break;
                         case SHOPPING_AT_AISLES:
-                            Aisle aisle = getFirstAisle(staticLocations);
+                            Sales sales = getSalesAisle(staticLocations);
+                            if (sales != null) {
+                                gotoLocation(sales.getName(), staticLocations);
+                                getItemsFromAisle(sales);
+                            } else {
+                                Aisle aisle = getFirstAisle(staticLocations);
 
-                            gotoLocation(aisle.getName(), staticLocations);
-                            getItemsFromAisle(aisle);
+                                gotoLocation(aisle.getName(), staticLocations);
+                                getItemsFromAisle(aisle);
+                            }
 
                             if (shoppingList.isEmpty()) {
                                 action = Action.CHOOSING_CHECKOUT;

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "items")
 public class Item {
+    private final int DISCOUNT_PERCENTAGE = 20;
 
     @Id
     @GeneratedValue
@@ -17,7 +18,7 @@ public class Item {
 
     public enum Category {
 
-        BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICES, NONFOOD, FROZEN, PRESERVATION, BREAD, MEAT, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT, BEER_IN_SALE, DAIRY_IN_SALE
+        BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICES, NONFOOD, FROZEN, PRESERVATION, BREAD, MEAT, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT
     }
     @Column(name = "name")
     private String name;
@@ -30,14 +31,6 @@ public class Item {
     private boolean available;
 
     public Item() {
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 
     /**
@@ -62,6 +55,10 @@ public class Item {
         this.name = name;
         this.price = price;
         this.category = category;
+    }
+    
+    public void discount() {
+        price *= (100f - DISCOUNT_PERCENTAGE) / 100f;
     }
 
     /**
@@ -134,5 +131,23 @@ public class Item {
      */
     public void setCategory(Category category) {
         this.category = category;
+    }
+    
+    /**
+     * Sets availabillity for this item
+     * 
+     * @param available 
+     */
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    /**
+     * Gets availabillity of this item
+     * 
+     * @return available The availability of this item
+     */
+    public boolean isAvailable() {
+        return available;
     }
 }
