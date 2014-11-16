@@ -10,8 +10,8 @@ import supermarket.Item.Category;
  */
 public class Sales extends Aisle {
 
-    public Sales(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
-        super(name, location, categories, storeItems);
+    public Sales(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> aisleItems) {
+        super(name, location, categories, aisleItems);
     }
 
     public void newSales(ArrayList<Item> aisleItems) {

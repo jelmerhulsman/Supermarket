@@ -73,12 +73,12 @@ public class Supermarket extends javax.swing.JFrame {
         g = mapCanvas.getGraphics();
         customerSelector.setLightWeightPopupEnabled(false);
         staffComboBox.setLightWeightPopupEnabled(false);
-
+        
         //Add all unique items to a list
+        storeItems = new ArrayList<>();
         departmentItems = new ArrayList<>();
         departmentItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
         departmentItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
-        storeItems.addAll(departmentItems);
 
         aisleItems = new ArrayList<>();
         aisleItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
@@ -90,7 +90,6 @@ public class Supermarket extends javax.swing.JFrame {
         aisleItems.add(new Item("Moo-Moo Milk", 1.25f, Item.Category.DAIRY));
         aisleItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
         aisleItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
-
         storeItems.addAll(aisleItems);
 
 
@@ -141,7 +140,7 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.NONFOOD);
         aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, aisleItems));
         lblNonfoon.setText("Nonfood");
-
+        
         //Create departments
         departments = new ArrayList<>();
         bakery = new Department("Bakery", new Vector2f(100, 190), Category.BREAD, departmentItems);
@@ -223,6 +222,8 @@ public class Supermarket extends javax.swing.JFrame {
         //Fills the departmentlistst
         lstDepartment1.add("Bakery makes:");
         lstDepartment2.add("Butchery makes:");
+        
+        //Graphics for department
         for (String s : departments.get(0).getItemNames()) {
             lstDepartment1.add(s);
         }
