@@ -327,6 +327,8 @@ public class Customer extends Person {
                     
                     shoppingBasket.add(aisle.pickFromShelve(item));
                     System.out.println("Customer " + name + " picked " + item.getName() + " up from the shelves.");
+                } else {
+                    System.out.println("Customer " + name + " -> " + item.getName() + " has no stock.");
                 }
 
                 sleep(ITEM_INTERACTION_TIME);
@@ -419,7 +421,7 @@ public class Customer extends Person {
                             if (shoppingBasket.isEmpty()) {
                                 gotoLocation("Doorway", staticLocations);
                                 action = Action.LEAVING;
-                                System.out.println("Customer " + name + "is now leaving (without paying)...");
+                                System.out.println("Customer " + name + "is now leaving (without any items)...");
                             } else {
                                 Checkout checkout = chooseCheckout(staticLocations); //Choose from far away
                                 gotoLocation(checkout.getName(), staticLocations);
