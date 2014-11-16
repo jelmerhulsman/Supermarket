@@ -73,12 +73,12 @@ public class Supermarket extends javax.swing.JFrame {
 
         //Add all unique items to a list
         storeItems = new ArrayList<>();
-        
+
         departmentItems = new ArrayList<>();
         departmentItems.add(new Item("Spareribs", 5.30f, Item.Category.MEAT));
         departmentItems.add(new Item("Gluten-free Bread", 4.75f, Item.Category.BREAD));
         storeItems.addAll(departmentItems);
-        
+
         aisleItems = new ArrayList<>();
         aisleItems.add(new Item("Heimstel-Jan", 0.80f, Item.Category.BEER));
         aisleItems.add(new Item("Ricewaffle", 1.20f, Item.Category.BREAKFAST));
@@ -90,7 +90,7 @@ public class Supermarket extends javax.swing.JFrame {
         aisleItems.add(new Item("Lice", 1.00f, Item.Category.FOREIGN));
         aisleItems.add(new Item("Ass-Whipe Deluxe", 1.40f, Item.Category.NONFOOD));
         storeItems.addAll(aisleItems);
-        
+
 
         //Create aisles
 
@@ -212,14 +212,16 @@ public class Supermarket extends javax.swing.JFrame {
 
         //List of all people
         people = new ArrayList<>();
-        
+
         //Fills the departmentlistst
         lstDepartment1.add("Bakery makes:");
         lstDepartment2.add("Butchery makes:");
-        for(String s :departments.get(0).getItemNames())
+        for (String s : departments.get(0).getItemNames()) {
             lstDepartment1.add(s);
-        for(String s :departments.get(1).getItemNames())
+        }
+        for (String s : departments.get(1).getItemNames()) {
             lstDepartment2.add(s);
+        }
     }
 
     /**
@@ -949,10 +951,13 @@ public class Supermarket extends javax.swing.JFrame {
             for (int i = 0; i < aislesListboxList.size(); i++) {
                 if (aisles.get(i).isChanged()) {
                     aislesListboxList.get(i).removeAll();
-                    for (Item item : aisles.get(i).getItems()) {
-                        aislesListboxList.get(i).add(item.getName());
+                    try {
+                        for (Item item : aisles.get(i).getItems()) {
+                            aislesListboxList.get(i).add(item.getName());
+                        }
+                    } catch (Exception e) {
                     }
-                    
+
                     aisles.get(i).setChanged(false);
                 }
             }
@@ -973,7 +978,7 @@ public class Supermarket extends javax.swing.JFrame {
             try {
                 lstItems.removeAll();
                 lstOtherStaffInfo.removeAll();
-       
+
                 if (workforce.get(staffComboBox.getSelectedIndex()).getItems().size() > 0) {
                     for (Item item : workforce.get(staffComboBox.getSelectedIndex()).getItems()) {
                         lstItems.add(item.getName());
