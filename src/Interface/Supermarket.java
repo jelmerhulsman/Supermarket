@@ -96,7 +96,7 @@ public class Supermarket extends javax.swing.JFrame {
         //Create aisles
         ArrayList<Category> aisleCategories = new ArrayList<>();
         aisleCategories.addAll(Arrays.asList(Category.values()));
-        sales = new Sales("Sales", new Vector2f(100, 50), aisleCategories, aisleItems);
+        sales = new Sales("Sales", new Vector2f(100, 50), aisleCategories);
         lblSales.setText("Sales");
 
         aisles = new ArrayList<>();
@@ -177,15 +177,14 @@ public class Supermarket extends javax.swing.JFrame {
         butcher = new Artisan("Timo Gehaktbal", storage.getLocation(), butchery);
 
         stockers = new ArrayList<>();
-        stockers.add(new Stocker("Jan de Bierman", storage.getLocation(), storage));
-        stockers.add(new Stocker("Jip de Chip", storage.getLocation(), storage));
-        stockers.add(new Stocker("Grietje Gezond", storage.getLocation(), storage));
-        stockers.add(new Stocker("Kees Koeler", storage.getLocation(), storage));
+        stockers.add(new Stocker("Jan de Bierman", storage.getLocation(), storage, aisleItems));
+        stockers.add(new Stocker("Jip de Chip", storage.getLocation(), storage, aisleItems));
+        stockers.add(new Stocker("Grietje Gezond", storage.getLocation(), storage, aisleItems));
+        stockers.add(new Stocker("Kees Koeler", storage.getLocation(), storage, aisleItems));
 //      stockers.add(new Stocker("Jacob Dubbelfris", storage.getLocation(), storage));
 //      stockers.add(new Stocker("Pietje Nietsnut", storage.getLocation(), storage));
 //      stockers.add(new Stocker("Achmed Joseph Adam Gelovig", storage.getLocation(), storage));
 //      stockers.add(new Stocker("Triensje Treintje", storage.getLocation(), storage));
-
 
         cashiers = new ArrayList<>();
         cashiers.add(new Cashier("Johanna Doekoe", storage.getLocation(), checkouts.get(0)));
@@ -765,7 +764,7 @@ public class Supermarket extends javax.swing.JFrame {
         ArrayList<Cashier> formerCashiers = new ArrayList<>();
         for (Cashier cashier : cashiers) {
             if (cashier.isWaiting()) {
-                Stocker stocker = new Stocker(cashier.getName(), cashier.getLocation(), storage);
+                Stocker stocker = new Stocker(cashier.getName(), cashier.getLocation(), storage, aisleItems);
                 stocker.gotoLocation(storage.getName(), staticLocations);
                 stockers.add(stocker);
                 workforce.add(stocker);
@@ -781,7 +780,7 @@ public class Supermarket extends javax.swing.JFrame {
     }
 
     /**
-     * Checks the checkouts if they need an extra cashiere
+     * Handles the checkouts if they need an extra cashiere
      */
     private void handleCheckouts() {
         for (int i = 1; i < checkouts.size(); i++) {

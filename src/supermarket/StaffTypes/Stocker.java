@@ -23,7 +23,8 @@ public class Stocker extends Staff {
     private Action action;
     private Storage storage;
     private Aisle aisle;
-    private int currentRun;
+    private int runs;
+    private ArrayList<Item> aisleItems;
 
     /**
      * Make a new stocker, this person will slowly fill up all the aisles
@@ -32,13 +33,14 @@ public class Stocker extends Staff {
      * @param location the starting location of this stocker
      * @param storage the starting workplace of this stocker
      */
-    public Stocker(String name, Vector2f location, Storage storage) {
+    public Stocker(String name, Vector2f location, Storage storage, ArrayList<Item> aisleItems) {
         super(name, location);
 
         action = Action.WAITING;
         this.storage = storage;
         aisle = null;
-        currentRun = 0;
+        runs = 0;
+        this.aisleItems = aisleItems;
     }
 
     public Aisle getAisle() {
@@ -85,29 +87,20 @@ public class Stocker extends Staff {
      */
     private void chooseAisle(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
-            Sales tempSales = null;
-            if (o instanceof Aisle) {
-                Aisle tempAisle = (Aisle) o;
-                if (tempAisle.getItems().isEmpty() && !tempAisle.isManned()) {
-                    setAisle(tempAisle);
-                    tempAisle.setManned(true);
-                    break;
-                }
-
-                if (tempAisle == this.getAisle() && currentRun == 0) {
-                    tempAisle.setManned(false);
-                }
-            }
             if (o instanceof Sales) {
-                tempSales = (Sales) o;
-                if (tempSales.getItems().isEmpty() && !tempSales.isManned()) {
-                    setAisle(tempSales);
-                    tempSales.setManned(true);
+                Sales temp = (Sales) o;
+                if (temp.isEmpty() && !temp.isManned()) {
+                    temp.giveNewSales(aisleItems);
+                    temp.setManned(true);
+                    aisle = temp;
                     break;
                 }
-
-                if (tempSales == this.getAisle() && currentRun == 0) {
-                    tempSales.setManned(false);
+            } else if (o instanceof Aisle) {
+                Aisle temp = (Aisle) o;
+                if (temp.isEmpty() && !temp.isManned()) {
+                    temp.setManned(true);
+                    aisle = temp;
+                    break;
                 }
             }
         }
@@ -147,15 +140,24 @@ public class Stocker extends Staff {
                 while (true) {
                     switch (action) {
                         case GET_ITEMS:
-                            if (currentRun == NUMBER_OF_RUNS_PER_AISLE) {
-                                currentRun = 0;
+                            if (aisle instanceof Sales) {
+                                Sales sales = (Sales) aisle;
+                                if (!sales.isStocked()) {
+                                    sales.stocked();
+                                } else {
+                                    runs = 0;
+                                    aisle.setManned(false);
+                                    aisle = null;
+                                }
+                            } else if (runs == NUMBER_OF_RUNS_PER_AISLE) {
+                                runs = 0;
+                                aisle.setManned(false);
                                 aisle = null;
-                                action = Action.WAITING;
                             }
+
                             if (storage.getAllItems().isEmpty() || aisle == null) {
                                 action = Action.WAITING;
                             } else {
-                                gotoLocation("Storage", staticLocations);
                                 storeItemsInStorage();
                                 getItemsFromStorage();
                                 action = Action.STORE_ITEMS;
@@ -164,19 +166,20 @@ public class Stocker extends Staff {
                         case STORE_ITEMS:
                             gotoLocation(aisle.getName(), staticLocations);
                             storeItemsInAisle();
-                            currentRun++;
+                            runs++;
                             action = Action.GET_ITEMS;
                             break;
                         case WAITING:
+                            if (locationObject != storage) {
+                                gotoLocation("Storage", staticLocations);
+                            }
+
                             if (aisle == null) {
                                 chooseAisle(staticLocations);
-                                action = Action.WAITING;
+                            } else if (!storage.getAllItems().isEmpty()) {
+                                action = Action.GET_ITEMS;
                             } else {
-                                if (!storage.getAllItems().isEmpty()) {
-                                    action = Action.GET_ITEMS;
-                                } else {
-                                    sleep(1000);
-                                }
+                                sleep(1000);
                             }
                             break;
                     }

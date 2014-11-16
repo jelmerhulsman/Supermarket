@@ -24,7 +24,7 @@ public class Unloader extends Staff {
     private Action action;
     private Storage storage;
     private Truck truck;
-    private ArrayList<Item> shopItems;
+    private ArrayList<Item> aisleItems;
 
     /**
      * Constructor for the Unloader staff member
@@ -32,13 +32,13 @@ public class Unloader extends Staff {
      * @param name Specify the name of this person
      * @param storage Specify the workplace of this person
      */
-    public Unloader(String name, Vector2f location, Storage storage, Truck truck, ArrayList<Item> shopItems) {
+    public Unloader(String name, Vector2f location, Storage storage, Truck truck, ArrayList<Item> aisleItems) {
         super(name, location);
 
         action = Action.WAITING;
         this.storage = storage;
         this.truck = truck;
-        this.shopItems = shopItems;
+        this.aisleItems = aisleItems;
     }
 
     /**
@@ -75,15 +75,15 @@ public class Unloader extends Staff {
      */
     public void orderItems() {
         ArrayList<Item> orderItems = new ArrayList<>();
-        for (Item shopItem : shopItems) {
-            int currentStash = storage.getItemCount(shopItem.getName());
+        for (Item aisleItem : aisleItems) {
+            int currentStash = storage.getItemCount(aisleItem.getName());
             if (currentStash < MIN_STOCK) {
                 if (orderItems.isEmpty()) {
                     System.out.println("Unloader " + name + " is ordering items...");
                 }
 
                 do {
-                    orderItems.add(new Item(shopItem));
+                    orderItems.add(new Item(aisleItem));
                     currentStash++;
                 } while (currentStash < MAX_STOCK);
                 sleep(ORDER_TIME_PER_ITEM_GROUP);

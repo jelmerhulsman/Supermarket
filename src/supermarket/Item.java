@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "items")
 public class Item {
+    @Transient
     private final int DISCOUNT_PERCENTAGE = 20;
 
     @Id

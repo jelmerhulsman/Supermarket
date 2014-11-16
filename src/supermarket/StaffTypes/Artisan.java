@@ -44,7 +44,7 @@ public class Artisan extends Staff {
      */
     public Item craftItem(Customer customer) {
         for (Item item : department.getItems()) {
-            if (customer.getShoppingListItemNames().contains(item.getName())) {
+            if (customer.getShoppingList().contains(item)) {
                 System.out.println("Artisan " + name + " is now crafting " + item.getName() + "...");
                 sleep(ITEM_CRAFT_TIME);
                 customer.sleep(ITEM_CRAFT_TIME);
@@ -97,6 +97,6 @@ public class Artisan extends Staff {
             }
         });
         operation.start();
-        operation.setName("Unloader " + name);
+        operation.setName("Artisan " + name);
     }
 }

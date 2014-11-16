@@ -316,11 +316,17 @@ public class Customer extends Person {
             sleep(ITEM_SEARCH_TIME);
 
             if (aisleItemNames.contains(item.getName())) {
-                if (aisle.getItemCount(item) > 0 && aisle.getItems().get(0).isAvailable()) {
+                if (aisle.getItemCount(item) > 0) {
+                    while (!item.isAvailable()) {
+                        sleep(100);
+                    }
+                    
                     if (aisle instanceof Sales) {
                         item.discount();
                     }
+                    
                     shoppingBasket.add(aisle.pickFromShelve(item));
+                    System.out.println("Customer " + name + " picked " + item.getName() + " up from the shelves.");
                 }
 
                 sleep(ITEM_INTERACTION_TIME);

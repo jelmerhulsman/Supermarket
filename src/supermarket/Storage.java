@@ -30,7 +30,7 @@ public class Storage extends ObjectInShop {
         try {
             factory = new AnnotationConfiguration().
                     configure().
-                    //addPackage("com.xyz") //add package if used.
+                    //addPackage("com.xyz");
                     addAnnotatedClass(Item.class).
                     buildSessionFactory();
         } catch (Throwable ex) {
