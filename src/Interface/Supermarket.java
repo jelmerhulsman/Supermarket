@@ -621,7 +621,7 @@ public class Supermarket extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Panes.addTab("Derpartments", jPanel7);
+        Panes.addTab("Departments", jPanel7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
