@@ -316,13 +316,20 @@ public class Customer extends Person {
             sleep(ITEM_SEARCH_TIME);
 
             if (aisleItemNames.contains(item.getName())) {
-                if (aisle.getStockCount(item) > 0 && item.isAvailable()) {
+                if (aisle.getStockCount(item) > 0) {
                     if (aisle instanceof Sales) {
                         item.discount();
                     }
-                    
-                    shoppingBasket.add(aisle.pickFromShelve(item));
-                    System.out.println("Customer " + name + " picked " + item.getName() + " up from the shelves.");
+
+                    Item temp = null;
+                    do {
+                        temp = aisle.pickFromShelve(item);
+                        if (!temp.isAvailable()) {
+                            sleep(100);
+                        }
+                    } while (!temp.isAvailable());
+                    shoppingBasket.add(temp);
+                    System.out.println("Customer " + name + " picked " + temp.getName() + " up from the shelves.");
                 } else {
                     System.out.println("Customer " + name + " -> " + item.getName() + " not available.");
                 }
