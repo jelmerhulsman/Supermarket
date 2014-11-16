@@ -115,10 +115,10 @@ public class StorageTest {
     public void testGetItems_int_ItemCategory() {
         System.out.println("getItems");
         int count = 0;
-        Item.Category category = null;
+        Item item = null;
         Storage instance = null;
         ArrayList expResult = null;
-        ArrayList result = instance.getItems(count, category);
+        ArrayList result = instance.getItems(count, item);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

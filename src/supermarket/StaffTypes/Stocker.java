@@ -34,6 +34,7 @@ public class Stocker extends Staff {
      */
     public Stocker(String name, Vector2f location, Storage storage, ArrayList<Item> aisleItems) {
         super(name, location);
+        this.multiplySpeed(1.5f);
 
         action = Action.WAITING;
         this.storage = storage;
@@ -148,7 +149,8 @@ public class Stocker extends Staff {
                                     aisle.setManned(false);
                                     aisle = null;
                                 }
-                            } else if (runs == NUMBER_OF_RUNS_PER_AISLE) {
+                            }
+                            if (runs == NUMBER_OF_RUNS_PER_AISLE) {
                                 runs = 0;
                                 aisle.setManned(false);
                                 aisle = null;

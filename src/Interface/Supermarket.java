@@ -708,6 +708,8 @@ public class Supermarket extends javax.swing.JFrame {
     private void executeStaffUpdate() {
         for (Staff staff : workforce) {
             staff.update(staticLocations);
+            staff.sleep(500);
+            sleep(100);
         }
     }
 
