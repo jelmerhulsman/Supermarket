@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package supermarket.StaffTypes;
 
 import com.jme3.math.Vector2f;
@@ -13,7 +9,7 @@ import supermarket.ObjectInShop;
 
 /**
  *
- * @author Hulsman
+ * @author SDJM
  */
 public class Artisan extends Staff {
 
@@ -27,10 +23,11 @@ public class Artisan extends Staff {
     private Department department;
 
     /**
-     * Constructor for the Unloader staff member
+     * Constructor for the Artisan staff member
      *
      * @param name Specify the name of this person
-     * @param storage Specify the workplace of this person
+     * @param department Specify the workplace of this person
+     * @param location Specify the starting location of this person
      */
     public Artisan(String name, Vector2f location, Department department) {
         super(name, location);
@@ -39,6 +36,12 @@ public class Artisan extends Staff {
         this.department = department;
     }
 
+    /**
+     * Used by the artisian to make items in front of the customer
+     *
+     * @param customer The customer this artisian is working for
+     * @return A fresh new item which corresponds with the customer's needs
+     */
     public Item craftItem(Customer customer) {
         for (Item item : department.getItems()) {
             if (customer.getShoppingListItemNames().contains(item.getName())) {

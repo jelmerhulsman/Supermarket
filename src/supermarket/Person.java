@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author SDJM
  */
-public class Person extends ObjectInShop {
+public abstract class Person extends ObjectInShop {
 
     final protected int ITEM_INTERACTION_TIME = 250;
     final private int STEP_TIME = 100;
@@ -17,20 +17,39 @@ public class Person extends ObjectInShop {
     protected ObjectInShop locationObject;
     protected float speed;
 
+    /**
+     * Abstract class
+     *
+     * @param name the name of this person
+     * @param location the starting location of this person
+     */
     public Person(String name, Vector2f location) {
         super(name, location);
         operation = new Thread();
         speed = WALKING_SPEED;
     }
-    
+
+    /**
+     * Used to stop the thread of this person and thus stopping the update loop
+     */
     public void kill() {
         operation.stop();
     }
-    
+
+    /**
+     * returns the object of the current location
+     *
+     * @return
+     */
     public ObjectInShop getLocationObject() {
         return locationObject;
     }
 
+    /**
+     * multiplies the speed
+     *
+     * @param multiplier multiplier
+     */
     public void multiplySpeed(float multiplier) {
         this.speed *= multiplier;
     }
@@ -51,7 +70,7 @@ public class Person extends ObjectInShop {
 
         Vector2f targetLocation = new Vector2f(targetObject.getLocation());
         locationObject = null;
-        
+
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(getLocation().x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(getLocation().y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
@@ -88,14 +107,14 @@ public class Person extends ObjectInShop {
      */
     public void gotoCoords(Vector2f targetLocation) {
         locationObject = null;
-        
+
         float moveX = FastMath.floor(targetLocation.x) - FastMath.floor(location.x);
         float moveY = FastMath.floor(targetLocation.y) - FastMath.floor(location.y);
         float moveTotal = FastMath.abs(moveX) + FastMath.abs(moveY);
 
         moveX = (moveX / moveTotal) * speed;
         moveY = (moveY / moveTotal) * speed;
-        
+
         float distanceToTarget = location.distance(targetLocation);
         if (distanceToTarget > speed) {
             while (distanceToTarget > speed) {

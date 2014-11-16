@@ -17,7 +17,13 @@ public class Storage extends ObjectInShop {
     private ArrayList<Item> items;
     private static SessionFactory factory;
     boolean changed = true;
-    
+
+    /**
+     * Make a new storage
+     *
+     * @param name The name of this storage
+     * @param location the location of this storage
+     */
     public Storage(String name, Vector2f location) {
         super(name, location);
         items = new ArrayList<>();

@@ -17,6 +17,13 @@ public class Aisle extends ObjectInShop {
     private boolean changed;
     private boolean manned;
 
+    /**
+     * Make a new aisle
+     * @param name The name of this aisle
+     * @param location The location in the store
+     * @param categories List of categories which this aisle will contain
+     * @param storeItems All the available items in the supermarket
+     */
     public Aisle(String name, Vector2f location, ArrayList<Category> categories, ArrayList<Item> storeItems) {
         super(name, location);
         

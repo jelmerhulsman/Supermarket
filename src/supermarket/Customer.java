@@ -31,6 +31,14 @@ public class Customer extends Person {
     private ArrayList<Item> shoppingList, shoppingBasket;
     private Customer myself;
 
+    /**
+     * Make a customer
+     *
+     * @param name The name of the customer
+     * @param location The startinglocation of the customer
+     * @param stereotype The type of stereotype of this customer
+     * @param uniqueItems A list of unique items favoured by this customer
+     */
     public Customer(String name, Vector2f location, Stereotype stereotype, ArrayList<Item> uniqueItems) {
         super(name, location);
 
@@ -220,6 +228,11 @@ public class Customer extends Person {
         return null;
     }
 
+    /**
+     * Adds an item to this customer his shopping cart/basket
+     *
+     * @param item the item being added
+     */
     public void addItemToBasket(Item item) {
         shoppingBasket.add(item);
 
@@ -261,7 +274,10 @@ public class Customer extends Person {
     public Stereotype getStereotype() {
         return stereotype;
     }
-    
+
+    /**
+     * Used for departments
+     */
     public void helped() {
         action = Action.SHOPPING_AT_DEPARTMENTS;
     }
@@ -344,7 +360,7 @@ public class Customer extends Person {
                             break;
                         case SHOPPING_AT_DEPARTMENTS:
                             Department department = getFirstDepartment(staticLocations);
-                            
+
                             if (department != null) {
                                 gotoLocation(department.getName(), staticLocations);
                                 department.addCustomer(myself);

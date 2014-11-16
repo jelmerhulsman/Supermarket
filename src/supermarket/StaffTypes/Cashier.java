@@ -7,6 +7,10 @@ import supermarket.Customer;
 import supermarket.Item;
 import supermarket.ObjectInShop;
 
+/**
+ *
+ * @author SDJM
+ */
 public class Cashier extends Staff {
 
     private final int PAYMENT_TIME = 3000;
@@ -63,7 +67,7 @@ public class Cashier extends Staff {
     public Checkout getCheckout() {
         return checkout;
     }
-    
+
     public boolean isWaiting() {
         return (action == Action.HELP_STOCKERS);
     }
@@ -81,7 +85,7 @@ public class Cashier extends Staff {
                 while (true) {
                     switch (action) {
                         case GO_TO_CHECKOUT:
-                            checkout.open();                            
+                            checkout.open();
                             gotoLocation(checkout.getName(), staticLocations);
                             action = Action.WORKING;
                         case WORKING:

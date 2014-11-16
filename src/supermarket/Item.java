@@ -20,7 +20,7 @@ public class Item {
         BEER, LIQUOR, WINE, CAFFEINE, SNACK, SODA, DAIRY, SPICES, NONFOOD, FROZEN, PRESERVATION, BREAD, MEAT, BREAKFAST, SPREAD, VEGTABLES, FRUIT, FOREIGN, READY_TO_EAT
     }
     @Column(name = "name")
-    private String name; 
+    private String name;
     @Column(name = "price")
     private float price;
     @Column(name = "category")
@@ -40,12 +40,24 @@ public class Item {
         return available;
     }
 
+    /**
+     * Creates an item -INTERNAL USE ONLY-
+     *
+     * @param item
+     */
     public Item(Item item) {
         this.name = item.name;
         this.price = item.price;
         this.category = item.category;
     }
 
+    /**
+     * Creates an item
+     *
+     * @param name the name of this item
+     * @param price the price of this item
+     * @param category the category of this item
+     */
     public Item(String name, float price, Category category) {
         this.name = name;
         this.price = price;

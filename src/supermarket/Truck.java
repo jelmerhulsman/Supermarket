@@ -14,6 +14,7 @@ public class Truck extends ObjectInShop {
     /**
      * creates a truck
      *
+     * @param name The name of this truck
      * @param status WAITING, UNLOADING, AWAY, EMPTY
      */
     public Truck(String name, Vector2f location) {
@@ -24,7 +25,7 @@ public class Truck extends ObjectInShop {
     public ArrayList<Item> getItems() {
         return items;
     }
-    
+
     public boolean isEmpty() {
         return items.isEmpty();
     }
@@ -55,7 +56,7 @@ public class Truck extends ObjectInShop {
 
     /**
      * add's items to the truck
-     *     
+     *
      * @param items the collection of items to put in the truck
      */
     public void putItemsInTruck(ArrayList<Item> items) {

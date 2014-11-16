@@ -24,6 +24,13 @@ public class Stocker extends Staff {
     private Aisle aisle;
     private int runs;
 
+    /**
+     * Make a new stocker, this person will slowly fill up all the aisles
+     *
+     * @param name the name of this stocker
+     * @param location the starting location of this stocker
+     * @param storage the starting workplace of this stocker
+     */
     public Stocker(String name, Vector2f location, Storage storage) {
         super(name, location);
 
@@ -69,6 +76,12 @@ public class Stocker extends Staff {
         items = new ArrayList<>();
     }
 
+    /**
+     * Used by this stocker to decide which aisle he will be filling next
+     *
+     * @param staticLocations a collection of all the possible locations in the
+     * simulation
+     */
     private void chooseAisle(ArrayList<ObjectInShop> staticLocations) {
         for (ObjectInShop o : staticLocations) {
             if (o instanceof Aisle) {
@@ -79,7 +92,7 @@ public class Stocker extends Staff {
                     tempAisle.setManned(true);
                     break;
                 }
-                
+
                 if (tempAisle == this.getAisle() && runs == 0) {
                     tempAisle.setManned(false);
                 }

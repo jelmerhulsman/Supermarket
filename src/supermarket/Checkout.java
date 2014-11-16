@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Checkout extends ObjectInShop {
 
     final int CROWDED_SIZE = 3;
-    
+
     public enum Status {
 
         CLOSED, CLOSING, OPEN, CROWDED
@@ -19,7 +19,13 @@ public class Checkout extends ObjectInShop {
     private Status status;
     private ArrayList<Customer> customers;
     private boolean manned = false;
-    
+
+    /**
+     * Make a new checkout
+     *
+     * @param number which number does this checkout have?
+     * @param location The location in the supermarket
+     */
     public Checkout(int number, Vector2f location) {
         super("Checkout " + number, location);
         this.number = number;
@@ -50,7 +56,7 @@ public class Checkout extends ObjectInShop {
     public boolean isManned() {
         return this.manned;
     }
-    
+
     /**
      * Let cashier open the checkout
      *
@@ -87,7 +93,7 @@ public class Checkout extends ObjectInShop {
     public boolean noCustomersLeft() {
         return customers.isEmpty();
     }
-    
+
     public int getCustomersCount() {
         return customers.size();
     }

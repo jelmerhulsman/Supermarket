@@ -32,7 +32,7 @@ import supermarket.Truck;
 public class Supermarket extends javax.swing.JFrame {
 
     private final int MAX_CUSTOMERS = 10; //10;
-    private final int CHANCE_OF_ENTERING = 100; //12;
+    private final int CHANCE_OF_ENTERING = 12; //12;
     private ArrayList<Aisle> aisles;
     private ArrayList<Department> departments;
     private Department bakery;
@@ -141,7 +141,8 @@ public class Supermarket extends javax.swing.JFrame {
         //Create storage and truck
         storage = new Storage("Storage", new Vector2f(10, 100));
         truck = new Truck("Truck", new Vector2f(10, 10));
-        doorway = new ObjectInShop("Doorway", new Vector2f(20, 400));
+        doorway = new ObjectInShop("Doorway", new Vector2f(20, 400)) {
+        };
 
         //Assign locations in the shop
         staticLocations = new ArrayList<>();
@@ -163,12 +164,12 @@ public class Supermarket extends javax.swing.JFrame {
         stockers.add(new Stocker("Jip de Chip", storage.getLocation(), storage));
         stockers.add(new Stocker("Grietje Gezond", storage.getLocation(), storage));
         stockers.add(new Stocker("Kees Koeler", storage.getLocation(), storage));
-        stockers.add(new Stocker("Jacob Dubbelfris", storage.getLocation(), storage));
-        stockers.add(new Stocker("Pietje Nietsnut", storage.getLocation(), storage));
-        stockers.add(new Stocker("Achmed Joseph Adam Gelovig", storage.getLocation(), storage));
-        stockers.add(new Stocker("Triensje Treintje", storage.getLocation(), storage));
-        
-        
+//      stockers.add(new Stocker("Jacob Dubbelfris", storage.getLocation(), storage));
+//      stockers.add(new Stocker("Pietje Nietsnut", storage.getLocation(), storage));
+//      stockers.add(new Stocker("Achmed Joseph Adam Gelovig", storage.getLocation(), storage));
+//      stockers.add(new Stocker("Triensje Treintje", storage.getLocation(), storage));
+
+
         cashiers = new ArrayList<>();
         cashiers.add(new Cashier("Johanna Doekoe", storage.getLocation(), checkouts.get(0)));
 
@@ -577,6 +578,8 @@ public class Supermarket extends javax.swing.JFrame {
     }//GEN-LAST:event_customerSelectorActionPerformed
 
     /**
+     * Start the simulation!
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -607,19 +610,25 @@ public class Supermarket extends javax.swing.JFrame {
         while (true) { //Update loop
             simulation.customersLoop();
             simulation.staffLoop();
-            simulation.updatePeoplesList();
 
             simulation.interfaceUpdate();
             simulation.sleep(1000); //Sleep at the end of the loop
         }
     }
 
+    /**
+     * Make sure all the staff updates are being called once
+     */
     private void executeStaffUpdate() {
         for (Staff staff : workforce) {
             staff.update(staticLocations);
         }
     }
 
+    /**
+     * Used to generate new customers or properly leave customers when they're
+     * out of bounds
+     */
     private void customersLoop() {
         addEnteringCustomers();
 
@@ -634,6 +643,9 @@ public class Supermarket extends javax.swing.JFrame {
         customers.removeAll(leavingCustomers);
     }
 
+    /**
+     * Used to add customers to the simulation with a random stereotype
+     */
     private void addEnteringCustomers() {
         if (customers.size() < MAX_CUSTOMERS) {
 
@@ -660,6 +672,10 @@ public class Supermarket extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * An extra staff loop used to check if there's an idle cashiere and
+     * reassign him to be a stocker
+     */
     private void staffLoop() {
         ArrayList<Cashier> formerCashiers = new ArrayList<>();
         for (Cashier cashier : cashiers) {
@@ -668,9 +684,9 @@ public class Supermarket extends javax.swing.JFrame {
                 stocker.gotoLocation(storage.getName(), staticLocations);
                 stockers.add(stocker);
                 workforce.add(stocker);
-                stocker.update(staticLocations);                
+                stocker.update(staticLocations);
                 cashier.kill();
-                formerCashiers.add(cashier);                
+                formerCashiers.add(cashier);
             }
         }
         cashiers.removeAll(formerCashiers);
@@ -679,6 +695,9 @@ public class Supermarket extends javax.swing.JFrame {
         handleCheckouts();
     }
 
+    /**
+     * Checks the checkouts if they need an extra cashiere
+     */
     private void handleCheckouts() {
         for (int i = 1; i < checkouts.size(); i++) {
             Checkout currentCheckout = checkouts.get(i);
@@ -712,12 +731,18 @@ public class Supermarket extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * used for an internal list of total people in the simulation
+     */
     private void updatePeoplesList() {
         people = new ArrayList<>();
         people.addAll(workforce);
         people.addAll(customers);
     }
 
+    /**
+     * Draws the map with squares representing entities
+     */
     private void drawStore() {
         String storeLocationName;
 
@@ -764,9 +789,17 @@ public class Supermarket extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Used for the map; Shows number of type of people there ( 'S' - staff, 'C'
+     * - customers )
+     *
+     * @param object The location where you are checking
+     * @return A string used on the map
+     */
     private String peopleAtObject(ObjectInShop object) {
         int counter = 0;
         int counter2 = 0;
+        updatePeoplesList();
         for (Person person : people) {
             if (person.getLocationObject() == object) {
                 if (person instanceof Staff) {
@@ -824,7 +857,7 @@ public class Supermarket extends javax.swing.JFrame {
             //cleans the map
             g.clearRect(0, 0, 400, 400);
             drawStore();
-
+            updatePeoplesList();
             for (Person person : people) {
                 if (person.getLocationObject() == null) {
                     if (person instanceof Unloader) {
@@ -943,10 +976,21 @@ public class Supermarket extends javax.swing.JFrame {
         System.setErr(new PrintStream(out, true));
     }
 
+    /**
+     * Used to make a percentage chance
+     *
+     * @param percent The percentage you are using
+     * @return either true or false
+     */
     private boolean chanceOf(int percent) {
         return (int) (Math.random() * 101) <= percent;
     }
 
+    /**
+     * Used for threads to make them sleep for a little while
+     *
+     * @param milliseconds total milliseconds for a thread to sleep
+     */
     private void sleep(int milliseconds) {
         try {
             Thread.sleep(milliseconds); //1000 milliseconds is one second.

@@ -13,38 +13,56 @@ public class Department extends ObjectInShop {
     private ArrayList<Item> items;
     private ArrayList<Customer> customers;
 
+    /**
+     * Create a department
+     *
+     * @param name the name of this department
+     * @param location the location of this department
+     * @param category the category of the item from this department
+     * @param storeItems all the available items in the simulation
+     */
     public Department(String name, Vector2f location, Category category, ArrayList<Item> storeItems) {
         super(name, location);
 
         createListOfDepartmentItems(category, storeItems);
         customers = new ArrayList<>();
     }
-    
+
     public ArrayList<Item> getItems() {
         return items;
     }
-    
-     /**
+
+    /**
      * returns all the item names in this department
-     * @return 
+     *
+     * @return
      */
     public ArrayList<String> getItemNames() {
         ArrayList<String> itemNames = new ArrayList<>();
-        
-        for (Item item : items)
-        {
-            if (!itemNames.contains(item.getName()))
-            {
+
+        for (Item item : items) {
+            if (!itemNames.contains(item.getName())) {
                 itemNames.add(item.getName());
             }
         }
         return itemNames;
     }
-    
+
+    /**
+     * returns wheter there aren't customers left of not
+     *
+     * @return
+     */
     public boolean noCustomersLeft() {
         return customers.isEmpty();
     }
 
+    /**
+     * Creates a list of items for this department
+     *
+     * @param category The category which we will be using
+     * @param storeItems all the available items in the simulation
+     */
     private void createListOfDepartmentItems(Category category, ArrayList<Item> storeItems) {
         items = new ArrayList<>();
 
@@ -54,7 +72,7 @@ public class Department extends ObjectInShop {
             }
         }
     }
-    
+
     /**
      * Adds customer to the end of the lane
      *
