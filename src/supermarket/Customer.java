@@ -288,16 +288,52 @@ public class Customer extends Person {
         return itemNames;
     }
 
+    /**
+     * Gets action of customer
+     *
+     * @return action
+     */
     public Action getAction() {
         return action;
     }
+    
+    /**
+     * Gets shopping basket of customer
+     * 
+     * @return shopping basket
+     */
+    public ArrayList<Item> getShoppingBasket() {
+        return shoppingBasket;
+    }
+    
+    /**
+     * Gets saldo of customer
+     * 
+     * @return saldo
+     */
+    public float getSaldo() {
+        return saldo;
+    }
 
+    /**
+     * Sets saldo of customer
+     * @param saldo 
+     */
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+
+    /**
+     * Gets stereotype of customer
+     *
+     * @return
+     */
     public Stereotype getStereotype() {
         return stereotype;
     }
 
     /**
-     * Used for departments
+     * Lets customers shop again
      */
     public void helped() {
         action = Action.SHOPPING_AT_DEPARTMENTS;
@@ -363,18 +399,6 @@ public class Customer extends Person {
         }
 
         return c;
-    }
-
-    public ArrayList<Item> getShoppingBasket() {
-        return shoppingBasket;
-    }
-
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
-    }
-
-    public float getSaldo() {
-        return saldo;
     }
 
     /**
