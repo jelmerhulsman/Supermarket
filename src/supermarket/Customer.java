@@ -129,17 +129,20 @@ public class Customer extends Person {
                 blackList.add(Category.SPICES);
                 blackList.add(Category.FOREIGN);
                 blackList.add(Category.CAFFEINE);
+                likingList.add(Category.DAIRY_IN_SALE);
                 likingList.add(Category.VEGTABLES);
                 likingList.add(Category.DAIRY);
                 break;
             case MOTHER:
                 blackList.add(Category.READY_TO_EAT);
+                likingList.add(Category.DAIRY_IN_SALE);
                 break;
             case STUDENT:
                 blackList.add(Category.NONFOOD);
                 blackList.add(Category.WINE);
                 blackList.add(Category.VEGTABLES);
                 blackList.add(Category.FRUIT);
+                likingList.add(Category.BEER_IN_SALE);
                 likingList.add(Category.BEER);
                 likingList.add(Category.LIQUOR);
                 likingList.add(Category.CAFFEINE);
@@ -148,6 +151,7 @@ public class Customer extends Person {
                 break;
             case WORKER:
                 blackList.add(Category.NONFOOD);
+                likingList.add(Category.BEER_IN_SALE);
                 likingList.add(Category.BEER);
                 likingList.add(Category.LIQUOR);
                 likingList.add(Category.FROZEN);
