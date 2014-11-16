@@ -13,9 +13,9 @@ import supermarket.Truck;
  */
 public class Unloader extends Staff {
 
-    private final int MIN_STASH = 5;
-    private final int MAX_STASH = 25;
-    private final int ORDER_TIME_PER_ITEM = 100;
+    private final int MIN_STOCK = 5;
+    private final int MAX_STOCK = 25;
+    private final int ORDER_TIME_PER_ITEM_GROUP = 1000;
 
     private enum Action {
 
@@ -77,7 +77,7 @@ public class Unloader extends Staff {
         ArrayList<Item> orderItems = new ArrayList<>();
         for (Item shopItem : shopItems) {
             int currentStash = storage.getItemCount(shopItem.getName());
-            if (currentStash < MIN_STASH) {
+            if (currentStash < MIN_STOCK) {
                 if (orderItems.isEmpty()) {
                     System.out.println("Unloader " + name + " is ordering items...");
                 }
@@ -85,8 +85,8 @@ public class Unloader extends Staff {
                 do {
                     orderItems.add(new Item(shopItem));
                     currentStash++;
-                    sleep(ORDER_TIME_PER_ITEM);
-                } while (currentStash < MAX_STASH);
+                } while (currentStash < MAX_STOCK);
+                sleep(ORDER_TIME_PER_ITEM_GROUP);
             }
         }
 

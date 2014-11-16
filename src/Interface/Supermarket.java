@@ -724,8 +724,7 @@ public class Supermarket extends javax.swing.JFrame {
 
 
                 customerCounter++;
-                String name = "#" + customerCounter;
-                Customer customer = new Customer(name, doorway.getLocation(), stereotype.get(0), storeItems);
+                Customer customer = new Customer("#" + customerCounter, doorway.getLocation(), stereotype.get(0), storeItems);
                 customer.update(staticLocations);
 
                 customers.add(customer);
@@ -953,8 +952,9 @@ public class Supermarket extends javax.swing.JFrame {
                     for (Item item : aisles.get(i).getItems()) {
                         aislesListboxList.get(i).add(item.getName());
                     }
+                    
+                    aisles.get(i).setChanged(false);
                 }
-                aisles.get(i).setChanged(false);
             }
         } else if (Panes.getSelectedIndex() == 3) {
             //update for the storage items list
