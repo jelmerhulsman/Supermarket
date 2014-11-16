@@ -62,7 +62,7 @@ public class Stocker extends Staff {
         System.out.println("Stocker " + name + " is picking up items from storage...");
         for (Category category : aisle.getCategories()) {
             items.addAll(storage.getItems(MAX_ITEMS, category));
-            sleep(items.size() * ITEM_INTERACTION_TIME);
+            sleep(items.size() * ITEM_INTERACTION_TIME / 2);
         }
     }
 
@@ -73,7 +73,7 @@ public class Stocker extends Staff {
         System.out.println("Stocker " + name + " is storing items back into the storage...");
         for (Item i : items) {
             storage.addItem(i);
-            sleep(ITEM_INTERACTION_TIME);
+            sleep(ITEM_INTERACTION_TIME / 2);
         }
 
         items = new ArrayList<>();
@@ -120,7 +120,7 @@ public class Stocker extends Staff {
                 i.setAvailable(false);
                 aisle.loadAisle(i);
                 storedItems.add(i);
-                sleep(ITEM_INTERACTION_TIME);
+                sleep(ITEM_INTERACTION_TIME / 2);
             }
         }
 
@@ -149,7 +149,8 @@ public class Stocker extends Staff {
                                     aisle.setManned(false);
                                     aisle = null;
                                 }
-                            } else if (runs == NUMBER_OF_RUNS_PER_AISLE) {
+                            } 
+                            if (runs == NUMBER_OF_RUNS_PER_AISLE) {
                                 runs = 0;
                                 aisle.setManned(false);
                                 aisle = null;

@@ -49,6 +49,7 @@ public class Unloader extends Staff {
      * objects in an arraylist
      */
     public void getItemsFromTruck() {
+        items = new ArrayList<>();
         if (!truck.getItems().isEmpty()) {
             System.out.println("Unloader " + name + " is picking up items from truck...");
             items.addAll(truck.unload(MAX_ITEMS));
