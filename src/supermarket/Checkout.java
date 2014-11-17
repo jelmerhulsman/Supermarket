@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Checkout extends ObjectInShop {
 
-    final int CROWDED_SIZE = 3;
+    final int CROWDED_SIZE = 4;
 
     public enum Status {
 

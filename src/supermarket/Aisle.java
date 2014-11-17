@@ -80,6 +80,10 @@ public class Aisle extends ObjectInShop {
      * @return True if aisle needs stock
      */
     public boolean needsStock() {
+        if (items == null) {
+            return false;
+        }
+
         for (Item item : items) {
             if (getStockCount(item) < MINIMUM_STOCK_PER_SHELVE) {
                 return true;
@@ -103,7 +107,7 @@ public class Aisle extends ObjectInShop {
                 temp = item;
             }
         }
-        
+
         return temp;
     }
 
@@ -160,16 +164,20 @@ public class Aisle extends ObjectInShop {
      * get the item count by checking the itemname
      *
      * @param itemname
-     * @return
+     * @return counter
      */
     public int getStockCount(Item item) {
-        int counter = 0;
-        for (Item i : stock) {
-            if (i.getName().equals(item.getName())) {
-                counter++;
+        try {
+            int counter = 0;
+            for (Item i : stock) {
+                if (i.getName().equals(item.getName())) {
+                    counter++;
+                }
             }
+            return counter;
+        } catch (Exception e) {
+            return 0;
         }
-        return counter;
     }
 
     /**
