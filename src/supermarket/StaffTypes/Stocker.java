@@ -159,9 +159,15 @@ public class Stocker extends Staff {
                             if (storage.getAllItems().isEmpty() || aisle == null) {
                                 action = Action.WAITING;
                             } else {
-                                storeItemsInStorage();
-                                getItemsFromStorage();
-                                action = Action.STORE_ITEMS;
+                                try {
+                                    storeItemsInStorage();
+                                    getItemsFromStorage();
+                                    action = Action.STORE_ITEMS;
+                                } catch (Exception e) {
+                                    items = new ArrayList<>();
+                                    aisle = null;
+                                    action = action.WAITING;
+                                }
                             }
                             break;
                         case STORE_ITEMS:
