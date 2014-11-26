@@ -98,6 +98,7 @@ public class Cashier extends Staff {
                             }
                             break;
                     }
+                    sleep(500);
                 }
             }
         });

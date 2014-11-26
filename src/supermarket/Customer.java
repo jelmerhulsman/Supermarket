@@ -468,6 +468,7 @@ public class Customer extends Person {
                             }
                             break;
                     }
+                    sleep(500);
                 }
             }
         });

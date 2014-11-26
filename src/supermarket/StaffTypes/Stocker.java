@@ -13,7 +13,7 @@ import supermarket.Storage;
  */
 public class Stocker extends Staff {
 
-    private final int NUMBER_OF_RUNS_PER_AISLE = 3;
+    private static final int NUMBER_OF_RUNS_PER_AISLE = 3;
 
     private enum Action {
 
@@ -190,6 +190,7 @@ public class Stocker extends Staff {
                             }
                             break;
                     }
+                    sleep(500);
                 }
             }
         });

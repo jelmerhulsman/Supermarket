@@ -93,6 +93,7 @@ public class Artisan extends Staff {
                             }
                             break;
                     }
+                    sleep(500);
                 }
             }
         });

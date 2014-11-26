@@ -11,7 +11,7 @@ import supermarket.Person;
  */
 public abstract class Staff extends Person {
 
-    protected final int CARRYING_CAPACITY = 10;
+    protected static final int CARRYING_CAPACITY = 10;
     protected ArrayList<Item> items;
 
     /**
@@ -22,7 +22,7 @@ public abstract class Staff extends Person {
      */
     public Staff(String name, Vector2f location) {
         super(name, location);
-        items = new ArrayList<>();
+        items = new ArrayList<>(CARRYING_CAPACITY);
     }
 
     public ArrayList<Item> getItems() {

@@ -33,8 +33,8 @@ import supermarket.Truck;
  */
 public class Supermarket extends javax.swing.JFrame {
 
-    private final int MAX_CUSTOMERS = 10; //10;
-    private final int CHANCE_OF_ENTERING = 12; //12;
+    private static final int MAX_CUSTOMERS = 20; //10;
+    private static final int CHANCE_OF_ENTERING = 30; //12;
     private ArrayList<Aisle> aisles;
     private Sales sales;
     private ArrayList<Department> departments;
@@ -73,7 +73,7 @@ public class Supermarket extends javax.swing.JFrame {
         g = mapCanvas.getGraphics();
         customerSelector.setLightWeightPopupEnabled(false);
         staffComboBox.setLightWeightPopupEnabled(false);
-        
+
         //Add all unique items to a list
         storeItems = new ArrayList<>();
         departmentItems = new ArrayList<>();
@@ -140,7 +140,7 @@ public class Supermarket extends javax.swing.JFrame {
         aisleCategories.add(Category.NONFOOD);
         aisles.add(new Aisle("Nonfood", new Vector2f(250, 125), aisleCategories, aisleItems));
         lblNonfoon.setText("Nonfood");
-        
+
         //Create departments
         departments = new ArrayList<>();
         bakery = new Department("Bakery", new Vector2f(100, 190), Category.BREAD, departmentItems);
@@ -181,10 +181,10 @@ public class Supermarket extends javax.swing.JFrame {
         stockers.add(new Stocker("Jip de Chip", storage.getLocation(), storage, aisleItems));
         stockers.add(new Stocker("Grietje Gezond", storage.getLocation(), storage, aisleItems));
         stockers.add(new Stocker("Kees Koeler", storage.getLocation(), storage, aisleItems));
-//      stockers.add(new Stocker("Jacob Dubbelfris", storage.getLocation(), storage));
-//      stockers.add(new Stocker("Pietje Nietsnut", storage.getLocation(), storage));
-//      stockers.add(new Stocker("Achmed Joseph Adam Gelovig", storage.getLocation(), storage));
-//      stockers.add(new Stocker("Triensje Treintje", storage.getLocation(), storage));
+//        stockers.add(new Stocker("Jacob Dubbelfris", storage.getLocation(), storage, aisleItems));
+//        stockers.add(new Stocker("Pietje Nietsnut", storage.getLocation(), storage, aisleItems));
+//        stockers.add(new Stocker("Achmed Joseph Adam Gelovig", storage.getLocation(), storage, aisleItems));
+//        stockers.add(new Stocker("Triensje Treintje", storage.getLocation(), storage, aisleItems));
 
         cashiers = new ArrayList<>();
         cashiers.add(new Cashier("Johanna Doekoe", storage.getLocation(), checkouts.get(0)));
@@ -221,7 +221,7 @@ public class Supermarket extends javax.swing.JFrame {
         //Fills the departmentlistst
         lstDepartment1.add("Bakery makes:");
         lstDepartment2.add("Butchery makes:");
-        
+
         //Graphics for department
         for (String s : departments.get(0).getItemNames()) {
             lstDepartment1.add(s);
@@ -691,7 +691,11 @@ public class Supermarket extends javax.swing.JFrame {
         simulation.setVisible(true);
         simulation.redirectSystemStreams();
         simulation.executeStaffUpdate();
-        simulation.drawStore();
+        try { //Sometimes the Drawing on the AWT screen can be bugged out
+            simulation.drawStore();
+        } catch (Exception e) {
+            System.out.println("Encountered a AWT-exception!");
+        }
 
         while (true) { //Update loop
             simulation.customersLoop();

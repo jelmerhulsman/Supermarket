@@ -10,9 +10,9 @@ import java.util.ArrayList;
  */
 public abstract class Person extends ObjectInShop {
 
-    final protected int ITEM_INTERACTION_TIME = 250;
-    final private int STEP_TIME = 100;
-    final private int WALKING_SPEED = 5;
+    final static protected int ITEM_INTERACTION_TIME = 250;
+    final static private int STEP_TIME = 100;
+    final static private int WALKING_SPEED = 5;
     protected Thread operation;
     protected ObjectInShop locationObject;
     protected float speed;
