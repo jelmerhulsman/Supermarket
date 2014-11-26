@@ -33,8 +33,8 @@ import supermarket.Truck;
  */
 public class Supermarket extends javax.swing.JFrame {
 
-    private static final int MAX_CUSTOMERS = 20; //10;
-    private static final int CHANCE_OF_ENTERING = 30; //12;
+    private static final int MAX_CUSTOMERS = 10; //10;
+    private static final int CHANCE_OF_ENTERING = 12; //12;
     private ArrayList<Aisle> aisles;
     private Sales sales;
     private ArrayList<Department> departments;
